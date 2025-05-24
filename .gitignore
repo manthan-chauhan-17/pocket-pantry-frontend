@@ -48,3 +48,6 @@ app.*.map.json
 /windows/
 /linux/
 /macos/
+
+# Generated files
+**/*.g.dart
