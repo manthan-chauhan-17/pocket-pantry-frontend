@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:pocket_pantry_frontend/models/user_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'rest_client.g.dart';
@@ -7,6 +8,12 @@ part 'rest_client.g.dart';
 abstract class RestClient {
   factory RestClient(Dio dio, {String? baseUrl}) = _RestClient;
 
-  @GET('/healthcheck')
+  @GET('healthcheck')
   Future<dynamic> healthcheck();
+
+  @POST('auth/register')
+  Future<UserModel> register(@Body() Map<String, dynamic> body);
+
+  @POST('auth/login')
+  Future<UserModel> login(@Body() Map<String, dynamic> body);
 }
