@@ -34,6 +34,9 @@ Dio getDio() {
     final response = e.response;
     dev.log(
         'Api Error --> statusCode: ${response?.statusCode} --> ${response?.statusMessage} : Error ==> ${e.toString()}');
+    if (e.response != null) {
+      dev.log('Response data: ${e.response?.data}');
+    }
     return handler.next(e);
   }));
   return dio;
