@@ -17,7 +17,7 @@
 
 - **Frontend Framework:** Flutter
 - **Language:** Dart
-- **State Management:** Provider / Riverpod / Bloc *(depending on your setup)*
+- **State Management:** Bloc
 - **Networking:** `retrofit` / `dio`
 - **Routing:** `go_router` / `auto_route` / default navigator
 - **Authentication:** JWT token-based flow
@@ -39,7 +39,13 @@ cd pocket-pantry-frontend
 flutter pub get
 ```
 
-### 3. Run the app
+### 3. Generate the files
+
+```bash
+dart run build_runner build
+```
+
+### 4. Run the app
 
 ```bash
 flutter run
