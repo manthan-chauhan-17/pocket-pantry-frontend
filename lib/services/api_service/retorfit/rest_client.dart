@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:pocket_pantry_frontend/models/item_model.dart';
 import 'package:pocket_pantry_frontend/models/user_model.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -16,4 +17,9 @@ abstract class RestClient {
 
   @POST('auth/login')
   Future<UserModel> login(@Body() Map<String, dynamic> body);
+
+  @GET('item/get-items')
+  Future<ItemModel> getItems(
+    @Header('Authorization') String token,
+  );
 }

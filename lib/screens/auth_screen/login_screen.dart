@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pocket_pantry_frontend/bloc/auth_bloc/auth_bloc.dart';
+import 'package:pocket_pantry_frontend/bloc/auth_bloc/auth_event.dart';
 import 'package:pocket_pantry_frontend/bloc/auth_bloc/auth_state.dart';
 import 'package:pocket_pantry_frontend/colors.dart';
 import 'package:pocket_pantry_frontend/screens/auth_screen/register_screen.dart';
@@ -135,6 +136,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             backgroundColor: AppColors.success,
                           ),
                         );
+
+                        context.read<AuthBloc>().add(
+                              AuthLoginEvent(
+                                  email: _emailController.text,
+                                  password: _passwordController.text),
+                            );
                       }
                     },
                     style: ElevatedButton.styleFrom(

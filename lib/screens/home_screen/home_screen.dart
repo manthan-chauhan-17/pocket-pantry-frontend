@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pocket_pantry_frontend/bloc/item_bloc/item_bloc.dart';
+import 'package:pocket_pantry_frontend/bloc/item_bloc/item_event.dart';
+import 'package:pocket_pantry_frontend/bloc/item_bloc/item_state.dart';
 import 'package:pocket_pantry_frontend/typography.dart';
 import 'package:pocket_pantry_frontend/colors.dart';
+import 'package:pocket_pantry_frontend/widgets/grocery_tile.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,51 +15,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // Sample data for the grocery items
-  final List<Map<String, dynamic>> groceryItems = [
-    {
-      'image': 'assets/images/apples.png',
-      'title': 'Apples',
-      'expires': 'May 5, 2024',
-      'category': 'Meat',
-      'span': 1, // Smaller tile
-    },
-    {
-      'image': 'assets/images/apples.png',
-      'title': 'Whole Wheat Bread',
-      'expires': 'May 10, 2024',
-      'category': 'Bakery',
-      'span': 2, // Larger tile
-    },
-    {
-      'image': 'assets/images/apples.png',
-      'title': 'Chicken Breast',
-      'expires': 'May 5, 2024',
-      'category': 'Meat',
-      'span': 1,
-    },
-    {
-      'image': 'assets/images/apples.png',
-      'title': 'Carrots',
-      'expires': '',
-      'category': 'Vegetable',
-      'span': 1,
-    },
-    {
-      'image': 'assets/images/apples.png',
-      'title': 'Greek Yogurt',
-      'expires': '',
-      'category': '',
-      'span': 1,
-    },
-    {
-      'image': 'assets/images/apples.png',
-      'title': 'Tomato Sauce',
-      'expires': '',
-      'category': '',
-      'span': 1,
-    },
-  ];
+  @override
+  void initState() {
+    super.initState();
+    context.read<ItemBloc>().add(GetItemEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,104 +33,44 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 2,
         shadowColor: AppColors.shadow,
       ),
-      body: GridView.builder(
-        itemCount: groceryItems.length,
-        shrinkWrap: true,
-        gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-        itemBuilder: (context, index) {
-          final item = groceryItems[index];
-          return GroceryTile(
-            image: item['image'],
-            title: item['title'],
-            expires: item['expires'],
-            category: item['category'],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(
+          Icons.add,
+        ),
+      ),
+      body: BlocConsumer<ItemBloc, ItemState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          if (state is GetItemsLoadingState) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (state is GetItemsSuccessState) {
+            var itemState = state;
+
+            return GridView.builder(
+              itemCount: itemState.items.length,
+              shrinkWrap: true,
+              gridDelegate:
+                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+              itemBuilder: (context, index) {
+                final item = itemState.items[index];
+                return GroceryTile(
+                  image: item.image ??
+                      "http://res.cloudinary.com/dbh5as7t7/image/upload/v1747547965/sqw45zyb5dcqzbcrvt5x.jpg",
+                  title: item.itemName!,
+                  expires: item.expireDate!,
+                  category: item.category!,
+                );
+              },
+            );
+          }
+          return Center(
+            child: Text("No Data Found"),
           );
         },
-      ),
-    );
-  }
-}
-
-class GroceryTile extends StatelessWidget {
-  final String image;
-  final String title;
-  final String expires;
-  final String category;
-
-  const GroceryTile({
-    required this.image,
-    required this.title,
-    required this.expires,
-    required this.category,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = AppTextTheme.getLightTextTheme(context);
-
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      color: AppColors.lightSurface,
-      shadowColor: AppColors.shadow,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: ClipRRect(
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(10)),
-              child: Image.asset(
-                image,
-                fit: BoxFit.cover,
-                width: double.infinity,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: AppColors.divider,
-                    child: const Center(
-                      child: Icon(
-                        Icons.broken_image,
-                        color: AppColors.lightIcon,
-                        size: 40,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: textTheme.titleLarge?.copyWith(
-                    color: AppColors.primary,
-                  ),
-                ),
-                if (expires.isNotEmpty)
-                  Text(
-                    'Expires: $expires',
-                    style: textTheme.labelLarge?.copyWith(
-                      color: AppColors.lightText.withOpacity(0.7),
-                    ),
-                  ),
-                if (category.isNotEmpty)
-                  Text(
-                    category,
-                    style: textTheme.labelLarge?.copyWith(
-                      color: AppColors.primary,
-                    ),
-                  ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }

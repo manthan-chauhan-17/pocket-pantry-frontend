@@ -5,7 +5,7 @@ import 'package:pocket_pantry_frontend/services/api_service/retorfit/rest_client
 
 // Change the base URL to your server's IP address
 final restClient =
-    RestClient(baseUrl: "http://192.168.0.101:3000/api/v1/", dio);
+    RestClient(baseUrl: "http://192.168.0.102:3000/api/v1/", dio);
 
 final dio = getDio();
 
