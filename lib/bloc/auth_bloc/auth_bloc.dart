@@ -6,6 +6,7 @@ import 'package:pocket_pantry_frontend/bloc/auth_bloc/auth_event.dart';
 import 'package:pocket_pantry_frontend/bloc/auth_bloc/auth_state.dart';
 import 'package:pocket_pantry_frontend/models/user_model.dart';
 import 'package:pocket_pantry_frontend/services/api_service/api/api.dart';
+import 'package:pocket_pantry_frontend/services/storage_service/my_shared_preference.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   UserModel userModel = UserModel();
@@ -22,7 +23,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       userModel =
           await Api.registerUser(event.name, event.email, event.password);
 
-      log(userModel.toString());
+      if (userModel.statusCode == 201) {
+        await MySharedPreference.saveUserData(
+            id: userModel.data!.id!,
+            name: userModel.data!.name!,
+            email: userModel.data!.email!,
+            token: userModel.data!.token!);
+      }
+      log("User registered successfully", name: "AUTH_BLOC");
       emit(AuthRegisterSuccessState());
     } catch (error) {
       log(error.toString(), name: "ERROR_BLOC");
@@ -40,6 +48,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     try {
       userModel = await Api.loginUser(event.email, event.password);
+
+      if (userModel.statusCode == 200) {
+        await MySharedPreference.saveUserData(
+            id: userModel.data!.id!,
+            name: userModel.data!.name!,
+            email: userModel.data!.email!,
+            token: userModel.data!.token!);
+      }
       emit(AuthLoginSuccessState());
     } catch (error) {
       log(error.toString(), name: "ERROR_BLOC");
