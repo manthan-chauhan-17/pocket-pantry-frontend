@@ -31,7 +31,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         backgroundColor: AppColors.lightSurface,
         elevation: 2,
-        shadowColor: AppColors.shadow,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
