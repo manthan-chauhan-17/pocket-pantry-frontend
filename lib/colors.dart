@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 class AppColors {
   // Primary Theme Colors
 
- // Medium grey
+  // Medium grey
   // Light Theme Colors
-  static const Color lightBackground = Color(0xFFF1F1F1); // Soft white
+  static const Color lightBackground = Color(0xFFFAFAFA); // Soft white
   static const Color lightPrimaryGreen = Color(0xFF66D147); // Fresh green
   static const Color secondaryLightBackground = Color(0xFFF2F2F2);
   static const Color greenTextField = Color(0xFFEBF2E8);
