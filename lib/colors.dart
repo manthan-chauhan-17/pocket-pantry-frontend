@@ -14,7 +14,7 @@ class AppColors {
 
   // Light Theme
   static const Color lightBackground = Color(0xFFFAFAFA); // Near white
-  static const Color lightSurface = Color(0xFFFFFFFF); // True white
+  static const Color lightSurface = Color(0xFFEBF2E8); // True white
   static const Color lightText = Color(0xFF212121); // Deep black
   static const Color lightIcon = Color(0xFF616161); // Medium grey
 

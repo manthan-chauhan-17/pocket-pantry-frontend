@@ -1,21 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:pocket_pantry_frontend/colors.dart';
+import 'package:pocket_pantry_frontend/responsive.dart';
 
-enum FieldType { name, email, password }
+enum FieldType { name, email, password , description}
 
 class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
   final FieldType fieldType;
-  final String labelText;
+  final String? labelText;
   final String? Function(String?) validator;
+  final IconData? suffixIcon;
+  final int? line;
+  final String? hintText;
+  final TextInputType? keyboardType;
 
-  const CustomTextField({
-    super.key,
-    required this.controller,
-    required this.fieldType,
-    required this.labelText,
-    required this.validator,
-  });
+  const CustomTextField(
+      {super.key,
+      required this.controller,
+      required this.fieldType,
+      this.labelText,
+      required this.validator,
+      this.suffixIcon,
+      this.line,
+      this.keyboardType,
+      this.hintText,
+      
+      });
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -29,38 +39,44 @@ class _CustomTextFieldState extends State<CustomTextField> {
     final textTheme = Theme.of(context).textTheme;
     // final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return TextFormField(
-      controller: widget.controller,
-      obscureText: widget.fieldType == FieldType.password && _obscureText,
-      keyboardType: _getKeyboardType(),
-      decoration: InputDecoration(
-        labelText: widget.labelText,
-        labelStyle: textTheme.bodyMedium,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.0),
+    return Padding(
+      padding: EdgeInsets.all(15 * getResponsive(context)),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.0 *  getResponsive(context)),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.0),
-          borderSide: BorderSide(color: AppColors.primary),
+        child: TextFormField(
+          controller: widget.controller,
+          textAlign: TextAlign.start,
+          textAlignVertical:
+              TextAlignVertical.top, // 🔹 Start text from the top vertically
+          keyboardType: _getKeyboardType(), // 🔹 Allow multiline input
+          maxLines: null, // 🔹 Unlimited lines
+          minLines: widget.line ?? 1, // 🔹 Field height - start with 5 lines worth of space
+          
+          obscureText: widget.fieldType == FieldType.password && _obscureText,
+          decoration: InputDecoration(
+            hintText: widget.hintText ?? "",
+            labelText: widget.labelText,
+            labelStyle: textTheme.bodyMedium,
+            border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius:
+                  BorderRadius.circular(12.0 * getResponsive(context)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.0),
+              borderSide: BorderSide.none,
+            ),
+            filled: true,
+            fillColor: AppColors.lightSurface,
+            suffixIcon: _buildSuffixIcon(),
+          ),
+          validator: widget.validator,
         ),
-        filled: true,
-        fillColor: AppColors.lightSurface,
-        suffixIcon: widget.fieldType == FieldType.password
-            ? IconButton(
-                icon: Icon(
-                  _obscureText ? Icons.visibility_off : Icons.visibility,
-                  color: AppColors.lightIcon,
-                ),
-                onPressed: () {
-                  setState(() {
-                    _obscureText = !_obscureText;
-                  });
-                },
-              )
-            : null,
       ),
-      validator: widget.validator,
     );
+
   }
 
   TextInputType _getKeyboardType() {
@@ -71,6 +87,29 @@ class _CustomTextFieldState extends State<CustomTextField> {
         return TextInputType.name;
       case FieldType.password:
         return TextInputType.visiblePassword;
+      case FieldType.description:
+        return TextInputType.multiline; // 🔹 For multiline description
+    }
+  }
+
+  Widget? _buildSuffixIcon() {
+    if (widget.fieldType == FieldType.password) {
+      return IconButton(
+        icon: Icon(
+          _obscureText ? Icons.visibility_off : Icons.visibility,
+          color: AppColors.lightIcon,
+        ),
+        onPressed: () {
+          setState(() {
+            _obscureText = !_obscureText;
+          });
+        },
+      );
+    } else if (widget.suffixIcon != null) {
+      // 💡 You can optionally pass a suffixIcon from the widget
+      return Icon(widget.suffixIcon, color: AppColors.lightIcon);
+    } else {
+      return null;
     }
   }
 }
