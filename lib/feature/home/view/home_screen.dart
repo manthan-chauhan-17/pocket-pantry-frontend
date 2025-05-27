@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
           'Pocket Pantry',
           style: AppTextTheme.getLightTextTheme(context).headlineLarge,
         ),
-        backgroundColor: AppColors.lightSurface,
+        // backgroundColor: AppColors.lightSurface,
         elevation: 2,
       ),
       floatingActionButton: FloatingActionButton(

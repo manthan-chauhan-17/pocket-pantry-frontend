@@ -80,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text(
                     'Pocket Pantry',
                     style: textTheme.displayLarge?.copyWith(
-                      color: AppColors.primary,
+                      color: AppColors.lightPrimaryGreen,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -133,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           SnackBar(
                             content: Text('Logging in...',
                                 style: textTheme.bodyMedium),
-                            backgroundColor: AppColors.success,
+                            // backgroundColor: AppColors.success,
                           ),
                         );
 
@@ -145,16 +145,19 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      foregroundColor: AppColors.lightSurface,
+                      backgroundColor: AppColors.lightPrimaryGreen,
+                      // foregroundColor: AppColors.lightSurface,
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                     ),
-                    child: Text('Login',
-                        style: textTheme.labelLarge
-                            ?.copyWith(color: AppColors.lightSurface)),
+                    child: Text(
+                      'Login',
+                      style: textTheme.labelLarge?.copyWith(
+                          // color: AppColors.lightSurface,
+                          ),
+                    ),
                   ),
                   const SizedBox(height: 16.0),
                   // Navigate to Register
@@ -168,8 +171,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     child: Text(
                       'Don\'t have an account? Register',
-                      style: textTheme.bodyMedium
-                          ?.copyWith(color: AppColors.accent),
+                      style: textTheme.bodyMedium?.copyWith(
+                          // color: AppColors.accent,
+                          ),
                     ),
                   ),
                 ],

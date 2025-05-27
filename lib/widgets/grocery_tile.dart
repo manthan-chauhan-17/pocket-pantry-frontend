@@ -25,7 +25,7 @@ class GroceryTile extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      color: AppColors.lightSurface,
+      // color: AppColors.lightSurface,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,7 +41,7 @@ class GroceryTile extends StatelessWidget {
                   return const Center(
                     child: Icon(
                       Icons.broken_image,
-                      color: AppColors.lightIcon,
+                      // color: AppColors.lightIcon,
                       size: 40,
                     ),
                   );
@@ -57,21 +57,21 @@ class GroceryTile extends StatelessWidget {
                 Text(
                   title,
                   style: textTheme.titleLarge?.copyWith(
-                    color: AppColors.primary,
+                    color: AppColors.lightPrimaryGreen,
                   ),
                 ),
                 if (expires.isNotEmpty)
                   Text(
                     'Expires: $expires',
                     style: textTheme.labelLarge?.copyWith(
-                      color: AppColors.lightText.withOpacity(0.7),
+                      // color: AppColors.lightText.withOpacity(0.7),
                     ),
                   ),
                 if (category.isNotEmpty)
                   Text(
                     category,
                     style: textTheme.labelLarge?.copyWith(
-                      color: AppColors.primary,
+                      color: AppColors.lightPrimaryGreen,
                     ),
                   ),
               ],
