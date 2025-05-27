@@ -1,6 +1,6 @@
 import 'dart:developer';
-import 'package:pocket_pantry_frontend/models/item_model.dart';
-import 'package:pocket_pantry_frontend/models/user_model.dart';
+import 'package:pocket_pantry_frontend/feature/home/models/item_model.dart';
+import 'package:pocket_pantry_frontend/feature/auth/models/user_model.dart';
 import 'package:pocket_pantry_frontend/services/api_service/retorfit/injection.dart';
 import 'package:pocket_pantry_frontend/services/storage_service/my_shared_preference.dart';
 

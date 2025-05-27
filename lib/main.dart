@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:pocket_pantry_frontend/bloc/auth_bloc/auth_bloc.dart';
-import 'package:pocket_pantry_frontend/bloc/item_bloc/item_bloc.dart';
-import 'package:pocket_pantry_frontend/screens/auth_screen/register_screen.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:pocket_pantry_frontend/feature/auth/bloc/auth_bloc.dart';
+import 'package:pocket_pantry_frontend/feature/home/bloc/item_bloc/item_bloc.dart';
+import 'package:pocket_pantry_frontend/feature/auth/view/register_screen.dart';
 import 'package:pocket_pantry_frontend/services/api_service/api/api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   Api.checkHealthApi();
+  Hive.initFlutter();
   runApp(const MyApp());
 }
 

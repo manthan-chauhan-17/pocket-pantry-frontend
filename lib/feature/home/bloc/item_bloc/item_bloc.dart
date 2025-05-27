@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:pocket_pantry_frontend/bloc/item_bloc/item_event.dart';
-import 'package:pocket_pantry_frontend/bloc/item_bloc/item_state.dart';
-import 'package:pocket_pantry_frontend/models/item_model.dart';
+import 'package:pocket_pantry_frontend/feature/home/bloc/item_bloc/item_event.dart';
+import 'package:pocket_pantry_frontend/feature/home/bloc/item_bloc/item_state.dart';
+import 'package:pocket_pantry_frontend/feature/home/models/item_model.dart';
 import 'package:pocket_pantry_frontend/services/api_service/api/api.dart';
 
 class ItemBloc extends Bloc<ItemEvent, ItemState> {
