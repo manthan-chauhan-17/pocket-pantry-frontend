@@ -26,7 +26,6 @@ class GroceryTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       color: AppColors.lightSurface,
-      shadowColor: AppColors.shadow,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -39,14 +38,11 @@ class GroceryTile extends StatelessWidget {
                 fit: BoxFit.cover,
                 width: double.infinity,
                 errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: AppColors.divider,
-                    child: const Center(
-                      child: Icon(
-                        Icons.broken_image,
-                        color: AppColors.lightIcon,
-                        size: 40,
-                      ),
+                  return const Center(
+                    child: Icon(
+                      Icons.broken_image,
+                      color: AppColors.lightIcon,
+                      size: 40,
                     ),
                   );
                 },

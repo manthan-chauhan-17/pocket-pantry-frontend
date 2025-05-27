@@ -38,7 +38,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
         labelStyle: textTheme.bodyMedium,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
-          borderSide: BorderSide(color: AppColors.divider),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
