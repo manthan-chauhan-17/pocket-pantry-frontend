@@ -45,6 +45,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0 *  getResponsive(context)),
         ),
+
         child: TextFormField(
           controller: widget.controller,
           textAlign: TextAlign.start,
@@ -74,6 +75,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           ),
           validator: widget.validator,
         ),
+
       ),
     );
 
