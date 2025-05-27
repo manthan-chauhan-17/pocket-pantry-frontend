@@ -39,7 +39,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
         backgroundColor: AppColors.lightBackground,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: AppColors.lightIcon),
+          icon: Icon(
+            Icons.arrow_back,
+            // color: AppColors.lightIcon,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -91,7 +94,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Text(
                     'Join Pocket Pantry',
                     style: textTheme.displayLarge?.copyWith(
-                      color: AppColors.primary,
+                      color: AppColors.lightPrimaryGreen,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -162,8 +165,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      foregroundColor: AppColors.lightSurface,
+                      backgroundColor: AppColors.lightPrimaryGreen,
+                      // foregroundColor: AppColors.lightSurface,
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),
@@ -173,9 +176,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ? Center(
                             child: CircularProgressIndicator(),
                           )
-                        : Text('Register',
-                            style: textTheme.labelLarge
-                                ?.copyWith(color: AppColors.lightSurface)),
+                        : Text(
+                            'Register',
+                            style: textTheme.labelLarge?.copyWith(
+                                // color: AppColors.lightSurface,
+                                ),
+                          ),
                   ),
                   const SizedBox(height: 16.0),
                   // Navigate to Login
@@ -190,8 +196,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     },
                     child: Text(
                       'Already have an account? Login',
-                      style: textTheme.bodyMedium
-                          ?.copyWith(color: AppColors.accent),
+                      style: textTheme.bodyMedium?.copyWith(
+                          // color: AppColors.accent,
+                          ),
                     ),
                   ),
                 ],

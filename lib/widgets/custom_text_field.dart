@@ -41,15 +41,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
-          borderSide: BorderSide(color: AppColors.primary),
+          borderSide: BorderSide(color: AppColors.lightPrimaryGreen),
         ),
         filled: true,
-        fillColor: AppColors.lightSurface,
+        // fillColor: AppColors.lightSurface,
         suffixIcon: widget.fieldType == FieldType.password
             ? IconButton(
                 icon: Icon(
                   _obscureText ? Icons.visibility_off : Icons.visibility,
-                  color: AppColors.lightIcon,
+                  // color: AppColors.lightIcon,
                 ),
                 onPressed: () {
                   setState(() {
