@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:pocket_pantry_frontend/models/item_model.dart';
-import 'package:pocket_pantry_frontend/models/user_model.dart';
+import 'package:pocket_pantry_frontend/feature/home/models/item_model.dart';
+import 'package:pocket_pantry_frontend/feature/auth/models/user_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'rest_client.g.dart';

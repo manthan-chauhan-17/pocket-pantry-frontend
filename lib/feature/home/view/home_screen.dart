@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pocket_pantry_frontend/bloc/item_bloc/item_bloc.dart';
-import 'package:pocket_pantry_frontend/bloc/item_bloc/item_event.dart';
-import 'package:pocket_pantry_frontend/bloc/item_bloc/item_state.dart';
+import 'package:pocket_pantry_frontend/feature/home/bloc/item_bloc/item_bloc.dart';
+import 'package:pocket_pantry_frontend/feature/home/bloc/item_bloc/item_event.dart';
+import 'package:pocket_pantry_frontend/feature/home/bloc/item_bloc/item_state.dart';
 import 'package:pocket_pantry_frontend/typography.dart';
 import 'package:pocket_pantry_frontend/colors.dart';
 import 'package:pocket_pantry_frontend/widgets/grocery_tile.dart';

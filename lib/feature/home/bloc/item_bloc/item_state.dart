@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:pocket_pantry_frontend/models/item_model.dart';
+import 'package:pocket_pantry_frontend/feature/home/models/item_model.dart';
 
 class ItemState extends Equatable {
   @override

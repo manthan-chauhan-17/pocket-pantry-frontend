@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:pocket_pantry_frontend/bloc/auth_bloc/auth_event.dart';
-import 'package:pocket_pantry_frontend/bloc/auth_bloc/auth_state.dart';
-import 'package:pocket_pantry_frontend/models/user_model.dart';
+import 'package:pocket_pantry_frontend/feature/auth/bloc/auth_event.dart';
+import 'package:pocket_pantry_frontend/feature/auth/bloc/auth_state.dart';
+import 'package:pocket_pantry_frontend/feature/auth/models/user_model.dart';
 import 'package:pocket_pantry_frontend/services/api_service/api/api.dart';
 import 'package:pocket_pantry_frontend/services/storage_service/my_shared_preference.dart';
 

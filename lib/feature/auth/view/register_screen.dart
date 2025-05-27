@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pocket_pantry_frontend/bloc/auth_bloc/auth_bloc.dart';
-import 'package:pocket_pantry_frontend/bloc/auth_bloc/auth_event.dart';
-import 'package:pocket_pantry_frontend/bloc/auth_bloc/auth_state.dart';
+import 'package:pocket_pantry_frontend/feature/auth/bloc/auth_bloc.dart';
+import 'package:pocket_pantry_frontend/feature/auth/bloc/auth_event.dart';
+import 'package:pocket_pantry_frontend/feature/auth/bloc/auth_state.dart';
 import 'package:pocket_pantry_frontend/colors.dart';
-import 'package:pocket_pantry_frontend/screens/auth_screen/login_screen.dart';
-import 'package:pocket_pantry_frontend/screens/home_screen/home_screen.dart';
+import 'package:pocket_pantry_frontend/feature/auth/view/login_screen.dart';
+import 'package:pocket_pantry_frontend/feature/home/view/home_screen.dart';
 import 'package:pocket_pantry_frontend/widgets/custom_text_field.dart';
 
 class RegisterScreen extends StatefulWidget {
