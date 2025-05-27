@@ -6,6 +6,7 @@ import 'package:pocket_pantry_frontend/feature/auth/bloc/auth_state.dart';
 import 'package:pocket_pantry_frontend/colors.dart';
 import 'package:pocket_pantry_frontend/feature/auth/view/register_screen.dart';
 import 'package:pocket_pantry_frontend/feature/home/view/home_screen.dart';
+import 'package:pocket_pantry_frontend/responsive.dart';
 import 'package:pocket_pantry_frontend/widgets/custom_text_field.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -33,6 +34,16 @@ class _LoginScreenState extends State<LoginScreen> {
     // final isDark = false; // make it toggle with bloc in future
 
     return Scaffold(
+      backgroundColor: AppColors.lightBackground,
+      appBar: AppBar(
+        backgroundColor: AppColors.lightBackground,
+        title: Text(
+          "Login",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+      ),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthLoginErrorState) {
@@ -67,113 +78,145 @@ class _LoginScreenState extends State<LoginScreen> {
               child: CircularProgressIndicator(),
             );
           }
-          return Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
+          return Container(
+            height: 0.9 * getHeight(context),
+            padding: EdgeInsets.symmetric(
+              horizontal: 16 * getResponsive(context),
+              vertical: 20 * getResponsive(context),
+            ),
             child: Form(
               key: _formKey,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // App Logo or Title
-                  Text(
-                    'Pocket Pantry',
-                    style: textTheme.displayLarge?.copyWith(
-                      color: AppColors.lightPrimaryGreen,
+                  Container(
+                    padding: EdgeInsets.only(
+                      left: 25 * getResponsive(context),
                     ),
-                    textAlign: TextAlign.center,
+                    child: Text(
+                      "Welcome Back",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25 * getResponsive(context),
+                      ),
+                    ),
                   ),
-                  const SizedBox(height: 8.0),
-                  Text(
-                    'Welcome back to your pantry!',
-                    style: textTheme.bodyMedium,
-                    textAlign: TextAlign.center,
+                  SizedBox(
+                    height: 0.04 * getHeight(context),
                   ),
-                  const SizedBox(height: 32.0),
-                  // Email Field
+                  Container(
+                    padding: EdgeInsets.only(
+                      left: 25 * getResponsive(context),
+                    ),
+                    child: Text(
+                      "Email",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
                   CustomTextField(
-                    controller: _emailController,
-                    fieldType: FieldType.email,
-                    labelText: "Email",
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
-                      }
-                      if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                          .hasMatch(value)) {
-                        return 'Please enter a valid email';
-                      }
-                      return null;
-                    },
+                      controller: _emailController,
+                      fieldType: FieldType.email,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your email';
+                        }
+                        // Add more email validation if needed
+                        return null;
+                      },
+                      hintText: 'Enter your email'),
+                  SizedBox(
+                    height: 0.02 * getHeight(context),
                   ),
-                  const SizedBox(height: 16.0),
-                  // Password Field
+                  Container(
+                    padding: EdgeInsets.only(
+                      left: 25 * getResponsive(context),
+                    ),
+                    child: Text(
+                      "Password",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
                   CustomTextField(
                     controller: _passwordController,
                     fieldType: FieldType.password,
-                    labelText: "Password",
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your password';
                       }
-                      if (value.length < 6) {
-                        return 'Password must be at least 6 characters';
-                      }
+                      // Add more password validation if needed
                       return null;
                     },
+                    hintText: 'Enter your password',
+                    maxlines: 1,
                   ),
-                  const SizedBox(height: 24.0),
-                  // Login Button
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        // Handle login logic here
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Logging in...',
-                                style: textTheme.bodyMedium),
-                            // backgroundColor: AppColors.success,
-                          ),
-                        );
-
-                        context.read<AuthBloc>().add(
-                              AuthLoginEvent(
-                                  email: _emailController.text,
-                                  password: _passwordController.text),
+                  Container(
+                    padding: EdgeInsets.only(left: 22 * getResponsive(context)),
+                    child: Text('Forgot Password?',
+                        style: TextStyle(
+                          color: AppColors.greenText,
+                          fontWeight: FontWeight.w500,
+                        )),
+                  ),
+                  SizedBox(
+                    height: 0.08 * getHeight(context),
+                  ),
+                  Center(
+                    child: SizedBox(
+                      width: 0.87 * getWidth(context),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            // Handle login logic here
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Logging in...',
+                                    style: textTheme.bodyMedium),
+                                // backgroundColor: AppColors.success,
+                              ),
                             );
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.lightPrimaryGreen,
-                      // foregroundColor: AppColors.lightSurface,
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
+
+                            context.read<AuthBloc>().add(
+                                  AuthLoginEvent(
+                                      email: _emailController.text,
+                                      password: _passwordController.text),
+                                );
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.lightPrimaryGreen,
+                          // foregroundColor: AppColors.lightSurface,
+                          padding: const EdgeInsets.symmetric(vertical: 16.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                        ),
+                        child: Text(
+                          'Login',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.black),
+                        ),
                       ),
                     ),
-                    child: Text(
-                      'Login',
-                      style: textTheme.labelLarge?.copyWith(
-                          // color: AppColors.lightSurface,
-                          ),
-                    ),
                   ),
-                  const SizedBox(height: 16.0),
+                  Spacer(),
                   // Navigate to Register
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const RegisterScreen()),
-                      );
-                    },
-                    child: Text(
-                      'Don\'t have an account? Register',
-                      style: textTheme.bodyMedium?.copyWith(
-                          // color: AppColors.accent,
-                          ),
+                  Center(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const RegisterScreen()),
+                        );
+                      },
+                      child: Text(
+                        'Don\'t have an account? Register',
+                        style: TextStyle(color: AppColors.greenText),
+                      ),
                     ),
                   ),
                 ],

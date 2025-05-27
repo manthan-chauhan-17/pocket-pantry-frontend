@@ -84,7 +84,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   decoration: InputDecoration(
                     hintText: selectedItem ?? 'Select Category',
                     filled: true,
-                    fillColor: AppColors.lightSurface,
+                    fillColor: AppColors.greenTextField,
                     contentPadding: EdgeInsets.all(16 * getResponsive(context)),
                     border: OutlineInputBorder(
                       borderRadius:
@@ -92,7 +92,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       borderSide: BorderSide.none,
                     ),
                   ),
-                  dropdownColor: AppColors.lightSurface,
+                  dropdownColor: AppColors.greenTextField,
                 ),
               ),
               SizedBox(
@@ -110,7 +110,6 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   return null;
                 },
               ),
-              
             ],
           );
         },
