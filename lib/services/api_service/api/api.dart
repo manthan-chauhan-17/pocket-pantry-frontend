@@ -1,4 +1,6 @@
 import 'dart:developer';
+import 'dart:io';
+
 import 'package:pocket_pantry_frontend/feature/home/models/item_model.dart';
 import 'package:pocket_pantry_frontend/feature/auth/models/user_model.dart';
 import 'package:pocket_pantry_frontend/services/api_service/retorfit/injection.dart';
@@ -58,5 +60,17 @@ class Api {
       log(e.toString(), name: "Error in get items");
       rethrow;
     }
+  }
+
+  static uploadItemWithImage(String name, String description, String expireDate,
+      String category, String expiredate, File imageFile) async {
+    String token = await MySharedPreference.getToken();
+    return await restClient.addItem(token,
+        imageFile, name, description, category, expiredate).then((value) {
+      log('Item added successfully: $value', name: 'ApiService');
+        },onError: (error) {
+      log('Error in adding item: $error', name: 'ApiService');
+      throw error;
+    });
   }
 }

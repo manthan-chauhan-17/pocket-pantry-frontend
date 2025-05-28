@@ -13,6 +13,7 @@ class CustomTextField extends StatefulWidget {
   final int? line;
   final String? hintText;
   final TextInputType? keyboardType;
+  final VoidCallback? onTap;
 
   const CustomTextField(
       {super.key,
@@ -24,7 +25,7 @@ class CustomTextField extends StatefulWidget {
       this.line,
       this.keyboardType,
       this.hintText,
-      
+      this.onTap,
       });
 
   @override
@@ -46,6 +47,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           borderRadius: BorderRadius.circular(12.0 *  getResponsive(context)),
         ),
         child: TextFormField(
+          onTap: widget.onTap,
           controller: widget.controller,
           textAlign: TextAlign.start,
           textAlignVertical:
@@ -69,7 +71,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               borderSide: BorderSide.none,
             ),
             filled: true,
-            fillColor: AppColors.lightSurface,
+            fillColor: AppColors.greenTextField,
             suffixIcon: _buildSuffixIcon(),
           ),
           validator: widget.validator,
@@ -97,7 +99,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       return IconButton(
         icon: Icon(
           _obscureText ? Icons.visibility_off : Icons.visibility,
-          color: AppColors.lightIcon,
+          color: AppColors.greenTextField,
         ),
         onPressed: () {
           setState(() {
@@ -107,7 +109,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       );
     } else if (widget.suffixIcon != null) {
       // 💡 You can optionally pass a suffixIcon from the widget
-      return Icon(widget.suffixIcon, color: AppColors.lightIcon);
+      return Icon(widget.suffixIcon, color: AppColors.greenTextField);
     } else {
       return null;
     }

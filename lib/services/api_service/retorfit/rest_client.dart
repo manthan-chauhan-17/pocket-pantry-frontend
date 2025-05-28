@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:pocket_pantry_frontend/feature/home/models/item_model.dart';
 import 'package:pocket_pantry_frontend/feature/auth/models/user_model.dart';
@@ -21,5 +23,16 @@ abstract class RestClient {
   @GET('item/get-items')
   Future<ItemModel> getItems(
     @Header('Authorization') String token,
+  );
+
+  @POST('api/v1/item/add-item')
+  @MultiPart()
+  Future<dynamic> addItem(
+    @Header('Authorization') String token,
+    @Part(name: 'image') File imageFile,
+    @Part(name: 'name') String name,
+    @Part(name: 'description') String description,
+    @Part(name: 'category') String category,
+    @Part(name: 'expiredate') String expiredate,
   );
 }

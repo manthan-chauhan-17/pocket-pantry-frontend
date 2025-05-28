@@ -1,8 +1,14 @@
 
 import 'package:equatable/equatable.dart';
+import 'package:image_picker/image_picker.dart';
 
 abstract class DropDownEvent extends Equatable {
    @override
+  List<Object?> get props => [];
+}
+
+abstract class ImagePickerEvent extends Equatable{
+  @override
   List<Object?> get props => [];
 }
 
@@ -15,4 +21,29 @@ class GetDropDownItemsEvent extends DropDownEvent{
   @override
   List<Object?> get props => [item];
 
+}
+
+class PickImageEvent extends ImagePickerEvent{
+  final ImageSource source;
+
+  PickImageEvent({required this.source});
+
+  @override
+  List<Object?> get props => [source];
+}
+
+class UploadImageEvent extends ImagePickerEvent {
+  final String name;
+  final String description;
+  final String category;
+  final String expiredate;
+  final String token;
+
+  UploadImageEvent({
+    required this.name,
+    required this.description,
+    required this.category,
+    required this.expiredate,
+    required this.token,
+  });
 }
