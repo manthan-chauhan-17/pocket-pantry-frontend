@@ -56,10 +56,8 @@ class _SplashScreenState extends State<SplashScreen>
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(
-                height: 0.03 * getHeight(context),
-              ),
               Text(
                 "PantryPal",
                 style: TextStyle(
@@ -69,14 +67,11 @@ class _SplashScreenState extends State<SplashScreen>
                 ),
               ),
               SizedBox(
-                height: 0.02 * getHeight(context),
+                height: 0.015 * getHeight(context),
               ),
               Text(
                 "Welcome to PantryPal",
                 style: AppTextTheme.getLightTextTheme(context).displayLarge,
-              ),
-              SizedBox(
-                height: 0.005 * getHeight(context),
               ),
               Text(
                 "Your smart pantry assistant for managing your food inventory and reducing waste",
@@ -84,7 +79,7 @@ class _SplashScreenState extends State<SplashScreen>
                 textAlign: TextAlign.center,
               ),
               SizedBox(
-                height: 0.04 * getHeight(context),
+                height: 0.035 * getHeight(context),
               ),
               ClipRRect(
                 borderRadius: BorderRadius.circular(
@@ -93,13 +88,11 @@ class _SplashScreenState extends State<SplashScreen>
                 child: Image.asset(
                   'assets/images/splash_image.png',
                   fit: BoxFit.cover,
-                  // width: 0.9 * getWidth(context),
-                  height: 0.6 * getHeight(context),
+                  width: 0.9 * getWidth(context),
+                  height: 0.55 * getHeight(context),
                 ),
               ),
-              SizedBox(
-                height: 0.03 * getHeight(context),
-              ),
+              Spacer(),
               Padding(
                 padding: EdgeInsets.only(right: 0.3 * getHeight(context)),
                 child: Text(
@@ -111,7 +104,7 @@ class _SplashScreenState extends State<SplashScreen>
                 ),
               ),
               SizedBox(
-                height: 0.01 * getHeight(context),
+                height: 0.005 * getHeight(context),
               ),
               SizedBox(
                 height: 0.009 * getHeight(context),
@@ -141,6 +134,9 @@ class _SplashScreenState extends State<SplashScreen>
               Text(
                 "version 1.0.0",
                 style: TextStyle(color: AppColors.greenText),
+              ),
+              SizedBox(
+                height: 0.01 * getHeight(context),
               ),
             ],
           ),
