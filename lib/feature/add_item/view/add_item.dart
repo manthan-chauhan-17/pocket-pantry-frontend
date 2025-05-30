@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -34,6 +36,18 @@ class _AddItemScreenState extends State<AddItemScreen> {
     "Frozen",
     "Others",
   ];
+
+  var token;
+  getToken() async {
+    token = await MySharedPreference.getToken();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getToken();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,6 +150,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
 
                 ///image container
                 ImagePickedBox(),
+
                 SizedBox(
                   height: 0.008 * getHeight(context),
                 ),
@@ -187,17 +202,23 @@ class _AddItemScreenState extends State<AddItemScreen> {
                             ),
                           ),
                         ),
-                        onPressed: () async {
-                          var token = await MySharedPreference.getToken();
-                          context.read<ImagePickerBloc>().add(
-                                UploadImageEvent(
-                                  name: itemNameController.text,
-                                  description: descriptionController.text,
-                                  category: selectedItem ?? '',
-                                  expiredate: expireDateController.text,
-                                  token: token,
-                                ),
-                              );
+                        onPressed: () {
+                          // context.read<ImagePickerBloc>().add(
+                          //       UploadImageEvent(
+                          //         name: itemNameController.text,
+                          //         description: descriptionController.text,
+                          //         category: selectedItem ?? '',
+                          //         expiredate: expireDateController.text,
+                          //         token: token,
+                          //       ),
+                          //     );
+
+                          context.read<ImagePickerBloc>().add(UploadImageEvent(
+                                category: selectedItem ?? '',
+                                description: descriptionController.text,
+                                expireDate: expireDateController.text,
+                                name: itemNameController.text,
+                              ));
                         },
                         child: Text(
                           "Add Item",

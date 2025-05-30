@@ -1,8 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:pocket_pantry_frontend/colors.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
 
-enum FieldType { name, email, password , description}
+enum FieldType { name, email, password, description }
 
 class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -13,20 +15,21 @@ class CustomTextField extends StatefulWidget {
   final int? line;
   final String? hintText;
   final TextInputType? keyboardType;
+  final int? maxlines;
   final VoidCallback? onTap;
 
-  const CustomTextField(
-      {super.key,
-      required this.controller,
-      required this.fieldType,
-      this.labelText,
-      required this.validator,
-      this.suffixIcon,
-      this.line,
-      this.keyboardType,
-      this.hintText,
-      this.onTap,
-      });
+  const CustomTextField({
+    super.key,
+    required this.controller,
+    required this.fieldType,
+    this.labelText,
+    required this.validator,
+    this.suffixIcon,
+    this.line,
+    this.keyboardType,
+    this.hintText,
+    this.maxlines,this.onTap,
+  });
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -41,10 +44,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
     // final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Padding(
-      padding: EdgeInsets.all(15 * getResponsive(context)),
+      padding: EdgeInsets.all(12 * getResponsive(context)),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0 *  getResponsive(context)),
+          borderRadius: BorderRadius.circular(12.0 * getResponsive(context)),
         ),
         child: TextFormField(
           onTap: widget.onTap,
@@ -53,9 +56,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
           textAlignVertical:
               TextAlignVertical.top, // 🔹 Start text from the top vertically
           keyboardType: _getKeyboardType(), // 🔹 Allow multiline input
-          maxLines: null, // 🔹 Unlimited lines
-          minLines: widget.line ?? 1, // 🔹 Field height - start with 5 lines worth of space
-          
+          maxLines: widget.maxlines, // 🔹 Unlimited lines
+          minLines: widget.line ??
+              1, // 🔹 Field height - start with 5 lines worth of space
+
           obscureText: widget.fieldType == FieldType.password && _obscureText,
           decoration: InputDecoration(
             hintText: widget.hintText ?? "",
@@ -78,10 +82,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ),
       ),
     );
-
   }
 
   TextInputType _getKeyboardType() {
+    log("Field Type: ${widget.fieldType}");
     switch (widget.fieldType) {
       case FieldType.email:
         return TextInputType.emailAddress;
@@ -99,7 +103,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       return IconButton(
         icon: Icon(
           _obscureText ? Icons.visibility_off : Icons.visibility,
-          color: AppColors.greenTextField,
+          color: AppColors.darkPrimary,
         ),
         onPressed: () {
           setState(() {

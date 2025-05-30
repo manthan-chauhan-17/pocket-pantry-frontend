@@ -12,10 +12,8 @@ import 'package:pocket_pantry_frontend/responsive.dart';
 
 // ignore: must_be_immutable
 class ImagePickedBox extends StatelessWidget {
-     File? imageFile;
-  ImagePickedBox({super.key,this.imageFile});
-
- 
+  File? imageFile;
+  ImagePickedBox({super.key, this.imageFile});
 
   @override
   Widget build(BuildContext context) {

@@ -62,7 +62,7 @@ class Api {
     }
   }
 
-  static uploadItemWithImage(String name, String description, String expireDate,
+  static uploadItemWithImage(String name, String description, 
       String category, String expiredate, File imageFile) async {
     String token = await MySharedPreference.getToken();
     return await restClient.addItem(token,

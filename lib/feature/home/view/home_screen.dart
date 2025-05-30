@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pocket_pantry_frontend/feature/add_item/view/add_item.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/item_bloc/item_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/item_bloc/item_event.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/item_bloc/item_state.dart';
@@ -33,7 +34,9 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 2,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AddItemScreen(),));
+        },
         child: Icon(
           Icons.add,
         ),

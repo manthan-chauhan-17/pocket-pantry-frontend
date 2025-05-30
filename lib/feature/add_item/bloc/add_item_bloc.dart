@@ -1,12 +1,12 @@
+import 'dart:developer';
 import 'dart:io';
-import 'dart:math';
 
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pocket_pantry_frontend/feature/add_item/bloc/add_item_event.dart';
 import 'package:pocket_pantry_frontend/feature/add_item/bloc/add_item_state.dart';
 import 'package:pocket_pantry_frontend/services/api_service/api/api.dart';
+
 
 class DropDownBloc extends Bloc<DropDownEvent, DropDownState> {
   DropDownBloc() : super(DropDownInitialState()) {
@@ -18,48 +18,36 @@ class DropDownBloc extends Bloc<DropDownEvent, DropDownState> {
 }
 
 class ImagePickerBloc extends Bloc<ImagePickerEvent, ImagePickState> {
-  XFile? pickedImage;
   final ImagePicker _picker = ImagePicker();
+   XFile? selectedImage;
   ImagePickerBloc() : super(ImageInitialState()) {
     on<PickImageEvent>(selectImage);
+    on<UploadImageEvent>(uploadImage);
   }
   selectImage(PickImageEvent event, Emitter<ImagePickState> emit) async {
     if (event.source != null) {
-      final XFile? image = await _picker.pickImage(source: event.source);
+      final XFile? image = await _picker.pickImage(source: event.source!);
       if (image != null) {
-        pickedImage = image;
-
+        selectedImage = image;  
         emit(ImagePickedState(imagePath: image.path));
       }
     }
   }
-}
 
-Future<void> _onUploadImage(UploadImageEvent event,
-    Emitter<ImagePickState> emit, XFile? pickedImage) async {
-  if (pickedImage == null) {
-    emit(UploadErrorState('No image selected'));
-    return;
-  }
+  uploadImage(UploadImageEvent event, Emitter<ImagePickState> emit) async {
+    if(selectedImage == null){
+      emit(UploadErrorState("Upload Image"));
+      return;
+    }
 
-  try {
     emit(UploadLoadingState());
-
-    final file = await File.fromRawPath(
-      await pickedImage!.readAsBytes(),
-    );
-
-    await Api.uploadItemWithImage(
-      event.token,
-      event.expiredate,
-      event.name,
-      event.description,
-      event.category,
-      file,
-    );
-
-    emit(UploadSuccessState());
-  } catch (e) {
-    emit(UploadErrorState(e.toString()));
+    try {
+      log("message",name: 'IMAGE EVENT');
+      await Api.uploadItemWithImage(event.expireDate, event.name,
+          event.description, event.category,File(selectedImage!.path));
+      emit(UploadSuccessState());
+    } catch (e) {
+      emit(UploadErrorState(e.toString()));
+    }
   }
 }

@@ -44,11 +44,13 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Pocket Pantry',
+
+
         theme: ThemeData(
           textTheme: GoogleFonts.poppinsTextTheme(),
         ),
-        home: LoginScreen(),
-        
+        home: AddItemScreen(),
+
       ),
     );
   }
