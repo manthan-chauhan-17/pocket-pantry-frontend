@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pocket_pantry_frontend/colors.dart';
 import 'package:pocket_pantry_frontend/feature/auth/view/register_screen.dart';
 import 'package:pocket_pantry_frontend/feature/splash/bloc/splash_bloc.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
@@ -50,16 +49,14 @@ class _SplashScreenState extends State<SplashScreen>
       },
       child: SafeArea(
         child: Scaffold(
-            body: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 25.0 * getResponsive(contex)
-          child: SingleChildScrollView(
+          body: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 25.0 * getResponsive(context),
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                SizedBox(
-                  height: 0.03 * getHeight(context),
-                ),
                 Text(
                   "PantryPal",
                   style: TextStyle(
@@ -69,14 +66,11 @@ class _SplashScreenState extends State<SplashScreen>
                   ),
                 ),
                 SizedBox(
-                  height: 0.02 * getHeight(context),
+                  height: 0.015 * getHeight(context),
                 ),
                 Text(
                   "Welcome to PantryPal",
                   style: AppTextTheme.getLightTextTheme(context).displayLarge,
-                ),
-                SizedBox(
-                  height: 0.005 * getHeight(context),
                 ),
                 Text(
                   "Your smart pantry assistant for managing your food inventory and reducing waste",
@@ -84,7 +78,7 @@ class _SplashScreenState extends State<SplashScreen>
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(
-                  height: 0.04 * getHeight(context),
+                  height: 0.035 * getHeight(context),
                 ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(
@@ -93,59 +87,24 @@ class _SplashScreenState extends State<SplashScreen>
                   child: Image.asset(
                     'assets/images/splash_image.png',
                     fit: BoxFit.cover,
-                    // width: 0.9 * getWidth(context),
-                    height: 0.6 * getHeight(context),
-=======
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                "PantryPal",
-                style: TextStyle(
-                  fontSize: 25 * getResponsiveText(context),
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              SizedBox(
-                height: 0.015 * getHeight(context),
-              ),
-              Text(
-                "Welcome to PantryPal",
-                style: AppTextTheme.getLightTextTheme(context).displayLarge,
-              ),
-              Text(
-                "Your smart pantry assistant for managing your food inventory and reducing waste",
-                style: AppTextTheme.getLightTextTheme(context).titleMedium,
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: 0.035 * getHeight(context),
-              ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(
-                  20 * getResponsive(context),
-                ),
-                child: Image.asset(
-                  'assets/images/splash_image.png',
-                  fit: BoxFit.cover,
-                  width: 0.9 * getWidth(context),
-                  height: 0.55 * getHeight(context),
-                ),
-              ),
-              Spacer(),
-              Padding(
-                padding: EdgeInsets.only(right: 0.3 * getHeight(context)),
-                child: Text(
-                  "Loading...",
-                  style: TextStyle(
-                    fontSize: 20 * getResponsiveText(context),
+                    width: 0.9 * getWidth(context),
+                    height: 0.55 * getHeight(context),
                   ),
                 ),
-
+                Spacer(),
+                Padding(
+                  padding: EdgeInsets.only(right: 0.3 * getHeight(context)),
+                  child: Text(
+                    "Loading...",
+                    style: TextStyle(
+                      fontSize: 20 * getResponsiveText(context),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        )),
+        ),
       ),
     );
   }
