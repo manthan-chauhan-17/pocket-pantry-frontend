@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/services.dart';
 
 abstract class DropDownState extends Equatable {
   @override
@@ -20,13 +19,13 @@ class DropDownInitialState extends DropDownState {
   List<Object?> get props => [selectedItem];
 }
 
-class ImageInitialState extends ImagePickState{}
+class ImageInitialState extends ImagePickState {}
 
-class ImagePickedState extends ImagePickState{
+class ImagePickedState extends ImagePickState {
   final String imagePath;
 
   ImagePickedState({required this.imagePath});
-   
+
   @override
   List<Object?> get props => [imagePath];
 }

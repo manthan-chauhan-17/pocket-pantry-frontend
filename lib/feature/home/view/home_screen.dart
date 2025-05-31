@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/add_item/view/add_item.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/item_bloc/item_bloc.dart';
-import 'package:pocket_pantry_frontend/feature/home/bloc/item_bloc/item_event.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/item_bloc/item_state.dart';
-import 'package:pocket_pantry_frontend/responsive.dart';
-import 'package:pocket_pantry_frontend/typography.dart';
 import 'package:pocket_pantry_frontend/colors.dart';
 import 'package:pocket_pantry_frontend/widgets/grocery_tile.dart';
 
@@ -39,10 +36,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AddItemScreen(),));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddItemScreen(),
+              ));
         },
         child: Icon(
           Icons.add,
@@ -80,11 +80,6 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Text("No Data Found"),
           );
         },
-
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8.0 * getResponsive(context)),
-        child: Column(),
-
       ),
     );
   }
