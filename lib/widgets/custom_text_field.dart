@@ -16,6 +16,7 @@ class CustomTextField extends StatefulWidget {
   final String? hintText;
   final TextInputType? keyboardType;
   final int? maxlines;
+  final VoidCallback? onTap;
 
   const CustomTextField({
     super.key,
@@ -27,7 +28,7 @@ class CustomTextField extends StatefulWidget {
     this.line,
     this.keyboardType,
     this.hintText,
-    this.maxlines,
+    this.maxlines,this.onTap,
   });
 
   @override
@@ -49,6 +50,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           borderRadius: BorderRadius.circular(12.0 * getResponsive(context)),
         ),
         child: TextFormField(
+          onTap: widget.onTap,
           controller: widget.controller,
           textAlign: TextAlign.start,
           textAlignVertical:

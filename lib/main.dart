@@ -6,6 +6,7 @@ import 'package:pocket_pantry_frontend/feature/add_item/bloc/add_item_bloc.dart'
 
 import 'package:pocket_pantry_frontend/feature/add_item/view/add_item.dart';
 import 'package:pocket_pantry_frontend/feature/auth/bloc/auth_bloc.dart';
+import 'package:pocket_pantry_frontend/feature/auth/view/login_screen.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/item_bloc/item_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/auth/view/register_screen.dart';
 import 'package:pocket_pantry_frontend/feature/home/view/home_screen.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
           create: (context) => ItemBloc(),
         ),
         BlocProvider(create: (context) => DropDownBloc()),
+        BlocProvider(create: (context) => ImagePickerBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -43,7 +45,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           textTheme: GoogleFonts.poppinsTextTheme(),
         ),
+
         home: HomeScreen(),
+
       ),
     );
   }
