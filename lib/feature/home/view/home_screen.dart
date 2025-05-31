@@ -4,6 +4,7 @@ import 'package:pocket_pantry_frontend/feature/add_item/view/add_item.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/item_bloc/item_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/item_bloc/item_event.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/item_bloc/item_state.dart';
+import 'package:pocket_pantry_frontend/responsive.dart';
 import 'package:pocket_pantry_frontend/typography.dart';
 import 'package:pocket_pantry_frontend/colors.dart';
 import 'package:pocket_pantry_frontend/widgets/grocery_tile.dart';
@@ -19,20 +20,26 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<ItemBloc>().add(GetItemEvent());
+    // context.read<ItemBloc>().add(GetItemEvent());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Pocket Pantry',
-          style: AppTextTheme.getLightTextTheme(context).headlineLarge,
-        ),
-        // backgroundColor: AppColors.lightSurface,
-        elevation: 2,
+        title: Text("Pocket Pantry"),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.add,
+              color: AppColors.darkBackground,
+            ),
+          ),
+        ],
       ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) => AddItemScreen(),));
@@ -73,6 +80,11 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Text("No Data Found"),
           );
         },
+
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8.0 * getResponsive(context)),
+        child: Column(),
+
       ),
     );
   }
