@@ -4,8 +4,8 @@ import 'dart:developer' as dev;
 import 'package:pocket_pantry_frontend/services/api_service/retorfit/rest_client.dart';
 
 // Change the base URL to your server's IP address
-final restClient =
-    RestClient(baseUrl: "http://192.168.4.120:3000/api/v1/", dio);
+final restClient = RestClient(
+    baseUrl: "https://pocket-pantry-backend-dnce.onrender.com/api/v1/", dio);
 
 final dio = getDio();
 
@@ -13,9 +13,9 @@ Dio getDio() {
   BaseOptions options = BaseOptions(
     receiveDataWhenStatusError: true,
     contentType: "application/json",
-    sendTimeout: const Duration(seconds: 30),
-    connectTimeout: const Duration(seconds: 30),
-    receiveTimeout: const Duration(seconds: 30),
+    sendTimeout: const Duration(seconds: 60),
+    connectTimeout: const Duration(seconds: 60),
+    receiveTimeout: const Duration(seconds: 60),
   );
 
   Dio dio = Dio(options);
