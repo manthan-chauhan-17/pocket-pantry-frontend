@@ -4,8 +4,8 @@ import 'dart:developer' as dev;
 import 'package:pocket_pantry_frontend/services/api_service/retorfit/rest_client.dart';
 
 // Change the base URL to your server's IP address
-final restClient =
-    RestClient(baseUrl: "http://192.168.4.120:3000/api/v1/", dio);
+final restClient = RestClient(
+    baseUrl: "https://pocket-pantry-backend-dnce.onrender.com/api/v1/", dio);
 
 final dio = getDio();
 

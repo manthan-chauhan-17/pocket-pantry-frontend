@@ -19,7 +19,7 @@
 - **Language:** Dart
 - **State Management:** Bloc
 - **Networking:** `retrofit` / `dio`
-- **Routing:** `go_router` / `auto_route` / default navigator
+- **Routing:** default navigator
 - **Authentication:** JWT token-based flow
 
 ---

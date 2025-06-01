@@ -16,4 +16,11 @@ class SplashProgressState extends SplashState {
   List<Object> get props => [progress];
 }
 
-class SplashComplete extends SplashState {}
+class SplashComplete extends SplashState {
+  final bool isLoggedIn;
+
+  SplashComplete({required this.isLoggedIn});
+
+  @override
+  List<Object> get props => [isLoggedIn];
+}

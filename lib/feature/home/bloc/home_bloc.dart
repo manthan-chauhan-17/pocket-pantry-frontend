@@ -1,19 +1,24 @@
 import 'dart:async';
 import 'dart:developer';
-
-import 'package:bloc/bloc.dart';
-import 'package:pocket_pantry_frontend/feature/home/bloc/item_bloc/item_event.dart';
-import 'package:pocket_pantry_frontend/feature/home/bloc/item_bloc/item_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pocket_pantry_frontend/feature/home/bloc/home_event.dart';
+import 'package:pocket_pantry_frontend/feature/home/bloc/home_state.dart';
 import 'package:pocket_pantry_frontend/feature/home/models/item_model.dart';
 import 'package:pocket_pantry_frontend/services/api_service/api/api.dart';
 
-class ItemBloc extends Bloc<ItemEvent, ItemState> {
+class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ItemModel itemModel = ItemModel();
-  ItemBloc() : super(ItemState()) {
+  HomeBloc() : super(HomeInitial()) {
+    on<BottomNavBarTappedEvent>(onBottomNavBarTapped);
     on<GetItemEvent>(getItems);
   }
 
-  FutureOr<void> getItems(GetItemEvent event, Emitter<ItemState> emit) async {
+  void onBottomNavBarTapped(
+      BottomNavBarTappedEvent event, Emitter<HomeState> emit) {
+    emit(NavigationState(currentIndex: event.index));
+  }
+
+  FutureOr<void> getItems(GetItemEvent event, Emitter<HomeState> emit) async {
     emit(GetItemsLoadingState());
 
     try {

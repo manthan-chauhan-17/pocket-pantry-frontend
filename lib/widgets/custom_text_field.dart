@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:pocket_pantry_frontend/colors.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
@@ -28,7 +26,8 @@ class CustomTextField extends StatefulWidget {
     this.line,
     this.keyboardType,
     this.hintText,
-    this.maxlines,this.onTap,
+    this.maxlines,
+    this.onTap,
   });
 
   @override
@@ -85,7 +84,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
   }
 
   TextInputType _getKeyboardType() {
-    log("Field Type: ${widget.fieldType}");
     switch (widget.fieldType) {
       case FieldType.email:
         return TextInputType.emailAddress;
