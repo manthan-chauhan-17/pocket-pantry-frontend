@@ -30,3 +30,5 @@ class GetItemsSuccessState extends HomeState {
 }
 
 class GetItemsErrorState extends HomeState {}
+
+class NavigateToAddItemScreenState extends HomeState {}

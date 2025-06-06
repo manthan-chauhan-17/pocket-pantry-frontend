@@ -4,7 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pocket_pantry_frontend/feature/add_item/bloc/add_item_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/auth/bloc/auth_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/home_bloc.dart';
-import 'package:pocket_pantry_frontend/feature/profile/view/profile_screen.dart';
+import 'package:pocket_pantry_frontend/feature/item_detail/view/item_detail_screen.dart';
 import 'package:pocket_pantry_frontend/feature/splash/bloc/splash_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/splash/splash_screen.dart';
 import 'package:pocket_pantry_frontend/services/api_service/api/api.dart';
@@ -19,7 +19,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -40,7 +39,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           textTheme: GoogleFonts.poppinsTextTheme(),
         ),
-        home: ProfileScreen(),
+        home: SplashScreen(),
       ),
     );
   }

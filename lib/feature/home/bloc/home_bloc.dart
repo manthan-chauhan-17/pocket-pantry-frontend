@@ -11,6 +11,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeInitial()) {
     on<BottomNavBarTappedEvent>(onBottomNavBarTapped);
     on<GetItemEvent>(getItems);
+    on<NavigateToAddItemScreenEvent>(navigateToAddItemScreen);
   }
 
   void onBottomNavBarTapped(
@@ -33,5 +34,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       log(e.toString(), name: "GetItemsError");
       emit(GetItemsErrorState());
     }
+  }
+
+  void navigateToAddItemScreen(
+      NavigateToAddItemScreenEvent event, Emitter<HomeState> emit) {
+    emit(NavigateToAddItemScreenState());
   }
 }
