@@ -19,3 +19,5 @@ class GetItemEvent extends HomeEvent {
   @override
   List<Object?> get props => [];
 }
+
+class NavigateToAddItemScreenEvent extends HomeEvent {}

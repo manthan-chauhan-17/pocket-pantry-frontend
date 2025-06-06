@@ -1,8 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:pocket_pantry_frontend/colors.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
+import 'package:pocket_pantry_frontend/widgets/reusable_widgets.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -65,9 +65,7 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 0.01 * getHeight(context),
-              ),
+              ReusableWidgets.getSizedBox(height: 0.01 * getHeight(context)),
               Text(
                 'Manthan Chauhan',
                 style: TextStyle(
@@ -75,22 +73,16 @@ class ProfileScreen extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
-                height: 0.001 * getHeight(context),
-              ),
+              ReusableWidgets.getSizedBox(height: 0.001 * getHeight(context)),
               Text(
                 'manthanchauhan062@gmail.com',
                 style: TextStyle(
                     fontSize: 16 * getResponsiveText(context),
                     color: AppColors.greenText),
               ),
-              SizedBox(
-                height: 0.02 * getHeight(context),
-              ),
+              ReusableWidgets.getSizedBox(height: 0.02 * getHeight(context)),
               getTitle(context, "Account"),
-              SizedBox(
-                height: 0.01 * getHeight(context),
-              ),
+              ReusableWidgets.getSizedBox(height: 0.01 * getHeight(context)),
               getSubtitle(
                 context,
                 "Edit Profile",
@@ -101,13 +93,9 @@ class ProfileScreen extends StatelessWidget {
                 "Change Password",
                 () {},
               ),
-              SizedBox(
-                height: 0.02 * getHeight(context),
-              ),
+              ReusableWidgets.getSizedBox(height: 0.02 * getHeight(context)),
               getTitle(context, "Settings"),
-              SizedBox(
-                height: 0.01 * getHeight(context),
-              ),
+              ReusableWidgets.getSizedBox(height: 0.01 * getHeight(context)),
               getSubtitle(context, "Notification", () {}),
               getSubtitle(
                 context,
@@ -119,13 +107,9 @@ class ProfileScreen extends StatelessWidget {
                 "Language",
                 () {},
               ),
-              SizedBox(
-                height: 0.02 * getHeight(context),
-              ),
+              ReusableWidgets.getSizedBox(height: 0.01 * getHeight(context)),
               getTitle(context, "Support"),
-              SizedBox(
-                height: 0.01 * getHeight(context),
-              ),
+              ReusableWidgets.getSizedBox(height: 0.01 * getHeight(context)),
               getSubtitle(
                 context,
                 "Help & Support",
@@ -141,9 +125,7 @@ class ProfileScreen extends StatelessWidget {
                 "Privacy Policy",
                 () {},
               ),
-              SizedBox(
-                height: 0.02 * getHeight(context),
-              ),
+              ReusableWidgets.getSizedBox(height: 0.02 * getHeight(context)),
               ElevatedButton(
                 onPressed: () {
                   // Add your logout functionality here
@@ -182,9 +164,7 @@ class ProfileScreen extends StatelessWidget {
   ) {
     return Row(
       children: [
-        SizedBox(
-          width: 0.05 * getWidth(context),
-        ),
+        ReusableWidgets.getSizedBox(width: 0.03 * getHeight(context)),
         Text(
           subtitle,
           style: TextStyle(
@@ -206,9 +186,7 @@ class ProfileScreen extends StatelessWidget {
   Widget getTitle(BuildContext context, String title) {
     return Row(
       children: [
-        SizedBox(
-          width: 0.05 * getWidth(context),
-        ),
+        ReusableWidgets.getSizedBox(width: 0.03 * getHeight(context)),
         Text(
           title,
           style: TextStyle(

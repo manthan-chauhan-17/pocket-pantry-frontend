@@ -1,8 +1,8 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:pocket_pantry_frontend/feature/home/models/item_model.dart';
 import 'package:pocket_pantry_frontend/feature/auth/models/user_model.dart';
+import 'package:pocket_pantry_frontend/services/api_service/api/api_helper.dart';
 import 'package:pocket_pantry_frontend/services/api_service/retorfit/injection.dart';
 import 'package:pocket_pantry_frontend/services/storage_service/my_shared_preference.dart';
 
@@ -62,15 +62,39 @@ class Api {
     }
   }
 
-  static uploadItemWithImage(String name, String description, 
-      String category, String expiredate, File imageFile) async {
+  // static uploadItemWithImage(String name, String description, String category,
+  //     String expiredate, File imageFile) async {
+  //   String token = await MySharedPreference.getToken();
+  //   return await restClient
+  //       .addItem(
+  //           'Bearer $token', imageFile, name, description, category, expiredate)
+  //       .then((value) {
+  //     log('Item added successfully: $value', name: 'ApiService');
+  //   }, onError: (error) {
+  //     log('Error in adding item: $error', name: 'ApiService');
+  //     throw error;
+  //   });
+  // }
+
+  static uploadItemWithImage1(
+      {required String itemName,
+      required String itemDescription,
+      required String category,
+      required String expireDate,
+      required File image}) async {
     String token = await MySharedPreference.getToken();
-    return await restClient.addItem(token,
-        imageFile, name, description, category, expiredate).then((value) {
-      log('Item added successfully: $value', name: 'ApiService');
-        },onError: (error) {
-      log('Error in adding item: $error', name: 'ApiService');
-      throw error;
-    });
+    Map<String, dynamic> body = {};
+    body['itemName'] = itemName;
+    body['itemDescription'] = itemDescription;
+    body['category'] = category;
+    body['expireDate'] = expireDate;
+
+    final bodyParts = ApiHelper.convertMapToMultipartList(body);
+
+    final response = restClient.addItem1("Bearer $token", image, bodyParts);
+
+    log(response.toString(), name: "RESINAPI");
+
+    return response;
   }
 }

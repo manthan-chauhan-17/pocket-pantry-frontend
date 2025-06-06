@@ -37,7 +37,7 @@ class PantryItemCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(getWidth(context) * 0.03),
+            padding: EdgeInsets.all(getWidth(context) * 0.02),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
