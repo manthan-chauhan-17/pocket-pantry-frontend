@@ -79,4 +79,16 @@ class Api {
 
     return response;
   }
+
+  static deleteItemFromList({required String id}) async {
+    String token = await MySharedPreference.getToken();
+    Map<String, dynamic> body = {};
+    body['itemId'] = id;
+
+    final response = restClient.deleteItem("Bearer $token", body);
+
+    log(response.toString(), name: "Delete Res");
+
+    return response;
+  }
 }

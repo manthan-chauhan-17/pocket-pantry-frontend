@@ -11,6 +11,7 @@ class AppColors {
   static const Color secondaryLightBackground = Color(0xFFF2F2F2);
   static const Color greenTextField = Color(0xFFEBF2E8);
   static const Color greenText = Color(0xFF52946B); // Dark green text
+  static const Color red = Color(0xffF2E8E8);
 
   // Dark Theme
   static const Color darkBackground = Color(0xFF121212); // Charcoal

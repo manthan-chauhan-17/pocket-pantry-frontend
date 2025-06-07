@@ -6,12 +6,13 @@ class PantryItemCard extends StatelessWidget {
   final String imagePath;
   final String title;
   final String expiry;
-
+  final String itemId;
   const PantryItemCard({
     super.key,
     required this.imagePath,
     required this.title,
     required this.expiry,
+    required this.itemId,
   });
 
   @override
@@ -24,16 +25,19 @@ class PantryItemCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(12),
-              topRight: Radius.circular(12),
-            ),
-            child: Image.network(
-              imagePath,
-              height: getHeight(context) * 0.15,
-              width: double.infinity,
-              fit: BoxFit.cover,
+          Hero(
+            tag: itemId,
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(12),
+                topRight: Radius.circular(12),
+              ),
+              child: Image.network(
+                imagePath,
+                height: getHeight(context) * 0.15,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Padding(

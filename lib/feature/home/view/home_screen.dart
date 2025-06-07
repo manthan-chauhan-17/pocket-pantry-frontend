@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:pocket_pantry_frontend/feature/add_item/view/add_item.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/home_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/home_event.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/home_state.dart';
+import 'package:pocket_pantry_frontend/feature/home/models/item_model.dart';
 import 'package:pocket_pantry_frontend/feature/item_detail/view/item_detail_screen.dart';
 import 'package:pocket_pantry_frontend/feature/profile/view/profile_screen.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
@@ -81,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
 
           if (state is GetItemsSuccessState) {
-            final items = state.items;
+            List<Data> items = state.items;
 
             return Padding(
               padding:
@@ -130,8 +132,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemBuilder: (context, index) {
                         final item = items[index];
                         return GestureDetector(
-                          onTap: () {
-                            ScreenNavigation.push(context, ItemDetailScreen());
+                          onTap: () async {
+                            final result = await ScreenNavigation.push(
+                                context,
+                                ItemDetailScreen(
+                                  item: item,
+                                ));
+
+                            if (result == 'deleted') {
+                              log("inside deleted in home screen",
+                                  name: "in if home");
+                              context.read<HomeBloc>().add(GetItemEvent());
+                            }
                           },
                           child: PantryItemCard(
                             imagePath: item.image ??
@@ -140,6 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             expiry: item.expireDate != null
                                 ? 'Expires on ${item.expireDate}'
                                 : 'No expiry date',
+                            itemId: item.sId!,
                           ),
                         );
                       },
