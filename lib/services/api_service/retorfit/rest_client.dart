@@ -35,4 +35,10 @@ abstract class RestClient {
     @Part(name: 'category') String category,
     @Part(name: 'image') File image,
   );
+
+  @DELETE('item/delete-item')
+  Future deleteItem(
+    @Header('Authorization') String token,
+    @Body() Map<String, dynamic> body,
+  );
 }

@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pocket_pantry_frontend/feature/add_item/bloc/add_item_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/auth/bloc/auth_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/home_bloc.dart';
+import 'package:pocket_pantry_frontend/feature/item_detail/bloc/item_detail_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/splash/bloc/splash_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/splash/splash_screen.dart';
 import 'package:pocket_pantry_frontend/services/api_service/api/api.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(create: (context) => DropDownBloc()),
         BlocProvider(create: (context) => ImagePickerBloc()),
+        BlocProvider(create: (context) => ItemDetailBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

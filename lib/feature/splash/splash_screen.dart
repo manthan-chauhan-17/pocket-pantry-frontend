@@ -87,6 +87,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 SizedBox(
                   height: 0.03 * getHeight(context),
                 ),
+                Spacer(),
                 Padding(
                   padding: EdgeInsets.only(right: 0.3 * getHeight(context)),
                   child: Text(
@@ -128,6 +129,9 @@ class _SplashScreenState extends State<SplashScreen> {
                 Text(
                   "version 1.0.0",
                   style: TextStyle(color: AppColors.greenText),
+                ),
+                SizedBox(
+                  height: 0.02 * getHeight(context),
                 ),
               ],
             ),
