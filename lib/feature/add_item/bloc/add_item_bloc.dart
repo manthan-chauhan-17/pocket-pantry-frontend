@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pocket_pantry_frontend/feature/add_item/bloc/add_item_event.dart';
@@ -34,23 +33,6 @@ class ImagePickerBloc extends Bloc<ImagePickerEvent, ImagePickState> {
     }
   }
 
-  // uploadImage(UploadImageEvent event, Emitter<ImagePickState> emit) async {
-  //   if (selectedImage == null) {
-  //     emit(UploadErrorState("Upload Image"));
-  //     return;
-  //   }
-
-  //   emit(UploadLoadingState());
-  //   try {
-  //     log("message", name: 'IMAGE EVENT');
-  //     await Api.uploadItemWithImage(event.expireDate, event.name,
-  //         event.description, event.category, File(selectedImage!.path));
-  //     emit(UploadSuccessState());
-  //   } catch (e) {
-  //     emit(UploadErrorState(e.toString()));
-  //   }
-  // }
-
   uploadImage1(UploadImageEvent event, Emitter<ImagePickState> emit) async {
     if (selectedImage == null) {
       emit(UploadErrorState("Uploading image is required"));
@@ -59,7 +41,7 @@ class ImagePickerBloc extends Bloc<ImagePickerEvent, ImagePickState> {
     emit(UploadLoadingState());
 
     try {
-      final res = await Api.uploadItemWithImage1(
+      final res = await Api.uploadItemWithImage(
           itemName: event.name,
           itemDescription: event.description,
           category: event.category,
@@ -67,10 +49,9 @@ class ImagePickerBloc extends Bloc<ImagePickerEvent, ImagePickState> {
           image: File(selectedImage!.path));
 
       log(res.toString(), name: "RESINBLOC");
-      if (res['statusCode'] == 200) {
-        emit(UploadSuccessState());
-      }
+      emit(UploadSuccessState());
     } catch (e) {
+      log(e.toString(), name: "BLOCERROR");
       emit(UploadErrorState(e.toString()));
     }
   }

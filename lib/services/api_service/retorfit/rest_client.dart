@@ -25,22 +25,14 @@ abstract class RestClient {
     @Header('Authorization') String token,
   );
 
-  // @POST('api/v1/item/add-item')
-  // @MultiPart()
-  // Future<dynamic> addItem(
-  //   @Header('Authorization') String token,
-  //   @Part(name: 'image') File imageFile,
-  //   @Part(name: 'itemName') String name,
-  //   @Part(name: 'itemDescription') String description,
-  //   @Part(name: 'category') String category,
-  //   @Part(name: 'expireDate') String expiredate,
-  // );
-
   @POST('item/add-item')
   @MultiPart()
-  Future<HttpResponse> addItem1(
+  Future<HttpResponse> addItem(
     @Header('Authorization') String token,
+    @Part(name: 'itemName') String itemName,
+    @Part(name: 'itemDescription') String itemDescription,
+    @Part(name: 'expireDate') String expireDate,
+    @Part(name: 'category') String category,
     @Part(name: 'image') File image,
-    @Part() List<MultipartFile> body,
   );
 }
