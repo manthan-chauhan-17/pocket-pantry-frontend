@@ -14,11 +14,11 @@ class ItemDetailBloc extends Bloc<ItemDetailEvent, ItemDetailState> {
   }
 
   FutureOr<void> deleteItem(
-      DeleteItemEvent event, Emitter<ItemDetailState> emit) {
+      DeleteItemEvent event, Emitter<ItemDetailState> emit) async {
     emit(DeleteItemLoadingState());
 
     try {
-      var res = Api.deleteItemFromList(id: event.id);
+      var res = await Api.deleteItemFromList(id: event.id);
 
       log(res.toString(), name: "res in bloc");
       emit(DeleteItemSuccessState());

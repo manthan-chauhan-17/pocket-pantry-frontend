@@ -33,7 +33,7 @@ class ItemDetailScreen extends StatelessWidget {
               ),
             );
 
-            Navigator.pop(context, "deleted");
+            ScreenNavigation.push(context, HomeScreen());
           }
 
           if (state is DeleteItemErrorState) {

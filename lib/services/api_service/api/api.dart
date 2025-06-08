@@ -85,7 +85,7 @@ class Api {
     Map<String, dynamic> body = {};
     body['itemId'] = id;
 
-    final response = restClient.deleteItem("Bearer $token", body);
+    final response = await restClient.deleteItem("Bearer $token", body);
 
     log(response.toString(), name: "Delete Res");
 

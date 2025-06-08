@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -132,18 +131,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemBuilder: (context, index) {
                         final item = items[index];
                         return GestureDetector(
-                          onTap: () async {
-                            final result = await ScreenNavigation.push(
+                          onTap: () {
+                            ScreenNavigation.push(
                                 context,
                                 ItemDetailScreen(
                                   item: item,
                                 ));
-
-                            if (result == 'deleted') {
-                              log("inside deleted in home screen",
-                                  name: "in if home");
-                              context.read<HomeBloc>().add(GetItemEvent());
-                            }
                           },
                           child: PantryItemCard(
                             imagePath: item.image ??
