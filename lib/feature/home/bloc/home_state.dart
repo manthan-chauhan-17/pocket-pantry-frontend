@@ -21,7 +21,7 @@ class NavigationState extends HomeState {
 class GetItemsLoadingState extends HomeState {}
 
 class GetItemsSuccessState extends HomeState {
-  final List<Data> items;
+  final List<Item> items;
 
   GetItemsSuccessState({required this.items});
 

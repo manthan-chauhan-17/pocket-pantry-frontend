@@ -1,9 +1,11 @@
 import 'dart:developer';
 
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pocket_pantry_frontend/colors.dart';
-import 'package:pocket_pantry_frontend/feature/home/models/item_model.dart';
+import 'package:pocket_pantry_frontend/feature/home/models/item_model.dart'
+    hide Image;
 import 'package:pocket_pantry_frontend/feature/home/view/home_screen.dart';
 import 'package:pocket_pantry_frontend/feature/item_detail/bloc/item_detail_bloc.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
@@ -11,7 +13,7 @@ import 'package:pocket_pantry_frontend/screen_navigation.dart';
 import 'package:pocket_pantry_frontend/widgets/reusable_widgets.dart';
 
 class ItemDetailScreen extends StatelessWidget {
-  final Data item;
+  final Item item;
   const ItemDetailScreen({super.key, required this.item});
 
   @override
@@ -27,21 +29,21 @@ class ItemDetailScreen extends StatelessWidget {
       body: BlocListener<ItemDetailBloc, ItemDetailState>(
         listener: (context, state) {
           if (state is DeleteItemSuccessState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text("Item Deleted successfully"),
-              ),
-            );
+            final snackbar = ReusableWidgets.getSnackBar(
+                title: "Success",
+                message: "Item Deleted Successfully",
+                contentType: ContentType.success);
+            ScaffoldMessenger.of(context).showSnackBar(snackbar);
 
             ScreenNavigation.push(context, HomeScreen());
           }
 
           if (state is DeleteItemErrorState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text("Something Went Wrong"),
-              ),
-            );
+            final snackbar = ReusableWidgets.getSnackBar(
+                title: "Error",
+                message: "Something went wrong",
+                contentType: ContentType.failure);
+            ScaffoldMessenger.of(context).showSnackBar(snackbar);
           }
         },
         child: Container(
@@ -69,7 +71,7 @@ class ItemDetailScreen extends StatelessWidget {
                         16 * getResponsive(context),
                       ),
                       child: Image.network(
-                        item.image ?? 'https://picsum.photos/250?image=9',
+                        item.image!.url ?? 'https://picsum.photos/250?image=9',
                         fit: BoxFit.cover,
                       ),
                     ),

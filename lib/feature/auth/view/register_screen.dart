@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/auth/bloc/auth_bloc.dart';
@@ -7,6 +8,7 @@ import 'package:pocket_pantry_frontend/colors.dart';
 import 'package:pocket_pantry_frontend/feature/auth/view/login_screen.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
 import 'package:pocket_pantry_frontend/widgets/custom_text_field.dart';
+import 'package:pocket_pantry_frontend/widgets/reusable_widgets.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -45,22 +47,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthRegisterErrorState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  state.error,
-                ),
-              ),
-            );
+            final snackbar = ReusableWidgets.getSnackBar(
+                title: "Error",
+                message: state.error,
+                contentType: ContentType.failure);
+            ScaffoldMessenger.of(context).showSnackBar(snackbar);
           }
           if (state is AuthRegisterSuccessState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  "User Registered Successfully",
-                ),
-              ),
-            );
+            final snackbar = ReusableWidgets.getSnackBar(
+                title: "Success",
+                message: "User Registered Successfully",
+                contentType: ContentType.success);
+            ScaffoldMessenger.of(context).showSnackBar(snackbar);
             Navigator.push(
               context,
               MaterialPageRoute(

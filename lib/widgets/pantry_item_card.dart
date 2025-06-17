@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pocket_pantry_frontend/colors.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
@@ -32,11 +33,19 @@ class PantryItemCard extends StatelessWidget {
                 topLeft: Radius.circular(12),
                 topRight: Radius.circular(12),
               ),
-              child: Image.network(
-                imagePath,
-                height: getHeight(context) * 0.15,
+              // child: Image.network(
+              //   imagePath,
+              //   height: getHeight(context) * 0.15,
+              //   width: double.infinity,
+              //   fit: BoxFit.cover,
+              // ),
+              child: CachedNetworkImage(
+                imageUrl: imagePath,
+                height: 0.15 * getHeight(context),
                 width: double.infinity,
                 fit: BoxFit.cover,
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Icon(Icons.error_rounded),
               ),
             ),
           ),

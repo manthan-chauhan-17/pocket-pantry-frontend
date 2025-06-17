@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:pocket_pantry_frontend/colors.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
+import 'package:pocket_pantry_frontend/services/storage_service/my_shared_preference.dart';
 import 'package:pocket_pantry_frontend/widgets/reusable_widgets.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -33,41 +34,46 @@ class ProfileScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Center(
-                child: Stack(
-                  children: [
-                    Container(
-                      height: 0.2 * getHeight(context),
-                      width: 0.4 * getWidth(context),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
-                      child: Image.asset(
-                        "assets/images/profile_pic.png",
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                        height: 0.05 * getHeight(context),
-                        width: 0.05 * getHeight(context),
+                child: GestureDetector(
+                  onTap: () {
+                    // To be implemented
+                  },
+                  child: Stack(
+                    children: [
+                      Container(
+                        height: 0.2 * getHeight(context),
+                        width: 0.4 * getWidth(context),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.white,
                         ),
-                        child: Icon(
-                          Icons.camera_alt,
-                          size: 0.03 * getHeight(context),
-                          color: Colors.black,
+                        child: Image.asset(
+                          "assets/images/profile_pic.png",
                         ),
                       ),
-                    ),
-                  ],
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: Container(
+                          height: 0.05 * getHeight(context),
+                          width: 0.05 * getHeight(context),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                          ),
+                          child: Icon(
+                            Icons.camera_alt,
+                            size: 0.03 * getHeight(context),
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               ReusableWidgets.getSizedBox(height: 0.01 * getHeight(context)),
               Text(
-                'Manthan Chauhan',
+                MySharedPreference.getUserName().toString(),
                 style: TextStyle(
                   fontSize: 22 * getResponsiveText(context),
                   fontWeight: FontWeight.bold,
@@ -75,7 +81,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               ReusableWidgets.getSizedBox(height: 0.001 * getHeight(context)),
               Text(
-                'manthanchauhan062@gmail.com',
+                MySharedPreference.getUserEmail().toString(),
                 style: TextStyle(
                     fontSize: 16 * getResponsiveText(context),
                     color: AppColors.greenText),
