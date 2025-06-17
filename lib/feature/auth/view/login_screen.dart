@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/auth/bloc/auth_bloc.dart';
@@ -8,6 +9,7 @@ import 'package:pocket_pantry_frontend/feature/auth/view/register_screen.dart';
 import 'package:pocket_pantry_frontend/feature/home/view/home_screen.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
 import 'package:pocket_pantry_frontend/widgets/custom_text_field.dart';
+import 'package:pocket_pantry_frontend/widgets/reusable_widgets.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -30,9 +32,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    // final isDark = false; // make it toggle with bloc in future
-
     return Scaffold(
       backgroundColor: AppColors.lightBackground,
       appBar: AppBar(
@@ -47,23 +46,19 @@ class _LoginScreenState extends State<LoginScreen> {
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthLoginErrorState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  state.error,
-                ),
-              ),
-            );
+            final snackbar = ReusableWidgets.getSnackBar(
+                title: "Error",
+                message: state.error,
+                contentType: ContentType.failure);
+            ScaffoldMessenger.of(context).showSnackBar(snackbar);
           }
 
           if (state is AuthLoginSuccessState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  "User Logged In Successfully",
-                ),
-              ),
-            );
+            final snackbar = ReusableWidgets.getSnackBar(
+                title: "Success",
+                message: "Successfully Logged In",
+                contentType: ContentType.success);
+            ScaffoldMessenger.of(context).showSnackBar(snackbar);
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -172,15 +167,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              // Handle login logic here
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('Logging in...',
-                                      style: textTheme.bodyMedium),
-                                  // backgroundColor: AppColors.success,
-                                ),
-                              );
-
                               context.read<AuthBloc>().add(
                                     AuthLoginEvent(
                                         email: _emailController.text,

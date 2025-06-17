@@ -9,14 +9,8 @@ import 'package:pocket_pantry_frontend/services/api_service/api/api.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ItemModel itemModel = ItemModel();
   HomeBloc() : super(HomeInitial()) {
-    on<BottomNavBarTappedEvent>(onBottomNavBarTapped);
     on<GetItemEvent>(getItems);
     on<NavigateToAddItemScreenEvent>(navigateToAddItemScreen);
-  }
-
-  void onBottomNavBarTapped(
-      BottomNavBarTappedEvent event, Emitter<HomeState> emit) {
-    emit(NavigationState(currentIndex: event.index));
   }
 
   FutureOr<void> getItems(GetItemEvent event, Emitter<HomeState> emit) async {
@@ -24,9 +18,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     try {
       itemModel = await Api.getItems();
+
       if (itemModel.statusCode == 200) {
-        log(itemModel.data.toString(), name: "get items bloc");
-        emit(GetItemsSuccessState(items: itemModel.data!));
+        log(itemModel.item.toString(), name: "get items bloc");
+        emit(GetItemsSuccessState(items: itemModel.item!));
       } else {
         emit(GetItemsErrorState());
       }

@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart' hide Image;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pocket_pantry_frontend/colors.dart';
@@ -7,11 +7,15 @@ import 'package:pocket_pantry_frontend/feature/add_item/view/add_item.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/home_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/home_event.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/home_state.dart';
-import 'package:pocket_pantry_frontend/feature/home/models/item_model.dart';
+import 'package:pocket_pantry_frontend/feature/home/models/item_model.dart'
+    hide Image;
 import 'package:pocket_pantry_frontend/feature/item_detail/view/item_detail_screen.dart';
 import 'package:pocket_pantry_frontend/feature/profile/view/profile_screen.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
 import 'package:pocket_pantry_frontend/screen_navigation.dart';
+import 'package:pocket_pantry_frontend/services/storage_service/hive/hive_helper/hive_helper.dart';
+import 'package:pocket_pantry_frontend/services/storage_service/hive/hive_model/hive_item_model.dart';
+import 'package:pocket_pantry_frontend/services/storage_service/my_shared_preference.dart';
 import 'package:pocket_pantry_frontend/widgets/pantry_item_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,6 +31,11 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     context.read<HomeBloc>().add(GetItemEvent());
+  }
+
+  List<HiveItemModel> hiveItemList = [];
+  void loadData() async {
+    hiveItemList = await HiveItemHelper.getAllItems();
   }
 
   @override
@@ -82,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
 
           if (state is GetItemsSuccessState) {
-            List<Data> items = state.items;
+            List<Item> items = state.items;
 
             return Padding(
               padding:
@@ -90,6 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text("Welcome back, ${MySharedPreference.getUserName()}"),
                   SizedBox(height: getHeight(context) * 0.02),
                   // Dropdown
                   Container(
@@ -126,7 +136,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisSpacing: 15,
                         mainAxisSpacing: 20,
                         mainAxisExtent: 240 * getResponsive(context),
-                        // childAspectRatio: 0.9999 * getResponsive(context),
                       ),
                       itemBuilder: (context, index) {
                         final item = items[index];
@@ -139,8 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ));
                           },
                           child: PantryItemCard(
-                            imagePath: item.image ??
-                                'https://picsum.photos/250?image=9',
+                            imagePath: item.image!.url!,
                             title: item.itemName ?? 'Unknown Item',
                             expiry: item.expireDate != null
                                 ? 'Expires on ${item.expireDate}'

@@ -41,16 +41,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     try {
       userModel = await Api.loginUser(event.email, event.password);
-      log(userModel.data!.token.toString(), name: "AUTH_BLOC");
-      log(userModel.data!.id.toString(), name: "AUTH_BLOC");
-      log(userModel.data!.name.toString(), name: "AUTH_BLOC");
-      log(userModel.data!.email.toString(), name: "AUTH_BLOC");
       if (userModel.statusCode == 200) {
         await MySharedPreference.saveUserData(
-            id: userModel.data!.id!,
-            name: userModel.data!.name!,
-            email: userModel.data!.email!,
-            token: userModel.data!.token!,
+            id: userModel.user!.id!,
+            name: userModel.user!.name!,
+            email: userModel.user!.email!,
+            token: userModel.user!.token!,
             isLoggedIn: "true");
       }
       log("User logged in successfully", name: "AUTH_BLOC");
