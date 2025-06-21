@@ -5,8 +5,28 @@ import 'package:pocket_pantry_frontend/responsive.dart';
 import 'package:pocket_pantry_frontend/services/storage_service/my_shared_preference.dart';
 import 'package:pocket_pantry_frontend/widgets/reusable_widgets.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadNameAndEmailFromPreference();
+  }
+
+  String name = "";
+  String email = "";
+
+  loadNameAndEmailFromPreference() async {
+    name = await MySharedPreference.getUserName();
+    email = await MySharedPreference.getUserEmail();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +93,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               ReusableWidgets.getSizedBox(height: 0.01 * getHeight(context)),
               Text(
-                MySharedPreference.getUserName().toString(),
+                name,
                 style: TextStyle(
                   fontSize: 22 * getResponsiveText(context),
                   fontWeight: FontWeight.bold,
@@ -81,7 +101,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               ReusableWidgets.getSizedBox(height: 0.001 * getHeight(context)),
               Text(
-                MySharedPreference.getUserEmail().toString(),
+                email,
                 style: TextStyle(
                     fontSize: 16 * getResponsiveText(context),
                     color: AppColors.greenText),
