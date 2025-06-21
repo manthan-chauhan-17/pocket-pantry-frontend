@@ -41,6 +41,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     try {
       userModel = await Api.loginUser(event.email, event.password);
+
+      log(userModel.user!.name.toString(), name: "NAME");
+
       if (userModel.statusCode == 200) {
         await MySharedPreference.saveUserData(
             id: userModel.user!.id!,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:pocket_pantry_frontend/feature/add_item/bloc/add_item_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/auth/bloc/auth_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/home_bloc.dart';
@@ -9,15 +9,22 @@ import 'package:pocket_pantry_frontend/feature/splash/bloc/splash_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/splash/splash_screen.dart';
 import 'package:pocket_pantry_frontend/services/api_service/api/api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pocket_pantry_frontend/services/storage_service/hive/hive_model/hive_item_model.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   Api.checkHealthApi();
-  Hive.initFlutter();
+  // ✅ Initialize Hive
+  await Hive.initFlutter();
+  // ✅ Register Hive adapter
+  Hive.registerAdapter(HiveItemModelAdapter());
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +42,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ItemDetailBloc()),
       ],
       child: MaterialApp(
+        navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         title: 'Pocket Pantry',
         theme: ThemeData(

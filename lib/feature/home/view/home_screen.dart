@@ -34,8 +34,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<HiveItemModel> hiveItemList = [];
-  void loadData() async {
+  String userName = "";
+  // void loadUsername() async {
+  //   userName = await MySharedPreference.getUserName();
+  // }
+
+  void loadHiveDataAfterBloc(List<Item> items) async {
     hiveItemList = await HiveItemHelper.getAllItems();
+    // log(hiveItemList.toString(), name: "HIVE_ITEM_LIST");
+    userName = await MySharedPreference.getUserName();
+    setState(() {}); // rebuild with updated data
   }
 
   @override
@@ -91,7 +99,10 @@ class _HomeScreenState extends State<HomeScreen> {
           }
 
           if (state is GetItemsSuccessState) {
-            List<Item> items = state.items;
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              loadHiveDataAfterBloc(state.items);
+            });
+            // List<Item> items = state.items;
 
             return Padding(
               padding:
@@ -99,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Welcome back, ${MySharedPreference.getUserName()}"),
+                  Text("Welcome back, $userName"),
                   SizedBox(height: getHeight(context) * 0.02),
                   // Dropdown
                   Container(
@@ -129,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   // Grid of pantry items
                   Expanded(
                     child: GridView.builder(
-                      itemCount: items.length,
+                      itemCount: hiveItemList.length,
                       shrinkWrap: true,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
@@ -138,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisExtent: 240 * getResponsive(context),
                       ),
                       itemBuilder: (context, index) {
-                        final item = items[index];
+                        final item = hiveItemList[index];
                         return GestureDetector(
                           onTap: () {
                             ScreenNavigation.push(
@@ -148,12 +159,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ));
                           },
                           child: PantryItemCard(
-                            imagePath: item.image!.url!,
-                            title: item.itemName ?? 'Unknown Item',
-                            expiry: item.expireDate != null
-                                ? 'Expires on ${item.expireDate}'
-                                : 'No expiry date',
-                            itemId: item.sId!,
+                            imagePath: item.imageUrl,
+                            title: item.itemName,
+                            expiry: 'Expires on ${item.expireDate}',
+                            itemId: item.id,
                           ),
                         );
                       },

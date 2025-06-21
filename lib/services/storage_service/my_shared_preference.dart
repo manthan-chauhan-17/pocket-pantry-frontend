@@ -6,6 +6,7 @@ class MySharedPreference {
   static const String keyEmail = "user_email";
   static const String keyToken = "user_token";
   static const String keyIsLoggedIn = "is_logged_in";
+  static const String keyFcmToken = 'fcm_token';
 
   static Future<void> saveUserData({
     required String id,
@@ -35,6 +36,11 @@ class MySharedPreference {
       'email': email,
       'token': token,
     };
+  }
+
+  static setFcmToken(String fcmToken) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(keyFcmToken, fcmToken);
   }
 
   static Future<bool> isLoggedIn() async {
