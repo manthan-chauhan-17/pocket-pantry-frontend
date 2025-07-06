@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   //   userName = await MySharedPreference.getUserName();
   // }
 
-  void loadHiveDataAfterBloc(List<Item> items) async {
+  void loadHiveDataAfterBloc(List<Items> items) async {
     hiveItemList = await HiveItemHelper.getAllItems();
     // log(hiveItemList.toString(), name: "HIVE_ITEM_LIST");
     userName = await MySharedPreference.getUserName();

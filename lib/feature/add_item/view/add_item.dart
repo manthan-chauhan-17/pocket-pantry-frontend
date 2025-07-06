@@ -61,7 +61,8 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   message: "Item Added Successfully",
                   contentType: ContentType.success);
               ScaffoldMessenger.of(context).showSnackBar(snackbar);
-              ScreenNavigation.push(context, HomeScreen());
+              // ScreenNavigation.push(context, HomeScreen());
+              Navigator.pop(context);
             } else if (state is UploadErrorState) {
               final snackbar = ReusableWidgets.getSnackBar(
                   title: "Error",
