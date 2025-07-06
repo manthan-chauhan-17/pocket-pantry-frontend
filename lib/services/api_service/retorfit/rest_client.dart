@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:pocket_pantry_frontend/feature/add_item/model/add_item_model.dart';
 import 'package:pocket_pantry_frontend/feature/home/models/item_model.dart';
 import 'package:pocket_pantry_frontend/feature/auth/models/user_model.dart';
 import 'package:retrofit/retrofit.dart';
@@ -27,7 +28,7 @@ abstract class RestClient {
 
   @POST('item/add-item')
   @MultiPart()
-  Future<HttpResponse> addItem(
+  Future<AddItemModel> addItem(
     @Header('Authorization') String token,
     @Part(name: 'itemName') String itemName,
     @Part(name: 'itemDescription') String itemDescription,

@@ -1,21 +1,16 @@
-class ItemModel {
+class AddItemModel {
   int? statusCode;
   String? message;
   bool? success;
-  List<Items>? items;
+  Item? item;
 
-  ItemModel({this.statusCode, this.message, this.success, this.items});
+  AddItemModel({this.statusCode, this.message, this.success, this.item});
 
-  ItemModel.fromJson(Map<String, dynamic> json) {
+  AddItemModel.fromJson(Map<String, dynamic> json) {
     statusCode = json['statusCode'];
     message = json['message'];
     success = json['success'];
-    if (json['items'] != null) {
-      items = <Items>[];
-      json['items'].forEach((v) {
-        items!.add(new Items.fromJson(v));
-      });
-    }
+    item = json['item'] != null ? new Item.fromJson(json['item']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -23,48 +18,48 @@ class ItemModel {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     data['success'] = this.success;
-    if (this.items != null) {
-      data['items'] = this.items!.map((v) => v.toJson()).toList();
+    if (this.item != null) {
+      data['item'] = this.item!.toJson();
     }
     return data;
   }
 }
 
-class Items {
-  Image? image;
+class Item {
+  String? id;
   String? itemName;
   String? itemDescription;
   String? expireDate;
   String? category;
-  String? id;
+  Image? image;
 
-  Items(
-      {this.image,
+  Item(
+      {this.id,
       this.itemName,
       this.itemDescription,
       this.expireDate,
       this.category,
-      this.id});
+      this.image});
 
-  Items.fromJson(Map<String, dynamic> json) {
-    image = json['image'] != null ? new Image.fromJson(json['image']) : null;
+  Item.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     itemName = json['itemName'];
     itemDescription = json['itemDescription'];
     expireDate = json['expireDate'];
     category = json['category'];
-    id = json['id'];
+    image = json['image'] != null ? new Image.fromJson(json['image']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.image != null) {
-      data['image'] = this.image!.toJson();
-    }
+    data['id'] = this.id;
     data['itemName'] = this.itemName;
     data['itemDescription'] = this.itemDescription;
     data['expireDate'] = this.expireDate;
     data['category'] = this.category;
-    data['id'] = this.id;
+    if (this.image != null) {
+      data['image'] = this.image!.toJson();
+    }
     return data;
   }
 }

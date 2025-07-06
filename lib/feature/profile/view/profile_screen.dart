@@ -15,7 +15,6 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     loadNameAndEmailFromPreference();
   }
@@ -26,6 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   loadNameAndEmailFromPreference() async {
     name = await MySharedPreference.getUserName();
     email = await MySharedPreference.getUserEmail();
+    setState(() {});
   }
 
   @override

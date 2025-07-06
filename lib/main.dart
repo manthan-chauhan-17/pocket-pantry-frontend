@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Pocket Pantry',
         theme: ThemeData(
-          textTheme: GoogleFonts.poppinsTextTheme(),
+          textTheme: GoogleFonts.aBeeZeeTextTheme(),
         ),
         home: SplashScreen(),
       ),

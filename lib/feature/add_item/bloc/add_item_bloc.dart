@@ -4,7 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pocket_pantry_frontend/feature/add_item/bloc/add_item_event.dart';
 import 'package:pocket_pantry_frontend/feature/add_item/bloc/add_item_state.dart';
+import 'package:pocket_pantry_frontend/feature/add_item/model/add_item_model.dart';
 import 'package:pocket_pantry_frontend/services/api_service/api/api.dart';
+import 'package:pocket_pantry_frontend/services/storage_service/hive/hive_helper/hive_helper.dart';
+import 'package:pocket_pantry_frontend/services/storage_service/hive/hive_model/hive_item_model.dart';
 
 class DropDownBloc extends Bloc<DropDownEvent, DropDownState> {
   DropDownBloc() : super(DropDownInitialState()) {
@@ -41,12 +44,25 @@ class ImagePickerBloc extends Bloc<ImagePickerEvent, ImagePickState> {
     emit(UploadLoadingState());
 
     try {
-      final res = await Api.uploadItemWithImage(
+      AddItemModel res = await Api.uploadItemWithImage(
           itemName: event.name,
           itemDescription: event.description,
           category: event.category,
           expireDate: event.expireDate,
           image: File(selectedImage!.path));
+
+      Item addedItem = res.item!;
+
+      final hiveItem = HiveItemModel(
+          id: addedItem.id!,
+          itemName: addedItem.itemName!,
+          itemDescription: addedItem.itemDescription!,
+          expireDate: addedItem.expireDate!,
+          category: addedItem.category!,
+          imageUrl: addedItem.image!.url!,
+          imagePublicId: addedItem.image!.publicId!);
+
+      await HiveItemHelper.addItem(hiveItem);
 
       log(res.toString(), name: "RESINBLOC");
       emit(UploadSuccessState());

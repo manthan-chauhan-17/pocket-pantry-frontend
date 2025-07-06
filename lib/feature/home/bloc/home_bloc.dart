@@ -61,13 +61,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     try {
       itemModel = await Api.getItems();
 
-      if (itemModel.statusCode == 200 && itemModel.item != null) {
-        log(itemModel.item.toString(), name: "get items bloc");
+      if (itemModel.statusCode == 200 && itemModel.items != null) {
+        log(itemModel.items.toString(), name: "get items bloc");
 
         // Convert List<Item> to List<HiveItemModel>
-        List<HiveItemModel> hiveItems = itemModel.item!.map((item) {
+        List<HiveItemModel> hiveItems = itemModel.items!.map((item) {
           return HiveItemModel(
-            id: item.sId ?? "",
+            id: item.id ?? "",
             itemName: item.itemName ?? "",
             itemDescription: item.itemDescription ?? "",
             expireDate: item.expireDate ?? "",
@@ -82,7 +82,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         await HiveItemHelper.replaceAll(hiveItems);
 
         // Emit state
-        emit(GetItemsSuccessState(items: itemModel.item!));
+        emit(GetItemsSuccessState(items: itemModel.items!));
       } else {
         emit(GetItemsErrorState());
       }
