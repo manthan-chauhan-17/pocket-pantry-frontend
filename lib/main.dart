@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -7,8 +8,10 @@ import 'package:pocket_pantry_frontend/feature/home/bloc/home_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/item_detail/bloc/item_detail_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/splash/bloc/splash_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/splash/splash_screen.dart';
+import 'package:pocket_pantry_frontend/notification_demo.dart';
 import 'package:pocket_pantry_frontend/services/api_service/api/api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pocket_pantry_frontend/services/notification_service/notification_service.dart';
 import 'package:pocket_pantry_frontend/services/storage_service/hive/hive_model/hive_item_model.dart';
 
 void main() async {
@@ -18,6 +21,8 @@ void main() async {
   await Hive.initFlutter();
   // ✅ Register Hive adapter
   Hive.registerAdapter(HiveItemModelAdapter());
+  await Firebase.initializeApp();
+  await NotificationService.initialize();
   runApp(const MyApp());
 }
 
@@ -48,7 +53,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           textTheme: GoogleFonts.aBeeZeeTextTheme(),
         ),
-        home: SplashScreen(),
+        home: NotificationDemo(),
       ),
     );
   }
