@@ -1,106 +1,128 @@
-// import 'dart:convert';
-// import 'dart:developer' as dev;
-// import 'dart:math';
-// import 'package:firebase_messaging/firebase_messaging.dart';
-// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-// import 'package:http/http.dart' as http;
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-// @pragma('vm:entry-point')
-// void onBackgroundNotificationClick(NotificationResponse response) {
-//   dev.log("[BACKGROUND] Notification Clicked: ${response.payload}");
-// }
+class NotificationService {
+  static final FirebaseMessaging _firebaseMessaging =
+      FirebaseMessaging.instance;
+  static final FlutterLocalNotificationsPlugin _localNotifications =
+      FlutterLocalNotificationsPlugin();
 
-// class NotificationService {
-//   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
-//       FlutterLocalNotificationsPlugin();
+  static String? _token;
+  static const String _serverUrl = 'http://10.0.2.2:3000/api/v1/item';
 
-//   static Future<void> initializeNotifications() async {
-//     const AndroidInitializationSettings androidSettings =
-//         AndroidInitializationSettings('ic_notification_icon');
-//     DarwinInitializationSettings iosSetting =
-//         const DarwinInitializationSettings();
-//     InitializationSettings settings =
-//         InitializationSettings(android: androidSettings, iOS: iosSetting);
+  static Future<void> initialize() async {
+    // Request permissions
+    await _firebaseMessaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
 
-//     await _notificationsPlugin.initialize(
-//       settings,
-//       onDidReceiveNotificationResponse: (NotificationResponse response) async {
-//         dev.log("Local Notification Tapped: ${response.payload}",
-//             name: "LocalNotification");
-//         if (response.payload != null && response.payload!.isNotEmpty) {
-//           Map<String, dynamic> payload = jsonDecode(response.payload!);
-//           handleNotificationData(payload);
-//         }
-//       },
-//       onDidReceiveBackgroundNotificationResponse: onBackgroundNotificationClick,
-//     );
-//   }
+    // Initialize local notifications
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
 
-//   static Future<void> showNotification(RemoteMessage message) async {
-//     if (message.data.isEmpty) return;
+    const InitializationSettings initializationSettings =
+        InitializationSettings(android: initializationSettingsAndroid);
 
-//     String? imageUrl = message.data['image']; // Image URL from payload
+    await _localNotifications.initialize(initializationSettings);
 
-//     BigPictureStyleInformation? bigPicture;
+    // Create notification channel
+    const AndroidNotificationChannel channel = AndroidNotificationChannel(
+      'high_importance_channel',
+      'High Importance Notifications',
+      description: 'This channel is used for important notifications.',
+      importance: Importance.high,
+    );
 
-//     if (imageUrl != null && imageUrl.isNotEmpty) {
-//       try {
-//         final ByteArrayAndroidBitmap largeIcon =
-//             await _getByteArrayFromUrl(imageUrl);
-//         bigPicture = BigPictureStyleInformation(largeIcon);
-//       } catch (e) {
-//         dev.log("Error loading image: $e", name: "Notification Error");
-//       }
-//     }
+    await _localNotifications
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
 
-//     dev.log(message.data.toString(), name: "Called from Notification");
+    // Get FCM token
+    _token = await _firebaseMessaging.getToken();
+    print('FCM Token: $_token');
 
-//     AndroidNotificationDetails androidDetails;
-//     dev.log(message.data.toString(), name: "Called from Notification");
+    // Handle background messages
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-//     // Check notification type
+    // Handle foreground messages
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Got a message whilst in the foreground!');
+      if (message.notification != null) {
+        _showNotification(message.notification!);
+      }
+    });
 
-//     androidDetails = AndroidNotificationDetails(
-//       'general_channel',
-//       'General Notification',
-//       channelDescription: 'Used for general notifications.',
-//       importance: Importance.high,
-//       enableVibration: true,
-//       priority: Priority.high,
-//       fullScreenIntent: true,
-//       styleInformation: bigPicture,
-//       icon: '@mipmap/ic_launcher',
-//       channelShowBadge: true,
-//     );
+    // Handle notification tap
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new onMessageOpenedApp event was published!');
+      // Handle notification tap
+    });
+  }
 
-//     DarwinNotificationDetails iosDetails = DarwinNotificationDetails(
-//       presentAlert: true,
-//       presentBadge: true,
-//       presentSound: true,
-//     );
+  static String? get token => _token;
 
-//     final NotificationDetails platformDetails = NotificationDetails(
-//       android: androidDetails,
-//       iOS: iosDetails,
-//     );
+  static Future<void> _showNotification(RemoteNotification notification) async {
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      'high_importance_channel',
+      'High Importance Notifications',
+      channelDescription: 'This channel is used for important notifications.',
+      importance: Importance.high,
+      priority: Priority.high,
+    );
 
-//     await _notificationsPlugin.show(
-//       Random().nextInt(1000000),
-//       message.data['title'],
-//       message.data['body'],
-//       platformDetails,
-//       payload: jsonEncode(message.data),
-//     );
-//   }
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
 
-//   static Future<ByteArrayAndroidBitmap> _getByteArrayFromUrl(String url) async {
-//     final response = await http.get(Uri.parse(url));
-//     if (response.statusCode == 200) {
-//       return ByteArrayAndroidBitmap(response.bodyBytes);
-//     } else {
-//       throw Exception("Failed to load image from $url");
-//     }
-//   }
+    await _localNotifications.show(
+      0,
+      notification.title,
+      notification.body,
+      platformChannelSpecifics,
+    );
+  }
 
-//   static void handleNotificationData(Map<String, dynamic> data) {}
-// }
+  static Future<void> sendNotificationToServer({
+    required String title,
+    required String body,
+    Map<String, String>? data,
+  }) async {
+    if (_token == null) {
+      print('No FCM token available');
+      return;
+    }
+
+    try {
+      final response = await http.post(
+        Uri.parse('$_serverUrl/send-single'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'token': _token,
+          'title': title,
+          'body': body,
+          'data': data ?? {},
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        print('Notification sent successfully');
+      } else {
+        print('Failed to send notification: ${response.body}');
+      }
+    } catch (e) {
+      print('Error sending notification: $e');
+    }
+  }
+}
+
+// Background message handler
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print("Handling a background message: ${message.messageId}");
+}
