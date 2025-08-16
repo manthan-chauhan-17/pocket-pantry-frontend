@@ -1,16 +1,52 @@
-# pocket_pantry_frontend
+# 🧁 Pocket Pantry Frontend
 
-A new Flutter project.
+**Pocket Pantry Frontend** is a Flutter-based mobile application that complements the [Pocket Pantry Backend](https://github.com/manthan-chauhan-17/poacket-pantry-backend). It provides an intuitive and responsive user interface for managing kitchen inventory, tracking grocery items, and minimizing food waste.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 📱 Features
 
-A few resources to get you started if this is your first Flutter project:
+- View, add, edit, and delete pantry items
+- Track expiration dates visually
+- User authentication and session management
+- Seamless integration with the backend API
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🛠 Tech Stack
+
+- **Frontend Framework:** Flutter
+- **Language:** Dart
+- **State Management:** Bloc
+- **Networking:** `retrofit` / `dio`
+- **Routing:** default navigator
+- **Authentication:** JWT token-based flow
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/manthan-chauhan-17/pocket-pantry-frontend.git
+cd pocket-pantry-frontend
+```
+
+### 2. Install Flutter Dependencies
+
+```bash
+flutter pub get
+```
+
+### 3. Generate the files
+
+```bash
+dart run build_runner build
+```
+
+### 4. Run the app
+
+```bash
+flutter run
+```
