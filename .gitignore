@@ -27,11 +27,11 @@ migrate_working_dir/
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/
+.flutter-plugins
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
 /build/
-/coverage/
 
 # Symbolication related
 app.*.symbols
@@ -44,7 +44,10 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-/web
-/windows
-/macos
-/linux
+/web/
+/windows/
+/linux/
+/macos/
+
+# Generated files
+**/*.g.dart
