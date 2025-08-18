@@ -11,18 +11,18 @@ class MySharedPreference {
   static const String keyFcmToken = 'fcm_token';
 
   static Future<void> saveUserData({
-    required String id,
-    required String name,
-    required String email,
-    required String token,
-    required String isLoggedIn,
+    required String? id,
+    required String? name,
+    required String? email,
+    required String? token,
+    required bool? isLoggedIn,
   }) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(keyId, id);
-    await prefs.setString(keyName, name);
-    await prefs.setString(keyEmail, email);
-    await prefs.setString(keyToken, token);
-    await prefs.setString(keyIsLoggedIn, isLoggedIn);
+    await prefs.setString(keyId, id ?? '');
+    await prefs.setString(keyName, name ?? '');
+    await prefs.setString(keyEmail, email ?? '');
+    await prefs.setString(keyToken, token ?? '');
+    await prefs.setBool(keyIsLoggedIn, isLoggedIn ?? false);
   }
 
   static Future<Map<String, String?>> getUserData() async {

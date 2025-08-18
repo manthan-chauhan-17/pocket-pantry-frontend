@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pocket_pantry_frontend/colors.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
 import 'package:pocket_pantry_frontend/services/storage_service/my_shared_preference.dart';
+import 'package:pocket_pantry_frontend/theme/app_theme.dart';
 import 'package:pocket_pantry_frontend/widgets/reusable_widgets.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -31,9 +32,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      // backgroundColor: AppTheme.getColor(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: AppColors.lightBackground,
+        backgroundColor: AppTheme.getColor(context).surface,
         leading: BackButton(),
         title: Text(
           'Profile',
@@ -158,7 +159,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   print("User logged out");
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.greenTextField,
+                  backgroundColor: AppTheme.getColor(context).onPrimary,
                   padding: EdgeInsets.symmetric(
                     vertical: 0.015 * getHeight(context),
                   ),

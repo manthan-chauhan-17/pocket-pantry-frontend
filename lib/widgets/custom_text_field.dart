@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pocket_pantry_frontend/colors.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
+import 'package:pocket_pantry_frontend/theme/app_theme.dart';
 
 enum FieldType { name, email, password, description }
 
@@ -74,7 +75,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               borderSide: BorderSide.none,
             ),
             filled: true,
-            fillColor: AppColors.greenTextField,
+            fillColor: AppTheme.getColor(context).onPrimary,
             suffixIcon: _buildSuffixIcon(),
           ),
           validator: widget.validator,
@@ -111,7 +112,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
       );
     } else if (widget.suffixIcon != null) {
       // 💡 You can optionally pass a suffixIcon from the widget
-      return Icon(widget.suffixIcon, color: AppColors.greenTextField);
+      return Icon(widget.suffixIcon,
+          color: AppTheme.getColor(context).onSurface);
     } else {
       return null;
     }

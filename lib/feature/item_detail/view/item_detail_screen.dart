@@ -8,6 +8,7 @@ import 'package:pocket_pantry_frontend/feature/item_detail/bloc/item_detail_bloc
 import 'package:pocket_pantry_frontend/responsive.dart';
 import 'package:pocket_pantry_frontend/screen_navigation.dart';
 import 'package:pocket_pantry_frontend/services/storage_service/hive/hive_model/hive_item_model.dart';
+import 'package:pocket_pantry_frontend/theme/app_theme.dart';
 import 'package:pocket_pantry_frontend/widgets/reusable_widgets.dart';
 
 class ItemDetailScreen extends StatelessWidget {
@@ -17,9 +18,9 @@ class ItemDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      // backgroundColor: AppTheme.getColor(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: AppColors.lightBackground,
+        backgroundColor: AppTheme.getColor(context).surface,
         leading: BackButton(),
         title: Text("Item Details"),
         centerTitle: true,
@@ -115,7 +116,7 @@ class ItemDetailScreen extends StatelessWidget {
                   // Add your edit functionality here
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.red,
+                  backgroundColor: AppTheme.getColor(context).error,
                   padding: EdgeInsets.symmetric(
                     vertical: 0.015 * getHeight(context),
                   ),

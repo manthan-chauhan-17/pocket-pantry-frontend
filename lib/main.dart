@@ -13,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pocket_pantry_frontend/services/notification_service/firebase_service.dart';
 import 'package:pocket_pantry_frontend/services/notification_service/notification_service.dart';
 import 'package:pocket_pantry_frontend/services/storage_service/hive/hive_model/hive_item_model.dart';
+import 'package:pocket_pantry_frontend/theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,9 +22,9 @@ void main() async {
   await Hive.initFlutter();
   // ✅ Register Hive adapter
   Hive.registerAdapter(HiveItemModelAdapter());
-  await Firebase.initializeApp();
-  await NotificationService.initialize();
-  await FirebaseService.firebaseService.getFCMToken();
+  // await Firebase.initializeApp();
+  // await NotificationService.initialize();
+  // await FirebaseService.firebaseService.getFCMToken();
 
   runApp(const MyApp());
 }
@@ -52,9 +53,9 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         title: 'Pocket Pantry',
-        theme: ThemeData(
-          textTheme: GoogleFonts.aBeeZeeTextTheme(),
-        ),
+        themeMode: ThemeMode.system,
+        darkTheme: AppTheme.darkTheme,
+        theme: AppTheme.lightTheme(context),
         home: SplashScreen(),
       ),
     );

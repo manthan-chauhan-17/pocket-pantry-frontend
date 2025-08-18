@@ -1,3 +1,7 @@
+
+
+import 'dart:developer';
+
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +12,7 @@ import 'package:pocket_pantry_frontend/feature/add_item/bloc/add_item_state.dart
 import 'package:pocket_pantry_frontend/feature/add_item/view/image_picker.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
 import 'package:pocket_pantry_frontend/services/storage_service/my_shared_preference.dart';
+import 'package:pocket_pantry_frontend/theme/app_theme.dart';
 import 'package:pocket_pantry_frontend/widgets/custom_text_field.dart';
 import 'package:pocket_pantry_frontend/widgets/reusable_widgets.dart';
 
@@ -72,9 +77,9 @@ class _AddItemScreenState extends State<AddItemScreen> {
         ),
       ],
       child: Scaffold(
-        backgroundColor: AppColors.lightBackground,
+        // backgroundColor: AppTheme.getColor(context).surface,
         appBar: AppBar(
-          backgroundColor: AppColors.lightBackground,
+          backgroundColor: AppTheme.getColor(context).surface,
           leading: IconButton(
             icon: Icon(Icons.cancel),
             onPressed: () => Navigator.pop(context),
@@ -124,7 +129,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       decoration: InputDecoration(
                         hintText: selectedItem ?? 'Select Category',
                         filled: true,
-                        fillColor: AppColors.greenTextField,
+                        fillColor: AppTheme.getColor(context).onPrimary,
                         contentPadding:
                             EdgeInsets.all(16 * getResponsive(context)),
                         border: OutlineInputBorder(
@@ -133,7 +138,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                           borderSide: BorderSide.none,
                         ),
                       ),
-                      dropdownColor: AppColors.greenTextField,
+                      dropdownColor: AppTheme.getColor(context).onPrimary,
                     ),
                   ),
                   SizedBox(height: 0.01 * getHeight(context)),
@@ -215,6 +220,10 @@ class _AddItemScreenState extends State<AddItemScreen> {
                               ),
                             ),
                             onPressed: () {
+                              log(selectedItem.toString(), name: 'selected');
+                              log(descriptionController.toString(), name: 'descr');
+                              log(expireDateController.toString(), name: 'expire');
+                              log(itemNameController.toString(), name: 'item');
                               context
                                   .read<ImagePickerBloc>()
                                   .add(UploadImageEvent(

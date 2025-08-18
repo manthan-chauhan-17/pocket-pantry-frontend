@@ -7,6 +7,7 @@ import 'package:pocket_pantry_frontend/feature/auth/bloc/auth_state.dart';
 import 'package:pocket_pantry_frontend/colors.dart';
 import 'package:pocket_pantry_frontend/feature/auth/view/login_screen.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
+import 'package:pocket_pantry_frontend/theme/app_theme.dart';
 import 'package:pocket_pantry_frontend/widgets/custom_text_field.dart';
 import 'package:pocket_pantry_frontend/widgets/reusable_widgets.dart';
 
@@ -34,9 +35,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      // backgroundColor: AppTheme.getColor(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: AppColors.lightBackground,
+        backgroundColor: AppTheme.getColor(context).surface,
         elevation: 0,
         title: Text(
           "Sign Up",

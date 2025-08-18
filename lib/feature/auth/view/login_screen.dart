@@ -8,6 +8,7 @@ import 'package:pocket_pantry_frontend/colors.dart';
 import 'package:pocket_pantry_frontend/feature/auth/view/register_screen.dart';
 import 'package:pocket_pantry_frontend/feature/home/view/home_screen.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
+import 'package:pocket_pantry_frontend/theme/app_theme.dart';
 import 'package:pocket_pantry_frontend/widgets/custom_text_field.dart';
 import 'package:pocket_pantry_frontend/widgets/reusable_widgets.dart';
 
@@ -33,9 +34,9 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      // backgroundColor: AppTheme.getColor(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: AppColors.lightBackground,
+        backgroundColor: AppTheme.getColor(context).surface,
         title: Text(
           "Login",
           style: TextStyle(fontWeight: FontWeight.bold),

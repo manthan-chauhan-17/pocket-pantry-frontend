@@ -9,6 +9,7 @@ import 'package:pocket_pantry_frontend/feature/add_item/bloc/add_item_bloc.dart'
 import 'package:pocket_pantry_frontend/feature/add_item/bloc/add_item_event.dart';
 import 'package:pocket_pantry_frontend/feature/add_item/bloc/add_item_state.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
+import 'package:pocket_pantry_frontend/theme/app_theme.dart';
 
 // ignore: must_be_immutable
 class ImagePickedBox extends StatelessWidget {
@@ -26,10 +27,10 @@ class ImagePickedBox extends StatelessWidget {
         return Stack(
           children: [
             DottedBorder(
-              options: RectDottedBorderOptions(
-                // borderPadding: EdgeInsets.all(8 * getResponsive(context)),
-
-                color: AppColors.greenTextField,
+              options: RoundedRectDottedBorderOptions(
+                radius: Radius.circular(10 * getResponsive(context)),
+                // borderPadding: EdgeInsts.all(8 * getResponsive(context)),
+                color: AppTheme.getColor(context).onSurface,
                 strokeWidth: 2 * getResponsive(context),
                 dashPattern: [8, 4],
               ),
@@ -83,16 +84,20 @@ class ImagePickedBox extends StatelessWidget {
                                 },
                                 style: ButtonStyle(
                                   backgroundColor: WidgetStatePropertyAll(
-                                    AppColors.greenTextField,
+                                    AppTheme.getColor(context).onPrimary,
                                   ),
                                   shape: WidgetStatePropertyAll(
                                       RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(
-                                      40 * getResponsive(context),
+                                      45 * getResponsive(context),
                                     ),
                                   )),
                                 ),
-                                child: Text('Upload')),
+                                child: Text('Upload',
+                                    style: TextStyle(
+                                        color: AppTheme.getColor(context)
+                                            .onSurface,
+                                        fontWeight: FontWeight.bold))),
                           ],
                         ),
                       ),

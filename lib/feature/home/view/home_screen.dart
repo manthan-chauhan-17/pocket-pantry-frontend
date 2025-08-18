@@ -16,6 +16,7 @@ import 'package:pocket_pantry_frontend/screen_navigation.dart';
 import 'package:pocket_pantry_frontend/services/storage_service/hive/hive_helper/hive_helper.dart';
 import 'package:pocket_pantry_frontend/services/storage_service/hive/hive_model/hive_item_model.dart';
 import 'package:pocket_pantry_frontend/services/storage_service/my_shared_preference.dart';
+import 'package:pocket_pantry_frontend/theme/app_theme.dart';
 import 'package:pocket_pantry_frontend/widgets/pantry_item_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -49,10 +50,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      // backgroundColor: AppTheme.getColor(context).scaffoldBackgroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: AppColors.lightBackground,
+        backgroundColor: AppTheme.getColor(context).surface,
         elevation: 0,
         centerTitle: true,
         title: Text(
@@ -117,7 +118,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: EdgeInsets.symmetric(
                         horizontal: getWidth(context) * 0.03),
                     decoration: BoxDecoration(
-                      color: AppColors.secondaryLightBackground,
+                      color: AppTheme.getColor(context).surface,
+                      // color: AppColors.secondaryLightBackground,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: DropdownButton<String>(

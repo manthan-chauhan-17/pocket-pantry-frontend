@@ -41,16 +41,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     try {
       userModel = await Api.loginUser(event.email, event.password);
-
-      log(userModel.user!.name.toString(), name: "NAME");
+      log(userModel.toString(), name: 'USERMODLE');
+      // log(userModel.user!.name.toString(), name: "NAME");
 
       if (userModel.statusCode == 200) {
         await MySharedPreference.saveUserData(
-            id: userModel.user!.id!,
-            name: userModel.user!.name!,
-            email: userModel.user!.email!,
-            token: userModel.user!.token!,
-            isLoggedIn: "true");
+            id: userModel.user?.id ?? '',
+            name: userModel.user?.name ?? '',
+            email: userModel.user?.email ?? '',
+            token: userModel.user?.token ?? '',
+            isLoggedIn: true);
       }
       log("User logged in successfully", name: "AUTH_BLOC");
       // to register FCM token

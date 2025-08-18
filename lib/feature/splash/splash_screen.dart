@@ -6,6 +6,7 @@ import 'package:pocket_pantry_frontend/feature/home/view/home_screen.dart';
 import 'package:pocket_pantry_frontend/feature/splash/bloc/splash_bloc.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
 import 'package:pocket_pantry_frontend/screen_navigation.dart';
+import 'package:pocket_pantry_frontend/theme/app_theme.dart';
 import 'package:pocket_pantry_frontend/typography.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -36,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
       },
       child: SafeArea(
         child: Scaffold(
-            backgroundColor: AppColors.lightBackground,
+            // backgroundColor: AppTheme.getColor(context).scaffoldBackgroundColor,
             body: Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: 25.0 * getResponsive(context),
@@ -120,7 +121,7 @@ class _SplashScreenState extends State<SplashScreen> {
                                 value: value,
                                 color: AppColors.lightPrimaryGreen,
                                 backgroundColor:
-                                    AppColors.secondaryLightBackground,
+                                    AppTheme.getColor(context).surface,
                               );
                             },
                           );
