@@ -54,7 +54,7 @@ class MySharedPreference {
 
   static Future<bool> isLoggedIn() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(keyIsLoggedIn) == "true";
+    return prefs.getBool(keyIsLoggedIn) == true;
   }
 
   static Future<String> getUserId() async {

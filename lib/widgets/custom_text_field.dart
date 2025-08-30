@@ -63,6 +63,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           obscureText: widget.fieldType == FieldType.password && _obscureText,
           decoration: InputDecoration(
             hintText: widget.hintText ?? "",
+            hintStyle: textTheme.bodyMedium,
             labelText: widget.labelText,
             labelStyle: textTheme.bodyMedium,
             border: OutlineInputBorder(
@@ -75,7 +76,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               borderSide: BorderSide.none,
             ),
             filled: true,
-            fillColor: AppTheme.getColor(context).onPrimary,
+            fillColor: AppTheme.getColor(context).onSurfaceVariant,
             suffixIcon: _buildSuffixIcon(),
           ),
           validator: widget.validator,

@@ -1,8 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:pocket_pantry_frontend/feature/add_item/bloc/add_item_bloc.dart';
+import 'package:pocket_pantry_frontend/feature/add-item/bloc/add_item_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/auth/bloc/auth_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/home_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/item_detail/bloc/item_detail_bloc.dart';
@@ -12,7 +11,6 @@ import 'package:pocket_pantry_frontend/services/api_service/api/api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pocket_pantry_frontend/services/notification_service/firebase_service.dart';
 import 'package:pocket_pantry_frontend/services/notification_service/notification_service.dart';
-import 'package:pocket_pantry_frontend/services/storage_service/hive/hive_model/hive_item_model.dart';
 import 'package:pocket_pantry_frontend/theme/app_theme.dart';
 
 void main() async {
@@ -21,10 +19,9 @@ void main() async {
   // ✅ Initialize Hive
   await Hive.initFlutter();
   // ✅ Register Hive adapter
-  Hive.registerAdapter(HiveItemModelAdapter());
-  // await Firebase.initializeApp();
-  // await NotificationService.initialize();
-  // await FirebaseService.firebaseService.getFCMToken();
+  await Firebase.initializeApp();
+  await NotificationService.initialize();
+  await FirebaseService.firebaseService.getFCMToken();
 
   runApp(const MyApp());
 }
@@ -45,8 +42,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => HomeBloc(),
         ),
-        BlocProvider(create: (context) => DropDownBloc()),
-        BlocProvider(create: (context) => ImagePickerBloc()),
+        BlocProvider(create: (context) => AddItemBloc()),
+        // BlocProvider(create: (context) => DropDownBloc()),
+        // BlocProvider(create: (context) => ImagePickerBloc()),
         BlocProvider(create: (context) => ItemDetailBloc()),
       ],
       child: MaterialApp(

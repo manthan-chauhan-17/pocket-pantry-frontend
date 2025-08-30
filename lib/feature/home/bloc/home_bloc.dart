@@ -44,8 +44,6 @@ import 'package:pocket_pantry_frontend/feature/home/bloc/home_event.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/home_state.dart';
 import 'package:pocket_pantry_frontend/feature/home/models/item_model.dart';
 import 'package:pocket_pantry_frontend/services/api_service/api/api.dart';
-import 'package:pocket_pantry_frontend/services/storage_service/hive/hive_helper/hive_helper.dart';
-import 'package:pocket_pantry_frontend/services/storage_service/hive/hive_model/hive_item_model.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ItemModel itemModel = ItemModel();
@@ -65,21 +63,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         log(itemModel.items.toString(), name: "get items bloc");
 
         // Convert List<Item> to List<HiveItemModel>
-        List<HiveItemModel> hiveItems = itemModel.items!.map((item) {
-          return HiveItemModel(
-            id: item.id ?? "",
-            itemName: item.itemName ?? "",
-            itemDescription: item.itemDescription ?? "",
-            expireDate: item.expireDate ?? "",
-            category: item.category ?? "",
-            imageUrl: item.image!.url ?? "",
-            imagePublicId: item.image!.publicId ?? "",
-          );
-        }).toList();
+        // List<HiveItemModel> hiveItems = itemModel.items!.map((item) {
+        //   return HiveItemModel(
+        //     id: item.id ?? "",
+        //     itemName: item.itemName ?? "",
+        //     itemDescription: item.itemDescription ?? "",
+        //     expireDate: item.expireDate ?? "",
+        //     category: item.category ?? "",
+        //     imageUrl: item.image!.url ?? "",
+        //     imagePublicId: item.image!.publicId ?? "",
+        //   );
+        // }).toList();
 
-        log(hiveItems.toString(), name: "HIVE_ITEMS_BLOC");
-        // Save all to Hive
-        await HiveItemHelper.replaceAll(hiveItems);
+        // log(hiveItems.toString(), name: "HIVE_ITEMS_BLOC");
+        // // Save all to Hive
+        // await HiveItemHelper.replaceAll(hiveItems);
 
         // Emit state
         emit(GetItemsSuccessState(items: itemModel.items!));

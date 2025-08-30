@@ -1,6 +1,6 @@
 import 'dart:developer';
-import 'dart:io';
-import 'package:pocket_pantry_frontend/feature/add_item/model/add_item_model.dart';
+import 'package:dio/dio.dart';
+import 'package:pocket_pantry_frontend/feature/add-item/model/add_item_model.dart';
 import 'package:pocket_pantry_frontend/feature/home/models/item_model.dart';
 import 'package:pocket_pantry_frontend/feature/auth/models/user_model.dart';
 import 'package:pocket_pantry_frontend/services/api_service/retorfit/injection.dart';
@@ -82,16 +82,11 @@ class Api {
   }
 
   // Add Item with Image
-  static uploadItemWithImage(
-      {required String itemName,
-      required String itemDescription,
-      required String category,
-      required String expireDate,
-      required File image}) async {
+  static Future<AddItemModel> uploadItemWithImage(
+      {required FormData body}) async {
     String token = await MySharedPreference.getToken();
 
-    AddItemModel response = await restClient.addItem("Bearer $token", itemName,
-        itemDescription, expireDate, category, image);
+    AddItemModel response = await restClient.addItem("Bearer $token", body);
 
     log(response.toString(), name: "RESINAPI");
 
