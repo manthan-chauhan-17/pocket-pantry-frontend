@@ -1,19 +1,15 @@
-import 'dart:developer';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pocket_pantry_frontend/colors.dart';
 import 'package:pocket_pantry_frontend/feature/home/view/home_screen.dart';
 import 'package:pocket_pantry_frontend/feature/item_detail/bloc/item_detail_bloc.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
 import 'package:pocket_pantry_frontend/screen_navigation.dart';
-import 'package:pocket_pantry_frontend/services/storage_service/hive/hive_model/hive_item_model.dart';
 import 'package:pocket_pantry_frontend/theme/app_theme.dart';
 import 'package:pocket_pantry_frontend/widgets/reusable_widgets.dart';
 
 class ItemDetailScreen extends StatelessWidget {
-  final HiveItemModel item;
-  const ItemDetailScreen({super.key, required this.item});
+  const ItemDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -64,13 +60,13 @@ class ItemDetailScreen extends StatelessWidget {
                     ),
                   ),
                   child: Hero(
-                    tag: item.id,
+                    tag: 'id',
                     child: ClipRRect(
                       borderRadius: BorderRadiusGeometry.circular(
                         16 * getResponsive(context),
                       ),
                       child: Image.network(
-                        item.imageUrl,
+                        '',
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -79,7 +75,7 @@ class ItemDetailScreen extends StatelessWidget {
               ),
               ReusableWidgets.getSizedBox(height: 0.03 * getHeight(context)),
               Text(
-                item.itemName,
+                'itemName',
                 style: TextStyle(
                   fontSize: 24 * getResponsiveText(context),
                   fontWeight: FontWeight.bold,
@@ -87,21 +83,21 @@ class ItemDetailScreen extends StatelessWidget {
               ),
               ReusableWidgets.getSizedBox(height: 0.02 * getHeight(context)),
               Text(
-                "Category : ${item.category}",
+                "Category : category",
                 style: TextStyle(
                   fontSize: 18 * getResponsiveText(context),
                 ),
               ),
               ReusableWidgets.getSizedBox(height: 0.015 * getHeight(context)),
               Text(
-                "Expiry Date : ${item.expireDate}",
+                "Expiry Date : expireDate",
                 style: TextStyle(
                   fontSize: 18 * getResponsiveText(context),
                 ),
               ),
               ReusableWidgets.getSizedBox(height: 0.015 * getHeight(context)),
               Text(
-                "Description : ${item.itemDescription}",
+                "Description : itemitemDescription",
                 style: TextStyle(
                   fontSize: 18 * getResponsiveText(context),
                 ),
@@ -109,10 +105,10 @@ class ItemDetailScreen extends StatelessWidget {
               Spacer(),
               ElevatedButton(
                 onPressed: () {
-                  log(item.id, name: "Item ID");
-                  context
-                      .read<ItemDetailBloc>()
-                      .add(DeleteItemEvent(id: item.id));
+                  // log(item.id, name: "Item ID");
+                  // context
+                  //     .read<ItemDetailBloc>()
+                  //     .add(DeleteItemEvent(id: item.id));
                   // Add your edit functionality here
                 },
                 style: ElevatedButton.styleFrom(

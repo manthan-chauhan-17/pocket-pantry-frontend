@@ -34,8 +34,10 @@ class Items {
   Image? image;
   String? itemName;
   String? itemDescription;
-  String? expireDate;
+  int? expireDate;
   String? category;
+  String? createdAt;
+  String? updatedAt;
   String? id;
 
   Items(
@@ -44,6 +46,8 @@ class Items {
       this.itemDescription,
       this.expireDate,
       this.category,
+      this.createdAt,
+      this.updatedAt,
       this.id});
 
   Items.fromJson(Map<String, dynamic> json) {
@@ -52,6 +56,8 @@ class Items {
     itemDescription = json['itemDescription'];
     expireDate = json['expireDate'];
     category = json['category'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
     id = json['id'];
   }
 
@@ -64,6 +70,8 @@ class Items {
     data['itemDescription'] = this.itemDescription;
     data['expireDate'] = this.expireDate;
     data['category'] = this.category;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
     data['id'] = this.id;
     return data;
   }

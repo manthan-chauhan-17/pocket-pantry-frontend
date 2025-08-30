@@ -10,16 +10,16 @@ class AddItemModel {
     statusCode = json['statusCode'];
     message = json['message'];
     success = json['success'];
-    item = json['item'] != null ? new Item.fromJson(json['item']) : null;
+    item = json['item'] != null ? Item.fromJson(json['item']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['statusCode'] = this.statusCode;
-    data['message'] = this.message;
-    data['success'] = this.success;
-    if (this.item != null) {
-      data['item'] = this.item!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['statusCode'] = statusCode;
+    data['message'] = message;
+    data['success'] = success;
+    if (item != null) {
+      data['item'] = item!.toJson();
     }
     return data;
   }
@@ -47,18 +47,18 @@ class Item {
     itemDescription = json['itemDescription'];
     expireDate = json['expireDate'];
     category = json['category'];
-    image = json['image'] != null ? new Image.fromJson(json['image']) : null;
+    image = json['image'] != null ? Image.fromJson(json['image']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['itemName'] = this.itemName;
-    data['itemDescription'] = this.itemDescription;
-    data['expireDate'] = this.expireDate;
-    data['category'] = this.category;
-    if (this.image != null) {
-      data['image'] = this.image!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['itemName'] = itemName;
+    data['itemDescription'] = itemDescription;
+    data['expireDate'] = expireDate;
+    data['category'] = category;
+    if (image != null) {
+      data['image'] = image!.toJson();
     }
     return data;
   }
@@ -76,9 +76,9 @@ class Image {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['url'] = this.url;
-    data['publicId'] = this.publicId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['url'] = url;
+    data['publicId'] = publicId;
     return data;
   }
 }

@@ -2,8 +2,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart' hide Image;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pocket_pantry_frontend/colors.dart';
-import 'package:pocket_pantry_frontend/feature/add_item/view/add_item.dart';
+import 'package:pocket_pantry_frontend/feature/add-item/view/add_item_screen.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/home_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/home_event.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/home_state.dart';
@@ -13,8 +12,6 @@ import 'package:pocket_pantry_frontend/feature/item_detail/view/item_detail_scre
 import 'package:pocket_pantry_frontend/feature/profile/view/profile_screen.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
 import 'package:pocket_pantry_frontend/screen_navigation.dart';
-import 'package:pocket_pantry_frontend/services/storage_service/hive/hive_helper/hive_helper.dart';
-import 'package:pocket_pantry_frontend/services/storage_service/hive/hive_model/hive_item_model.dart';
 import 'package:pocket_pantry_frontend/services/storage_service/my_shared_preference.dart';
 import 'package:pocket_pantry_frontend/theme/app_theme.dart';
 import 'package:pocket_pantry_frontend/widgets/pantry_item_card.dart';
@@ -34,14 +31,12 @@ class _HomeScreenState extends State<HomeScreen> {
     context.read<HomeBloc>().add(GetItemEvent());
   }
 
-  List<HiveItemModel> hiveItemList = [];
   String userName = "";
   // void loadUsername() async {
   //   userName = await MySharedPreference.getUserName();
   // }
 
   void loadHiveDataAfterBloc(List<Items> items) async {
-    hiveItemList = await HiveItemHelper.getAllItems();
     // log(hiveItemList.toString(), name: "HIVE_ITEM_LIST");
     userName = await MySharedPreference.getUserName();
     setState(() {}); // rebuild with updated data
@@ -142,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   // Grid of pantry items
                   Expanded(
                     child: GridView.builder(
-                      itemCount: hiveItemList.length,
+                      itemCount: state.items.length,
                       shrinkWrap: true,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
@@ -151,20 +146,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisExtent: 240 * getResponsive(context),
                       ),
                       itemBuilder: (context, index) {
-                        final item = hiveItemList[index];
+                        final item = state.items[index];
+                        // final expireDate =
+                        //     DateHelper.timestampToString(item.expireDate);
                         return GestureDetector(
                           onTap: () {
                             ScreenNavigation.push(
                                 context,
                                 ItemDetailScreen(
-                                  item: item,
-                                ));
+                                    // item: item,
+                                    ));
                           },
                           child: PantryItemCard(
-                            imagePath: item.imageUrl,
-                            title: item.itemName,
+                            imagePath: item.image?.url ?? '',
+                            title: item.itemName ?? '',
                             expiry: 'Expires on ${item.expireDate}',
-                            itemId: item.id,
+                            itemId: item.id ?? '',
                           ),
                         );
                       },
