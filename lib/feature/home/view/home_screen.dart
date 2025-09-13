@@ -127,8 +127,19 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              ScreenNavigation.push(context, AddItemScreen());
+            onPressed: () async {
+              // ✅ Navigate to AddItemScreen and wait for result
+              // If result is true, it means an item was successfully added
+              final result = await Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AddItemScreen()),
+              );
+
+              // ✅ If item was successfully added, refresh the home screen data
+              if (result == true) {
+                // Trigger a refresh of items by dispatching GetItemEvent
+                context.read<HomeBloc>().add(GetItemEvent());
+              }
             },
             icon: Icon(
               Icons.add,
@@ -167,93 +178,102 @@ class _HomeScreenState extends State<HomeScreen> {
             });
             // List<Item> items = state.items;
 
-            return Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: getWidth(context) * 0.04),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Welcome back, $userName"),
-                  SizedBox(height: getHeight(context) * 0.02),
-                  // Category Field
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 0.03 * getWidth(context)),
-                    child: GestureDetector(
-                      onTap: _showCategoryDropdown,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: AppTheme.getColor(context).onSurfaceVariant,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 18 * getResponsive(context),
-                          vertical: 20 * getResponsive(context),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              selectedCategory.isEmpty
-                                  ? 'All'
-                                  : selectedCategory,
-                              style: TextStyle(
-                                color: selectedCategory.isEmpty
-                                    ? AppTheme.getColor(context).onSurface
-                                    : Colors.black,
-                                fontSize: 18 * getResponsiveText(context),
-                              ),
-                            ),
-                            Transform.rotate(
-                              angle: 1.5708, // 90 degrees in radians
-                              child: Icon(
-                                Icons.chevron_right,
-                                color: Color(0xFF8BC34A),
-                                size: 20,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: getHeight(context) * 0.02),
-                  // Grid of pantry items
-                  Expanded(
-                    child: GridView.builder(
-                      itemCount: state.items.length,
-                      shrinkWrap: true,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 15,
-                        mainAxisSpacing: 20,
-                        mainAxisExtent: 240 * getResponsive(context),
-                      ),
-                      itemBuilder: (context, index) {
-                        final item = state.items[index];
-                        // final expireDate =
-                        //     DateHelper.timestampToString(item.expireDate);
-                        return GestureDetector(
-                          onTap: () {
-                            ScreenNavigation.push(
-                                context,
-                                ItemDetailScreen(
-                                  itemId: item.id ?? '',
-                                ));
-                          },
-                          child: PantryItemCard(
-                            imagePath: item.image?.url ?? '',
-                            title: item.itemName ?? '',
-                            expiry:
-                                'Expires on ${DateHelper.timestampToString(item.expireDate ?? -1).split(',')[0]}',
-                            itemId: item.id ?? '',
+            return RefreshIndicator(
+              // ✅ Add pull-to-refresh functionality for better user experience
+              onRefresh: () async {
+                // Trigger a refresh of items when user pulls down
+                context.read<HomeBloc>().add(GetItemEvent());
+                // Wait a bit to show the refresh indicator
+                await Future.delayed(Duration(milliseconds: 500));
+              },
+              child: Padding(
+                padding:
+                    EdgeInsets.symmetric(horizontal: getWidth(context) * 0.04),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Welcome back, $userName"),
+                    SizedBox(height: getHeight(context) * 0.02),
+                    // Category Field
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 0.03 * getWidth(context)),
+                      child: GestureDetector(
+                        onTap: _showCategoryDropdown,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: AppTheme.getColor(context).onSurfaceVariant,
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                        );
-                      },
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 18 * getResponsive(context),
+                            vertical: 20 * getResponsive(context),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                selectedCategory.isEmpty
+                                    ? 'All'
+                                    : selectedCategory,
+                                style: TextStyle(
+                                  color: selectedCategory.isEmpty
+                                      ? AppTheme.getColor(context).onSurface
+                                      : Colors.black,
+                                  fontSize: 18 * getResponsiveText(context),
+                                ),
+                              ),
+                              Transform.rotate(
+                                angle: 1.5708, // 90 degrees in radians
+                                child: Icon(
+                                  Icons.chevron_right,
+                                  color: Color(0xFF8BC34A),
+                                  size: 20,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                  )
-                ],
+
+                    SizedBox(height: getHeight(context) * 0.02),
+                    // Grid of pantry items
+                    Expanded(
+                      child: GridView.builder(
+                        itemCount: state.items.length,
+                        shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 15,
+                          mainAxisSpacing: 20,
+                          mainAxisExtent: 240 * getResponsive(context),
+                        ),
+                        itemBuilder: (context, index) {
+                          final item = state.items[index];
+                          // final expireDate =
+                          //     DateHelper.timestampToString(item.expireDate);
+                          return GestureDetector(
+                            onTap: () {
+                              ScreenNavigation.push(
+                                  context,
+                                  ItemDetailScreen(
+                                    itemId: item.id ?? '',
+                                  ));
+                            },
+                            child: PantryItemCard(
+                              imagePath: item.image?.url ?? '',
+                              title: item.itemName ?? '',
+                              expiry:
+                                  'Expires on ${DateHelper.timestampToString(item.expireDate ?? -1).split(',')[0]}',
+                              itemId: item.id ?? '',
+                            ),
+                          );
+                        },
+                      ),
+                    )
+                  ],
+                ),
               ),
             );
           }

@@ -174,7 +174,9 @@ class _AddItemScreenState extends State<AddItemScreen> {
   }
 
   void _submitForm() {
+    // ✅ Validate form before submission
     if (_formKey.currentState!.validate()) {
+      // ✅ Ensure category is selected
       if (selectedCategory.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Please select a category')),
@@ -182,6 +184,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
         return;
       }
 
+      // ✅ Ensure expiry date is selected
       if (_expiryDateController.text.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Please select an expiry date')),
@@ -189,6 +192,8 @@ class _AddItemScreenState extends State<AddItemScreen> {
         return;
       }
 
+      // ✅ Dispatch AddItemSubmitted event to the bloc
+      // This will trigger the API call to add the item
       context.read<AddItemBloc>().add(AddItemSubmitted(
             itemName: _itemNameController.text.trim(),
             itemDescription: _itemDescriptionController.text.trim(),
@@ -229,7 +234,9 @@ class _AddItemScreenState extends State<AddItemScreen> {
 
             ScaffoldMessenger.of(context).showSnackBar(snackbar);
 
-            Navigator.of(context).pop();
+            // ✅ Return true to indicate successful item addition
+            // This will trigger the home screen to refresh its data
+            Navigator.of(context).pop(true);
           } else if (state is AddItemError) {
             final snackbar = ReusableWidgets.getSnackBar(
                 title: "Error",

@@ -51,6 +51,8 @@ class AddItemBloc extends Bloc<AddItemEvent, AddItemState> {
 
       final response = await Api.uploadItemWithImage(body: formData);
 
+      // ✅ Emit success state with response message
+      // This will trigger the UI to show success snackbar and pop back to home screen
       emit(AddItemSuccess(response.message.toString()));
     } catch (e) {
       log(e.toString(), name: 'ERROR');
