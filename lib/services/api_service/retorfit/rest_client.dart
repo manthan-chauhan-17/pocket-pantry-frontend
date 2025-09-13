@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:pocket_pantry_frontend/feature/add-item/model/add_item_model.dart';
 import 'package:pocket_pantry_frontend/feature/home/models/item_model.dart';
 import 'package:pocket_pantry_frontend/feature/auth/models/user_model.dart';
+import 'package:pocket_pantry_frontend/feature/item-detail/model/item_detail_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'rest_client.g.dart';
@@ -34,6 +35,11 @@ abstract class RestClient {
   @DELETE('item/delete-item')
   Future deleteItem(
     @Header('Authorization') String token,
+    @Body() Map<String, dynamic> body,
+  );
+
+  @POST('item/get-single-item')
+  Future<ItemDetailModel> getItem(
     @Body() Map<String, dynamic> body,
   );
 

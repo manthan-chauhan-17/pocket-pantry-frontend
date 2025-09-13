@@ -31,16 +31,15 @@ class _AddItemScreenState extends State<AddItemScreen> {
   String selectedCategory = '';
   int? expireDateTimestamp;
   final List<String> categories = [
-    'Dairy',
-    'Meat',
-    'Vegetables',
-    'Fruits',
-    'Grains',
-    'Beverages',
-    'Snacks',
-    'Frozen',
-    'Condiments',
-    'Other'
+    "Vegetables",
+    "Fruits",
+    "Dairy",
+    "Grains",
+    "Spices",
+    "Beverages",
+    "Snacks",
+    "Frozen",
+    "Others"
   ];
 
   @override
