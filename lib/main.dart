@@ -4,7 +4,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:pocket_pantry_frontend/feature/add-item/bloc/add_item_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/auth/bloc/auth_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/home_bloc.dart';
-import 'package:pocket_pantry_frontend/feature/item_detail/bloc/item_detail_bloc.dart';
+import 'package:pocket_pantry_frontend/feature/item-detail/bloc/item_detail_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/splash/bloc/splash_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/splash/splash_screen.dart';
 import 'package:pocket_pantry_frontend/services/api_service/api/api.dart';

@@ -8,12 +8,13 @@ import 'package:pocket_pantry_frontend/feature/home/bloc/home_event.dart';
 import 'package:pocket_pantry_frontend/feature/home/bloc/home_state.dart';
 import 'package:pocket_pantry_frontend/feature/home/models/item_model.dart'
     hide Image;
-import 'package:pocket_pantry_frontend/feature/item_detail/view/item_detail_screen.dart';
+import 'package:pocket_pantry_frontend/feature/item-detail/view/item_detail_screen.dart';
 import 'package:pocket_pantry_frontend/feature/profile/view/profile_screen.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
 import 'package:pocket_pantry_frontend/screen_navigation.dart';
 import 'package:pocket_pantry_frontend/services/storage_service/my_shared_preference.dart';
 import 'package:pocket_pantry_frontend/theme/app_theme.dart';
+import 'package:pocket_pantry_frontend/utils/date_helper.dart';
 import 'package:pocket_pantry_frontend/widgets/pantry_item_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -32,14 +33,79 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   String userName = "";
-  // void loadUsername() async {
-  //   userName = await MySharedPreference.getUserName();
-  // }
 
   void loadHiveDataAfterBloc(List<Items> items) async {
-    // log(hiveItemList.toString(), name: "HIVE_ITEM_LIST");
     userName = await MySharedPreference.getUserName();
     setState(() {}); // rebuild with updated data
+  }
+
+  final List<String> categories = [
+    "Vegetables",
+    "Fruits",
+    "Dairy",
+    "Grains",
+    "Spices",
+    "Beverages",
+    "Snacks",
+    "Frozen",
+    "Others"
+  ];
+
+  String selectedCategory = '';
+
+  void _showCategoryDropdown() {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (context) => Container(
+        padding: EdgeInsets.all(16 * getResponsive(context)),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Select Category',
+                    style: TextStyle(
+                      fontSize: 16 * getResponsiveText(context),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(
+                        Icons.arrow_drop_down_circle_outlined,
+                        color: AppTheme.getColor(context).onSurface,
+                      ))
+                ],
+              ),
+              SizedBox(height: 16 * getResponsive(context)),
+              ...categories
+                  .map((category) => ListTile(
+                        title: Text(category),
+                        onTap: () {
+                          setState(() {
+                            selectedCategory = category;
+                          });
+                          Navigator.pop(context);
+                        },
+                        trailing: selectedCategory == category
+                            ? Icon(Icons.check, color: Color(0xFF7CB342))
+                            : null,
+                      ))
+                  .toList(),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -66,6 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             icon: Icon(
               Icons.add,
+              color: AppTheme.getColor(context).onSurface,
             ),
           ),
           GestureDetector(
@@ -108,31 +175,49 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Text("Welcome back, $userName"),
                   SizedBox(height: getHeight(context) * 0.02),
-                  // Dropdown
-                  Container(
+                  // Category Field
+                  Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: getWidth(context) * 0.03),
-                    decoration: BoxDecoration(
-                      color: AppTheme.getColor(context).surface,
-                      // color: AppColors.secondaryLightBackground,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: DropdownButton<String>(
-                      value: 'ALL',
-                      // isExpanded: true,
-                      underline: const SizedBox(),
-                      icon: const Icon(Icons.arrow_drop_down,
-                          color: Colors.black),
-                      items: const [
-                        DropdownMenuItem(value: 'ALL', child: Text('ALL')),
-                      ],
-                      onChanged: (value) {},
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16 * getResponsiveText(context),
+                        horizontal: 0.03 * getWidth(context)),
+                    child: GestureDetector(
+                      onTap: _showCategoryDropdown,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppTheme.getColor(context).onSurfaceVariant,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 18 * getResponsive(context),
+                          vertical: 20 * getResponsive(context),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              selectedCategory.isEmpty
+                                  ? 'All'
+                                  : selectedCategory,
+                              style: TextStyle(
+                                color: selectedCategory.isEmpty
+                                    ? AppTheme.getColor(context).onSurface
+                                    : Colors.black,
+                                fontSize: 18 * getResponsiveText(context),
+                              ),
+                            ),
+                            Transform.rotate(
+                              angle: 1.5708, // 90 degrees in radians
+                              child: Icon(
+                                Icons.chevron_right,
+                                color: Color(0xFF8BC34A),
+                                size: 20,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
+
                   SizedBox(height: getHeight(context) * 0.02),
                   // Grid of pantry items
                   Expanded(
@@ -154,13 +239,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             ScreenNavigation.push(
                                 context,
                                 ItemDetailScreen(
-                                    // item: item,
-                                    ));
+                                  itemId: item.id ?? '',
+                                ));
                           },
                           child: PantryItemCard(
                             imagePath: item.image?.url ?? '',
                             title: item.itemName ?? '',
-                            expiry: 'Expires on ${item.expireDate}',
+                            expiry:
+                                'Expires on ${DateHelper.timestampToString(item.expireDate ?? -1).split(',')[0]}',
                             itemId: item.id ?? '',
                           ),
                         );

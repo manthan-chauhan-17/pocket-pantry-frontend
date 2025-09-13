@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:pocket_pantry_frontend/feature/add-item/model/add_item_model.dart';
 import 'package:pocket_pantry_frontend/feature/home/models/item_model.dart';
 import 'package:pocket_pantry_frontend/feature/auth/models/user_model.dart';
+import 'package:pocket_pantry_frontend/feature/item-detail/model/item_detail_model.dart';
 import 'package:pocket_pantry_frontend/services/api_service/retorfit/injection.dart';
 import 'package:pocket_pantry_frontend/services/storage_service/my_shared_preference.dart';
 
@@ -101,6 +102,17 @@ class Api {
     final response = await restClient.deleteItem("Bearer $token", body);
 
     log(response.toString(), name: "Delete Res");
+
+    return response;
+  }
+
+  static Future<ItemDetailModel> getSingleItem({required String itemId}) async {
+    Map<String, dynamic> body = {};
+    body['itemId'] = itemId;
+
+    ItemDetailModel response = await restClient.getItem(body);
+
+    log(response.toString(), name: 'Get Single Item');
 
     return response;
   }
