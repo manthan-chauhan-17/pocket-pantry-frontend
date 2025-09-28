@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:pocket_pantry_frontend/feature/add-item/bloc/add_item_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/auth/bloc/auth_bloc.dart';
@@ -15,6 +16,7 @@ import 'package:pocket_pantry_frontend/theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   Api.checkHealthApi();
   // ✅ Initialize Hive
   await Hive.initFlutter();
@@ -43,17 +45,17 @@ class MyApp extends StatelessWidget {
           create: (context) => HomeBloc(),
         ),
         BlocProvider(create: (context) => AddItemBloc()),
-        // BlocProvider(create: (context) => DropDownBloc()),
-        // BlocProvider(create: (context) => ImagePickerBloc()),
         BlocProvider(create: (context) => ItemDetailBloc()),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         title: 'Pocket Pantry',
-        themeMode: ThemeMode.system,
-        darkTheme: AppTheme.darkTheme,
+        // themeMode: ThemeMode.system,
+        // darkTheme: AppTheme.darkTheme,
+        themeMode: ThemeMode.light,
         theme: AppTheme.lightTheme(context),
+
         home: SplashScreen(),
       ),
     );

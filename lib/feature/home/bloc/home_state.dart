@@ -22,11 +22,13 @@ class GetItemsLoadingState extends HomeState {}
 
 class GetItemsSuccessState extends HomeState {
   final List<Items> items;
+  final List<Items> selectedCategoryItems;
 
-  GetItemsSuccessState({required this.items});
+  GetItemsSuccessState(
+      {required this.items, required this.selectedCategoryItems});
 
   @override
-  List<Object?> get props => [items];
+  List<Object?> get props => [items, selectedCategoryItems];
 }
 
 class GetItemsErrorState extends HomeState {}

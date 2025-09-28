@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:pocket_pantry_frontend/colors.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
 import 'package:pocket_pantry_frontend/services/storage_service/my_shared_preference.dart';
 import 'package:pocket_pantry_frontend/theme/app_theme.dart';
@@ -32,7 +31,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: AppTheme.getColor(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: AppTheme.getColor(context).surface,
         leading: BackButton(),
@@ -105,7 +103,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 email,
                 style: TextStyle(
                     fontSize: 16 * getResponsiveText(context),
-                    color: AppColors.greenText),
+                    color: AppTheme.getColor(context).onSurface),
               ),
               ReusableWidgets.getSizedBox(height: 0.02 * getHeight(context)),
               getTitle(context, "Account"),

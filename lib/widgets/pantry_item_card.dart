@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:pocket_pantry_frontend/colors.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
+import 'package:pocket_pantry_frontend/theme/app_theme.dart';
 
 class PantryItemCard extends StatelessWidget {
   final String imagePath;
@@ -66,7 +66,7 @@ class PantryItemCard extends StatelessWidget {
                   expiry,
                   style: TextStyle(
                     fontSize: 14 * getResponsiveText(context),
-                    color: AppColors.greenText,
+                    color: AppTheme.getColor(context).onSurface,
                   ),
                 ),
               ],
