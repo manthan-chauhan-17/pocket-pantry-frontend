@@ -94,6 +94,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           setState(() {
                             selectedCategory = category;
                           });
+                          context.read<HomeBloc>().add(
+                                SelectCategoryEvent(
+                                    selectedCategory: selectedCategory),
+                              );
                           Navigator.pop(context);
                         },
                         trailing: selectedCategory == category
@@ -177,6 +181,9 @@ class _HomeScreenState extends State<HomeScreen> {
               loadHiveDataAfterBloc(state.items);
             });
             // List<Item> items = state.items;
+            List<Items> items = selectedCategory.isEmpty
+                ? state.items
+                : state.selectedCategoryItems;
 
             return RefreshIndicator(
               // ✅ Add pull-to-refresh functionality for better user experience
@@ -227,7 +234,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 angle: 1.5708, // 90 degrees in radians
                                 child: Icon(
                                   Icons.chevron_right,
-                                  color: Color(0xFF8BC34A),
+                                  color: AppTheme.getColor(context).primary,
                                   size: 20,
                                 ),
                               ),
@@ -241,7 +248,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     // Grid of pantry items
                     Expanded(
                       child: GridView.builder(
-                        itemCount: state.items.length,
+                        itemCount: items.length, //state.items.length,
                         shrinkWrap: true,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
@@ -250,7 +257,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisExtent: 240 * getResponsive(context),
                         ),
                         itemBuilder: (context, index) {
-                          final item = state.items[index];
+                          final item = items[index];
+                          // state.items[index];
                           // final expireDate =
                           //     DateHelper.timestampToString(item.expireDate);
                           return GestureDetector(

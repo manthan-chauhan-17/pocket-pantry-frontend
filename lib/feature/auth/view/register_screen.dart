@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/auth/bloc/auth_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/auth/bloc/auth_event.dart';
 import 'package:pocket_pantry_frontend/feature/auth/bloc/auth_state.dart';
-import 'package:pocket_pantry_frontend/colors.dart';
 import 'package:pocket_pantry_frontend/feature/auth/view/login_screen.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
 import 'package:pocket_pantry_frontend/theme/app_theme.dart';
@@ -35,7 +34,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: AppTheme.getColor(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: AppTheme.getColor(context).surface,
         elevation: 0,
@@ -195,8 +193,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.lightPrimaryGreen,
-                            // foregroundColor: AppColors.lightSurface,
+                            backgroundColor: AppTheme.getColor(context).primary,
                             padding: const EdgeInsets.symmetric(vertical: 16.0),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12.0),
@@ -209,7 +206,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               : Text(
                                   'Sign Up',
                                   style: TextStyle(
-                                    color: Colors.black,
+                                    color: AppTheme.getColor(context).onPrimary,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -231,7 +228,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                         child: Text('Already have an account? Login',
                             style: TextStyle(
-                              color: AppColors.greenText,
+                              color: AppTheme.getColor(context).onSurface,
                             )),
                       ),
                     ),

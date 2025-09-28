@@ -1,41 +1,3 @@
-// import 'dart:async';
-// import 'dart:developer';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:pocket_pantry_frontend/feature/home/bloc/home_event.dart';
-// import 'package:pocket_pantry_frontend/feature/home/bloc/home_state.dart';
-// import 'package:pocket_pantry_frontend/feature/home/models/item_model.dart';
-// import 'package:pocket_pantry_frontend/services/api_service/api/api.dart';
-
-// class HomeBloc extends Bloc<HomeEvent, HomeState> {
-//   ItemModel itemModel = ItemModel();
-//   HomeBloc() : super(HomeInitial()) {
-//     on<GetItemEvent>(getItems);
-//     on<NavigateToAddItemScreenEvent>(navigateToAddItemScreen);
-//   }
-
-//   FutureOr<void> getItems(GetItemEvent event, Emitter<HomeState> emit) async {
-//     emit(GetItemsLoadingState());
-
-//     try {
-//       itemModel = await Api.getItems();
-
-//       if (itemModel.statusCode == 200) {
-//         log(itemModel.item.toString(), name: "get items bloc");
-//         emit(GetItemsSuccessState(items: itemModel.item!));
-//       } else {
-//         emit(GetItemsErrorState());
-//       }
-//     } catch (e) {
-//       log(e.toString(), name: "GetItemsError");
-//       emit(GetItemsErrorState());
-//     }
-//   }
-
-//   void navigateToAddItemScreen(
-//       NavigateToAddItemScreenEvent event, Emitter<HomeState> emit) {
-//     emit(NavigateToAddItemScreenState());
-//   }
-// }
 import 'dart:async';
 import 'dart:developer';
 
@@ -51,6 +13,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeInitial()) {
     on<GetItemEvent>(getItems);
     on<NavigateToAddItemScreenEvent>(navigateToAddItemScreen);
+    on<SelectCategoryEvent>(selectedCategory);
   }
 
   FutureOr<void> getItems(GetItemEvent event, Emitter<HomeState> emit) async {
@@ -80,7 +43,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         // await HiveItemHelper.replaceAll(hiveItems);
 
         // Emit state
-        emit(GetItemsSuccessState(items: itemModel.items!));
+        emit(GetItemsSuccessState(
+            items: itemModel.items ?? [], selectedCategoryItems: []));
       } else {
         emit(GetItemsErrorState());
       }
@@ -93,5 +57,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   void navigateToAddItemScreen(
       NavigateToAddItemScreenEvent event, Emitter<HomeState> emit) {
     emit(NavigateToAddItemScreenState());
+  }
+
+  FutureOr<void> selectedCategory(
+      SelectCategoryEvent event, Emitter<HomeState> emit) {
+    final category = event.selectedCategory;
+
+    final categorisedList =
+        itemModel.items?.where((item) => item.category == category).toList() ??
+            [];
+
+    emit(GetItemsSuccessState(
+        items: itemModel.items ?? [], selectedCategoryItems: categorisedList));
   }
 }

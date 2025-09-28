@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pocket_pantry_frontend/colors.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
 import 'package:pocket_pantry_frontend/theme/app_theme.dart';
 
@@ -103,7 +102,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       return IconButton(
         icon: Icon(
           _obscureText ? Icons.visibility_off : Icons.visibility,
-          color: AppColors.darkPrimary,
+          color: AppTheme.getColor(context).primary,
         ),
         onPressed: () {
           setState(() {

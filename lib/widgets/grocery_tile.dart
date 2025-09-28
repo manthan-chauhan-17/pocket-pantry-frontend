@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pocket_pantry_frontend/colors.dart';
-import 'package:pocket_pantry_frontend/typography.dart';
+import 'package:pocket_pantry_frontend/responsive.dart';
+import 'package:pocket_pantry_frontend/theme/app_theme.dart';
 
 class GroceryTile extends StatelessWidget {
   final String image;
@@ -18,14 +18,11 @@ class GroceryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = AppTextTheme.getLightTextTheme(context);
-
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      // color: AppColors.lightSurface,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,7 +38,6 @@ class GroceryTile extends StatelessWidget {
                   return const Center(
                     child: Icon(
                       Icons.broken_image,
-                      // color: AppColors.lightIcon,
                       size: 40,
                     ),
                   );
@@ -54,26 +50,25 @@ class GroceryTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  style: textTheme.titleLarge?.copyWith(
-                    color: AppColors.lightPrimaryGreen,
-                  ),
-                ),
+                Text(title,
+                    style: TextStyle(
+                      fontSize: 18 * getResponsiveText(context),
+                      fontWeight: FontWeight.w600,
+                      color: AppTheme.getColor(context).primary,
+                    )),
                 if (expires.isNotEmpty)
-                  Text(
-                    'Expires: $expires',
-                    style: textTheme.labelLarge?.copyWith(
-                      // color: AppColors.lightText.withOpacity(0.7),
-                    ),
-                  ),
+                  Text('Expires: $expires',
+                      style: TextStyle(
+                          fontSize: 12 * getResponsiveText(context),
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white60)),
                 if (category.isNotEmpty)
-                  Text(
-                    category,
-                    style: textTheme.labelLarge?.copyWith(
-                      color: AppColors.lightPrimaryGreen,
-                    ),
-                  ),
+                  Text(category,
+                      style: TextStyle(
+                        fontSize: 12 * getResponsiveText(context),
+                        fontWeight: FontWeight.w500,
+                        color: AppTheme.getColor(context).primary,
+                      )),
               ],
             ),
           ),

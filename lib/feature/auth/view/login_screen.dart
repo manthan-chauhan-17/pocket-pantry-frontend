@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/auth/bloc/auth_bloc.dart';
 import 'package:pocket_pantry_frontend/feature/auth/bloc/auth_event.dart';
 import 'package:pocket_pantry_frontend/feature/auth/bloc/auth_state.dart';
-import 'package:pocket_pantry_frontend/colors.dart';
 import 'package:pocket_pantry_frontend/feature/auth/view/register_screen.dart';
 import 'package:pocket_pantry_frontend/feature/home/view/home_screen.dart';
 import 'package:pocket_pantry_frontend/responsive.dart';
@@ -152,12 +151,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Container(
                       padding:
-                          EdgeInsets.only(left: 22 * getResponsive(context)),
-                      child: Text('Forgot Password?',
-                          style: TextStyle(
-                            color: AppColors.greenText,
-                            fontWeight: FontWeight.w500,
-                          )),
+                          EdgeInsets.only(right: 22 * getResponsive(context)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            'Forgot Password?',
+                            style: TextStyle(
+                              color: AppTheme.getColor(context).onSurface,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 0.08 * getHeight(context),
@@ -176,8 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.lightPrimaryGreen,
-                            // foregroundColor: AppColors.lightSurface,
+                            backgroundColor: AppTheme.getColor(context).primary,
                             padding: const EdgeInsets.symmetric(vertical: 16.0),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12.0),
@@ -187,7 +192,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             'Login',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black),
+                                color: AppTheme.getColor(context).onPrimary),
                           ),
                         ),
                       ),
@@ -205,7 +210,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         child: Text(
                           'Don\'t have an account? Register',
-                          style: TextStyle(color: AppColors.greenText),
+                          style: TextStyle(
+                              color: AppTheme.getColor(context).onSurface),
                         ),
                       ),
                     ),

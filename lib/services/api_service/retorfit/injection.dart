@@ -1,11 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:developer' as dev;
 import 'package:pocket_pantry_frontend/services/api_service/retorfit/rest_client.dart';
 
 // Change the base URL to your server's IP address
-final restClient = RestClient(
-    baseUrl: "https://pocket-pantry-backend-dnce.onrender.com/api/v1/", dio);
+final restClient = dotenv.env['env'] == 'dev'
+    ? RestClient(baseUrl: 'http://192.168.0.103:3000/api/v1/', dio)
+    : RestClient(
+        baseUrl: "https://pocket-pantry-backend-dnce.onrender.com/api/v1/",
+        dio);
 
 final dio = getDio();
 

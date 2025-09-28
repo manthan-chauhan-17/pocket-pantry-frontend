@@ -78,7 +78,8 @@ class _AddItemScreenState extends State<AddItemScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              leading: Icon(Icons.camera_alt, color: Color(0xFF7CB342)),
+              leading: Icon(Icons.camera_alt,
+                  color: AppTheme.getColor(context).primary),
               title: Text('Take Photo'),
               onTap: () {
                 Navigator.pop(context);
@@ -86,7 +87,8 @@ class _AddItemScreenState extends State<AddItemScreen> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.photo_library, color: Color(0xFF7CB342)),
+              leading: Icon(Icons.photo_library,
+                  color: AppTheme.getColor(context).primary),
               title: Text('Choose from Gallery'),
               onTap: () {
                 Navigator.pop(context);
@@ -109,7 +111,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
-              primary: Color(0xFF7CB342),
+              primary: AppTheme.getColor(context).primary,
               onPrimary: Colors.white,
               surface: Colors.white,
               onSurface: Colors.black,
@@ -138,36 +140,36 @@ class _AddItemScreenState extends State<AddItemScreen> {
       ),
       builder: (context) => Container(
         padding: EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Select Category',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Select Category',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            ),
-            SizedBox(height: 16),
-            ...categories
-                .map((category) => ListTile(
-                      title: Text(category),
-                      onTap: () {
-                        setState(() {
-                          selectedCategory = category;
-                        });
-                        // context
-                        //     .read<AddItemBloc>()
-                        //     .add(CategoryChanged(category));
-                        Navigator.pop(context);
-                      },
-                      trailing: selectedCategory == category
-                          ? Icon(Icons.check, color: Color(0xFF7CB342))
-                          : null,
-                    ))
-                .toList(),
-          ],
+              SizedBox(height: 16),
+              ...categories
+                  .map((category) => ListTile(
+                        title: Text(category),
+                        onTap: () {
+                          setState(() {
+                            selectedCategory = category;
+                          });
+                          Navigator.pop(context);
+                        },
+                        trailing: selectedCategory == category
+                            ? Icon(Icons.check,
+                                color: AppTheme.getColor(context).primary)
+                            : null,
+                      ))
+                  .toList(),
+            ],
+          ),
         ),
       ),
     );
@@ -299,7 +301,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                             angle: 1.5708, // 90 degrees in radians
                             child: Icon(
                               Icons.chevron_right,
-                              color: Color(0xFF8BC34A),
+                              color: AppTheme.getColor(context).primary,
                               size: 20,
                             ),
                           ),

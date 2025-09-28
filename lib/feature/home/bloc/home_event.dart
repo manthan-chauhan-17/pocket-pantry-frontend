@@ -21,3 +21,12 @@ class GetItemEvent extends HomeEvent {
 }
 
 class NavigateToAddItemScreenEvent extends HomeEvent {}
+
+class SelectCategoryEvent extends HomeEvent {
+  final String selectedCategory;
+
+  SelectCategoryEvent({required this.selectedCategory});
+
+  @override
+  List<Object?> get props => [selectedCategory];
+}
