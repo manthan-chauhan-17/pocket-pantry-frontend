@@ -44,6 +44,7 @@ dependencies:
   dio: ^5.9.0
   pretty_dio_logger: ^1.4.0
   retrofit: ^4.9.1
+  connectivity_plus: ^7.0.0
 
   # Local Database
   hive: ^2.2.3
@@ -56,8 +57,15 @@ dependencies:
   # Image and Caching
   cached_network_image: ^3.4.1
 
+  # API error-response handling
   dartz: ^0.10.1
+
+  # Routing
   go_router: ^17.0.0
+
+  # UI
+  awesome_snackbar_content: ^0.1.8
+  google_fonts: ^6.3.3
 
 dev_dependencies:
   flutter_test:

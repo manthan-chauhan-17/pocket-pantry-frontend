@@ -1,8 +1,8 @@
-class AppExceptions implements Exception {
+class AppException implements Exception {
   final String? message;
   final int? statusCode;
 
-  AppExceptions({this.message, this.statusCode});
+  AppException({this.message, this.statusCode});
 
   @override
   String toString() {

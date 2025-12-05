@@ -73,7 +73,7 @@ Dio getDio() {
   return dio;
 }
 
-AppExceptions _handleDioError(DioException error) {
+AppException _handleDioError(DioException error) {
   String errorMessage;
 
   switch (error.type) {
@@ -103,7 +103,7 @@ AppExceptions _handleDioError(DioException error) {
       break;
   }
 
-  return AppExceptions(
+  return AppException(
     message: errorMessage,
     statusCode: error.response?.statusCode,
   );
