@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pocket_pantry_frontend/core/theme/colors.dart';
 
 class AppTheme {
@@ -9,120 +10,48 @@ class AppTheme {
       Theme.of(context).brightness == Brightness.dark;
 
   static ThemeData lightTheme(BuildContext context) => ThemeData(
+    textTheme: GoogleFonts.playwriteNoTextTheme(),
     useMaterial3: true,
     brightness: Brightness.light,
     scaffoldBackgroundColor: AppColors.backgroundPrimary,
     primaryColor: AppColors.primary,
-    shadowColor: AppColors.black,
-    splashColor: AppColors.splashBg,
-    dividerColor: AppColors.textFieldBorder,
 
     appBarTheme: const AppBarTheme(
       surfaceTintColor: Colors.transparent,
       backgroundColor: AppColors.backgroundPrimary,
-      foregroundColor: AppColors.black,
+      foregroundColor: AppColors.primaryText,
       elevation: 0,
     ),
 
     // Color theme
     colorScheme: const ColorScheme.light(
       primary: AppColors.primary,
-      //0xFF2F648E
       secondary: AppColors.secondary,
-      //0xFF2FBBA4
       surface: AppColors.backgroundPrimary,
-      //0xFFFAFAFF
-      surfaceContainer: AppColors.lightTeal,
-      //0xFFEEF7FD
-      surfaceContainerHigh: AppColors.containerHigh,
-      surfaceBright: AppColors.white,
-      //0xFFFFFFFF
-      error: AppColors.error,
-      //0xFFFFFFFF
-      onSecondary: AppColors.white,
-      //0xFFFFFFFF
-      onSurface: AppColors.textPrimary,
-
-      //0xFF101828
-      onSurfaceVariant: AppColors.textSecondary,
-      //0xFFFFFFFF
-      outline: AppColors.textFieldBorder,
-      //0xFF08A4BB
-      onSecondaryContainer: AppColors.containerGrey,
-      //0xFFF9FAFB
-      outlineVariant: AppColors.textGrey200,
-      // 0xFFEAECF0
-      primaryContainer: AppColors.lightPurple,
-      //0xFF98A2B3
-      tertiary: AppColors.myCoCyan,
-      //0xFFF4F3FF
-      onTertiary: AppColors.darksecondary,
-      //0xFF2FBBA4
-      onTertiaryContainer: AppColors.spanishYellow,
-
-      tertiaryContainer: AppColors.black,
-      inversePrimary: AppColors.primaryLight,
-      //0xFF2F648E
-      onErrorContainer: AppColors.red,
-
-      onPrimaryContainer: AppColors.white,
-
-      shadow: AppColors.grey_20,
+      error: AppColors.errorBg,
+      onError: AppColors.error,
     ),
   );
 
   // Optional: add this now for future dark mode use
   static ThemeData darkTheme(BuildContext context) => ThemeData(
+    textTheme: GoogleFonts.playwriteNoTextTheme(),
     brightness: Brightness.dark,
     useMaterial3: true,
     scaffoldBackgroundColor: AppColors.darkbackgroundPrimary,
-    primaryColor: AppColors.primary,
-    shadowColor: AppColors.gray,
+    primaryColor: AppColors.darkPrimary,
+
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.grey[900],
-      foregroundColor: AppColors.white,
+      foregroundColor: AppColors.darkPrimaryText,
       elevation: 0,
     ),
     colorScheme: const ColorScheme.dark(
-      primary: AppColors.primary,
-      //0xFF2F648E
-      secondary: AppColors.secondary,
-
-      //0xFF2FBBA4
+      primary: AppColors.darkPrimary,
+      secondary: AppColors.darkSecondary,
       surface: AppColors.darkbackgroundPrimary,
-      //0xFFFAFAFF
-      surfaceContainer: AppColors.lightTeal,
-      //0xFFEEF7FD
-      surfaceContainerHigh: AppColors.containerHighDark,
-      surfaceBright: AppColors.black,
-      error: AppColors.error,
-      //0xFFE53935
-      onPrimary: AppColors.white,
-      //0xFFFFFFFF
-      onSecondary: AppColors.white,
-      //0xFFFFFFFF
-      onSurface: AppColors.darktextPrimary,
-      //0xFF101828
-      onSurfaceVariant: AppColors.darktextSecondary,
-      //0xFF475467
-      onError: AppColors.white,
-      //0xFFFFFFFF
-      outline: AppColors.darkTextFieldBorder,
-      //0xFF98A2B3
-      outlineVariant: AppColors.darkTextFieldBorder, //0xFFEAECF0
-      //0xFF98A2B3
-      tertiary: AppColors.myCoCyan,
-      //0xFFF4F3FF
-      onTertiary: AppColors.darksecondary,
-      //0xFF2FBBA4
-      onTertiaryContainer: AppColors.spanishYellow,
-      inversePrimary: AppColors.darksurfacePrimary,
-
-      tertiaryContainer: AppColors.black,
-
-      onPrimaryContainer: AppColors.onPrimaryContainerDark,
-
-      shadow: AppColors.grey_80,
+      error: AppColors.errorBg,
+      onError: AppColors.error,
     ),
   );
 }
