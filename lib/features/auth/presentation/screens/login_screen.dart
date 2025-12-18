@@ -1,13 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pocket_pantry_frontend/core/constants/constants.dart';
 import 'package:pocket_pantry_frontend/core/router/route_paths.dart';
 import 'package:pocket_pantry_frontend/core/theme/app_theme.dart';
+import 'package:pocket_pantry_frontend/core/utils/util.dart';
 import 'package:pocket_pantry_frontend/core/widgets/custom_button.dart';
 import 'package:pocket_pantry_frontend/core/widgets/custom_snackbar.dart';
 import 'package:pocket_pantry_frontend/core/widgets/custom_text.dart';
 import 'package:pocket_pantry_frontend/core/widgets/custom_text_form_field.dart';
 import 'package:pocket_pantry_frontend/features/auth/presentation/widgets/common_auth_header.dart';
+import 'package:pocket_pantry_frontend/features/auth/presentation/widgets/forgot_password_bottomsheet.dart';
 import 'package:pocket_pantry_frontend/features/auth/presentation/widgets/suffix_eye_icon.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -70,6 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       CustomTextFormField(
                         controller: emailController,
                         hintText: 'Enter your email',
+                        validator: Util.emailValidator,
                       ),
                       CustomTextFormField(
                         controller: passwordController,
@@ -91,7 +95,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 0.03 * MediaQuery.of(context).size.height),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: [CustomText('Forgot password?', fontSize: 12.0)],
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) {
+                            return ResetPasswordBottomsheet();
+                            // OtpVerificationBottomsheet();
+                            // ForgotPasswordBottomsheet();
+                          },
+                        );
+                      },
+                      child: CustomText('Forgot password?', fontSize: 12.0),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 0.03 * MediaQuery.of(context).size.height),
                 CustomButton(
