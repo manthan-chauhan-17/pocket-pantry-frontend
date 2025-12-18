@@ -11,6 +11,9 @@ class CustomTextFormField extends StatelessWidget {
     this.isSuffixIconOn = false,
     this.suffixIcon,
     this.suffixIconColor,
+    this.isPrefixIconOn = false,
+    this.prefixIcon,
+    this.prefixIconColor,
     this.fillColor,
     this.validator,
   });
@@ -21,8 +24,12 @@ class CustomTextFormField extends StatelessWidget {
   final bool isSuffixIconOn;
   final Widget? suffixIcon;
   final Color? suffixIconColor;
+  final bool isPrefixIconOn;
+  final Widget? prefixIcon;
+  final Color? prefixIconColor;
   final Color? fillColor;
   final String? Function(String?)? validator;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -54,6 +61,8 @@ class CustomTextFormField extends StatelessWidget {
         ),
         suffixIcon: isSuffixIconOn ? suffixIcon : null,
         suffixIconColor: suffixIconColor ?? AppTheme.getColor(context).primary,
+        prefixIcon: isPrefixIconOn ? prefixIcon : null,
+        prefixIconColor: prefixIconColor ?? AppTheme.getColor(context).primary,
         fillColor: fillColor ?? AppTheme.getColor(context).surfaceContainer,
         filled: true,
       ),
