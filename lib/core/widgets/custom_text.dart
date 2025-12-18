@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pocket_pantry_frontend/core/theme/app_theme.dart';
+import 'package:pocket_pantry_frontend/core/theme/colors.dart';
 
 /// A custom text widget that supports optional language translation,
 /// styling, keyword highlighting, and a required field indicator.
@@ -49,12 +51,19 @@ class CustomText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Use provided color, or adapt to theme if not provided
+    final textColor =
+        color ??
+        (AppTheme.isAppThemeDarkMode(context)
+            ? AppColors.darkPrimaryText
+            : AppColors.primaryText);
+
     return Text(
       isUpperCase ? text.toUpperCase() : text,
       style: TextStyle(
         fontSize: fontSize,
         fontWeight: fontWeight,
-        color: color,
+        color: textColor,
         decoration: decoration,
         decorationColor: decorationColor,
         fontStyle: fontStyle,

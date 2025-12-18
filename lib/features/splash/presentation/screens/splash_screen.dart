@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pocket_pantry_frontend/core/router/route_paths.dart';
+import 'package:pocket_pantry_frontend/core/services/preference_service.dart';
 import 'package:pocket_pantry_frontend/core/theme/app_theme.dart';
 import 'package:pocket_pantry_frontend/core/widgets/custom_text.dart';
 
@@ -29,8 +30,13 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  void navigateToNextScreen() {
-    context.pushNamed(RoutePaths.login);
+  void navigateToNextScreen() async {
+    final isLoggedIn = await PreferenceService.getIsLoggedIn();
+    if (isLoggedIn) {
+      context.pushReplacementNamed(RoutePaths.home);
+    } else {
+      context.pushReplacementNamed(RoutePaths.login);
+    }
   }
 
   @override
