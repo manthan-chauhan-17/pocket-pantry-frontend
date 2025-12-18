@@ -155,23 +155,159 @@ import 'package:flutter/material.dart';
 // }
 
 class AppColors {
+  // ================================================================
   // LIGHT MODE COLORS
+  // ================================================================
+
+  // Primary brand color - used for main actions, buttons, and key UI elements
   static const Color primary = Color(0xFF57531e);
+
+  // Secondary brand color - used for secondary actions and accents
   static const Color secondary = Color(0xFFedeada);
+
+  // Background color - main app background
   static const Color backgroundPrimary = Color(0xFFFAFAFF);
+
+  // Primary text color - main text color for content
   static const Color primaryText = Color(0xFF57531e);
 
-  //================================================================
-  // Dark Mode Colors
-  //================================================================
+  // Text/icon color on primary background - ensures contrast on primary colored surfaces
+  static const Color onPrimary = Color(0xFFFFFFFF);
 
-  // Primary and Secondary Colors
+  // Text/icon color on secondary background - ensures contrast on secondary colored surfaces
+  static const Color onSecondary = Color(0xFF57531e);
+
+  // Text/icon color on surface - used for text on cards, dialogs, and other surfaces
+  static const Color onSurface = Color(0xFF57531e);
+
+  // Text/icon color on background - used for text directly on app background
+  static const Color onBackground = Color(0xFF57531e);
+
+  // Surface variant - slightly different surface color for elevation
+  static const Color surfaceVariant = Color(0xFFF5F5F5);
+
+  // Text/icon color on surface variant
+  static const Color onSurfaceVariant = Color(0xFF666666);
+
+  // Outline color - used for borders and dividers
+  static const Color outline = Color(0xFFCCCCCC);
+
+  // Outline variant - lighter outline for subtle borders
+  static const Color outlineVariant = Color(0xFFE6E6E6);
+
+  // Tertiary color - additional accent color
+  static const Color tertiary = Color(0xFF8B7355);
+
+  // Text/icon color on tertiary background
+  static const Color onTertiary = Color(0xFFFFFFFF);
+
+  // Primary container - lighter version of primary for containers
+  static const Color primaryContainer = Color(0xFFE8E6D0);
+
+  // Text/icon color on primary container
+  static const Color onPrimaryContainer = Color(0xFF57531e);
+
+  // Secondary container - lighter version of secondary for containers
+  static const Color secondaryContainer = Color(0xFFF5F3E8);
+
+  // Text/icon color on secondary container
+  static const Color onSecondaryContainer = Color(0xFF57531e);
+
+  // Tertiary container - container using tertiary color
+  static const Color tertiaryContainer = Color(0xFFE8DCC8);
+
+  // Text/icon color on tertiary container
+  static const Color onTertiaryContainer = Color(0xFF8B7355);
+
+  // Text/icon color on error background - ensures readable text on error colored surfaces
+  static const Color onError = Color(0xFFFFFFFF);
+
+  // Error container - background for error messages
+  static const Color errorContainer = Color(0xFFfee2e2);
+
+  // Text/icon color on error container
+  static const Color onErrorContainer = Color(0xFFE53935);
+
+  // ================================================================
+  // DARK MODE COLORS
+  // ================================================================
+
+  // Primary brand color for dark mode
   static const Color darkPrimary = Color(0xFFedeada);
+
+  // Secondary brand color for dark mode
   static const Color darkSecondary = Color(0xFF57531e);
+
+  // Background color for dark mode
   static const Color darkbackgroundPrimary = Color(0xFF1f1f1f);
+
+  // Primary text color for dark mode
   static const Color darkPrimaryText = Color(0xFFedeada);
 
-  // General Colors
+  // Text/icon color on primary background in dark mode
+  static const Color darkOnPrimary = Color(0xFF1f1f1f);
+
+  // Text/icon color on secondary background in dark mode
+  static const Color darkOnSecondary = Color(0xFFedeada);
+
+  // Text/icon color on surface in dark mode
+  static const Color darkOnSurface = Color(0xFFedeada);
+
+  // Text/icon color on background in dark mode
+  static const Color darkOnBackground = Color(0xFFedeada);
+
+  // Surface variant for dark mode
+  static const Color darkSurfaceVariant = Color(0xFF2f2f2f);
+
+  // Text/icon color on surface variant in dark mode
+  static const Color darkOnSurfaceVariant = Color(0xFFCCCCCC);
+
+  // Outline color for dark mode
+  static const Color darkOutline = Color(0xFF666666);
+
+  // Outline variant for dark mode
+  static const Color darkOutlineVariant = Color(0xFF444444);
+
+  // Tertiary color for dark mode
+  static const Color darkTertiary = Color(0xFFB8A082);
+
+  // Text/icon color on tertiary background in dark mode
+  static const Color darkOnTertiary = Color(0xFF1f1f1f);
+
+  // Primary container for dark mode
+  static const Color darkPrimaryContainer = Color(0xFF3a3a2a);
+
+  // Text/icon color on primary container in dark mode
+  static const Color darkOnPrimaryContainer = Color(0xFFedeada);
+
+  // Secondary container for dark mode
+  static const Color darkSecondaryContainer = Color(0xFF2a2a1f);
+
+  // Text/icon color on secondary container in dark mode
+  static const Color darkOnSecondaryContainer = Color(0xFFedeada);
+
+  // Tertiary container for dark mode
+  static const Color darkTertiaryContainer = Color(0xFF3a3328);
+
+  // Text/icon color on tertiary container in dark mode
+  static const Color darkOnTertiaryContainer = Color(0xFFB8A082);
+
+  // Text/icon color on error background in dark mode
+  static const Color darkOnError = Color(0xFFFFFFFF);
+
+  // Error container for dark mode
+  static const Color darkErrorContainer = Color(0xFF5a1f1f);
+
+  // Text/icon color on error container in dark mode
+  static const Color darkOnErrorContainer = Color(0xFFFF6B6B);
+
+  // ================================================================
+  // GENERAL COLORS (Shared between themes)
+  // ================================================================
+
+  // Error color - used for error states
   static const Color error = Color(0xFFE53935);
+
+  // Error background - light background for error messages
   static const Color errorBg = Color(0xFFfee2e2);
 }
