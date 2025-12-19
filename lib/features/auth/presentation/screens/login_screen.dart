@@ -101,10 +101,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         showModalBottomSheet(
                           context: context,
                           isScrollControlled: true,
+                          enableDrag: true,
+                          isDismissible: true,
+                          useSafeArea: true,
                           builder: (context) {
-                            return ResetPasswordBottomsheet();
-                            // OtpVerificationBottomsheet();
-                            // ForgotPasswordBottomsheet();
+                            return ResetPasswordFLow();
                           },
                         );
                       },
