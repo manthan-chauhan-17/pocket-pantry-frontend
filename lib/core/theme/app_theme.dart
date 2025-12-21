@@ -10,7 +10,8 @@ class AppTheme {
       Theme.of(context).brightness == Brightness.dark;
 
   static ThemeData lightTheme(BuildContext context) => ThemeData(
-    textTheme: GoogleFonts.playwriteNoTextTheme(),
+    // textTheme: GoogleFonts.playwriteNoTextTheme(),
+    textTheme: GoogleFonts.mochiyPopPOneTextTheme(),
     useMaterial3: true,
     brightness: Brightness.light,
     scaffoldBackgroundColor: AppColors.backgroundPrimary,

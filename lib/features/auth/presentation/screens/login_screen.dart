@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pocket_pantry_frontend/core/constants/constant.dart';
 import 'package:pocket_pantry_frontend/core/constants/constants.dart';
 import 'package:pocket_pantry_frontend/core/router/route_paths.dart';
 import 'package:pocket_pantry_frontend/core/theme/app_theme.dart';
@@ -74,6 +74,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: emailController,
                         hintText: 'Enter your email',
                         validator: Util.emailValidator,
+                        isPrefixIconOn: true,
+                        prefixIcon: Icon(
+                          Constant.mailIcon,
+                          color: AppTheme.getColor(context).primary,
+                        ),
                       ),
                       CustomTextFormField(
                         controller: passwordController,
