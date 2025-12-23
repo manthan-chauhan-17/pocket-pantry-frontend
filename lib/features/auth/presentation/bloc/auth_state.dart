@@ -28,3 +28,32 @@ class RegisterUserFailure extends AuthState {
   @override
   List<Object> get props => [message];
 }
+
+class LoginUserLoading extends AuthState {}
+
+class LoginUserSuccess extends AuthState {
+  final LoginUserEntity loginUserEntity;
+
+  const LoginUserSuccess({required this.loginUserEntity});
+
+  @override
+  List<Object> get props => [loginUserEntity];
+}
+
+class LoginUserFailure extends AuthState {
+  final String message;
+
+  const LoginUserFailure({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}
+
+class TogglePasswordVisibilityState extends AuthState {
+  final bool isVisible;
+
+  const TogglePasswordVisibilityState({required this.isVisible});
+
+  @override
+  List<Object> get props => [isVisible];
+}

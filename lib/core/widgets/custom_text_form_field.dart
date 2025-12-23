@@ -16,6 +16,7 @@ class CustomTextFormField extends StatelessWidget {
     this.prefixIconColor,
     this.fillColor,
     this.validator,
+    this.obscureText = false,
   });
 
   final TextEditingController controller;
@@ -29,11 +30,13 @@ class CustomTextFormField extends StatelessWidget {
   final Color? prefixIconColor;
   final Color? fillColor;
   final String? Function(String?)? validator;
+  final bool obscureText;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      obscureText: obscureText,
       style: TextStyle(color: AppTheme.getColor(context).primary),
       decoration: InputDecoration(
         hintText: hintText ?? '',

@@ -105,40 +105,71 @@ class _SignupScreenState extends State<SignupScreen> {
                           hintText: 'Enter your email',
                           validator: Util.emailValidator,
                         ),
-                        CustomTextFormField(
-                          controller: passwordController,
-                          hintText: 'Enter your password',
-                          isSuffixIconOn: true,
-                          suffixIcon: SuffixEyeIcon(
-                            confirmPasswordController: passwordController,
-                            onPressed: () {
-                              passwordController.clear();
-                            },
-                            isVisible: passwordController.text.isNotEmpty,
-                          ),
-                          suffixIconColor: AppTheme.getColor(context).primary,
+                        BlocBuilder<AuthBloc, AuthState>(
+                          builder: (context, state) {
+                            final togglePasswordVisibilityState =
+                                state as TogglePasswordVisibilityState;
+                            return CustomTextFormField(
+                              obscureText:
+                                  togglePasswordVisibilityState.isVisible,
+                              controller: passwordController,
+                              hintText: 'Enter your password',
+                              isSuffixIconOn: true,
+                              suffixIcon: SuffixEyeIcon(
+                                confirmPasswordController: passwordController,
+                                onPressed: () {
+                                  context.read<AuthBloc>().add(
+                                    TogglePasswordVisibilityEvent(
+                                      isVisible: togglePasswordVisibilityState
+                                          .isVisible,
+                                    ),
+                                  );
+                                },
+                                isVisible:
+                                    togglePasswordVisibilityState.isVisible,
+                              ),
+                              suffixIconColor: AppTheme.getColor(
+                                context,
+                              ).primary,
+                            );
+                          },
                         ),
-                        CustomTextFormField(
-                          controller: confirmPasswordController,
-                          hintText: 'Confirm your password',
-                          isSuffixIconOn: true,
-                          suffixIcon: SuffixEyeIcon(
-                            confirmPasswordController:
-                                confirmPasswordController,
-                            onPressed: () {
-                              confirmPasswordController.clear();
-                            },
-                            isVisible:
-                                confirmPasswordController.text.isNotEmpty,
-                          ),
-                          suffixIconColor: AppTheme.getColor(context).primary,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'This field is required!';
-                            } else if (value != passwordController.text) {
-                              return 'Passwords do not match!';
-                            }
-                            return null;
+                        BlocBuilder<AuthBloc, AuthState>(
+                          builder: (context, state) {
+                            final togglePasswordVisibilityState =
+                                state as TogglePasswordVisibilityState;
+                            return CustomTextFormField(
+                              obscureText:
+                                  togglePasswordVisibilityState.isVisible,
+                              controller: confirmPasswordController,
+                              hintText: 'Confirm your password',
+                              isSuffixIconOn: true,
+                              suffixIcon: SuffixEyeIcon(
+                                confirmPasswordController:
+                                    confirmPasswordController,
+                                onPressed: () {
+                                  context.read<AuthBloc>().add(
+                                    TogglePasswordVisibilityEvent(
+                                      isVisible: togglePasswordVisibilityState
+                                          .isVisible,
+                                    ),
+                                  );
+                                },
+                                isVisible:
+                                    togglePasswordVisibilityState.isVisible,
+                              ),
+                              suffixIconColor: AppTheme.getColor(
+                                context,
+                              ).primary,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'This field is required!';
+                                } else if (value != passwordController.text) {
+                                  return 'Passwords do not match!';
+                                }
+                                return null;
+                              },
+                            );
                           },
                         ),
                       ],
