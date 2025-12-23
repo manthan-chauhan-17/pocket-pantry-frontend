@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:pocket_pantry_frontend/core/constants/constant.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'api_client.g.dart';
 
-@RestApi(baseUrl: 'https://pocket-pantry-backend-dnce.onrender.com/api/v1/')
+@RestApi(baseUrl: Constant.apiBaseUrl)
 abstract class ApiClient {
   factory ApiClient(Dio dio, {String baseUrl}) = _ApiClient;
 

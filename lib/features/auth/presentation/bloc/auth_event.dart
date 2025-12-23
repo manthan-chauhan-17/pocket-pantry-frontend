@@ -21,3 +21,22 @@ class RegisterUserEvent extends AuthEvent {
   @override
   List<Object> get props => [name, email, password];
 }
+
+class LoginUserEvent extends AuthEvent {
+  final String email;
+  final String password;
+
+  const LoginUserEvent({required this.email, required this.password});
+
+  @override
+  List<Object> get props => [email, password];
+}
+
+class TogglePasswordVisibilityEvent extends AuthEvent {
+  final bool isVisible;
+
+  const TogglePasswordVisibilityEvent({required this.isVisible});
+
+  @override
+  List<Object> get props => [isVisible];
+}
