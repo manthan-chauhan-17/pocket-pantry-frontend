@@ -107,26 +107,18 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         BlocBuilder<AuthBloc, AuthState>(
                           builder: (context, state) {
-                            final togglePasswordVisibilityState =
-                                state as TogglePasswordVisibilityState;
+                            // final togglePasswordVisibilityState =
+                            //     state as TogglePasswordVisibilityState;
                             return CustomTextFormField(
-                              obscureText:
-                                  togglePasswordVisibilityState.isVisible,
+                              // obscureText:
+                              //     togglePasswordVisibilityState.isVisible,
                               controller: passwordController,
                               hintText: 'Enter your password',
                               isSuffixIconOn: true,
                               suffixIcon: SuffixEyeIcon(
                                 confirmPasswordController: passwordController,
-                                onPressed: () {
-                                  context.read<AuthBloc>().add(
-                                    TogglePasswordVisibilityEvent(
-                                      isVisible: togglePasswordVisibilityState
-                                          .isVisible,
-                                    ),
-                                  );
-                                },
-                                isVisible:
-                                    togglePasswordVisibilityState.isVisible,
+                                onPressed: () {},
+                                isVisible: true,
                               ),
                               suffixIconColor: AppTheme.getColor(
                                 context,
@@ -136,27 +128,22 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         BlocBuilder<AuthBloc, AuthState>(
                           builder: (context, state) {
-                            final togglePasswordVisibilityState =
-                                state as TogglePasswordVisibilityState;
+                            // final togglePasswordVisibilityState =
+                            //     state is TogglePasswordVisibilityState
+                            //     ? state
+                            //     : null;
                             return CustomTextFormField(
-                              obscureText:
-                                  togglePasswordVisibilityState.isVisible,
+                              // obscureText:
+                              //     togglePasswordVisibilityState?.isVisible ??
+                              // false,
                               controller: confirmPasswordController,
                               hintText: 'Confirm your password',
                               isSuffixIconOn: true,
                               suffixIcon: SuffixEyeIcon(
                                 confirmPasswordController:
                                     confirmPasswordController,
-                                onPressed: () {
-                                  context.read<AuthBloc>().add(
-                                    TogglePasswordVisibilityEvent(
-                                      isVisible: togglePasswordVisibilityState
-                                          .isVisible,
-                                    ),
-                                  );
-                                },
-                                isVisible:
-                                    togglePasswordVisibilityState.isVisible,
+                                onPressed: () {},
+                                isVisible: true,
                               ),
                               suffixIconColor: AppTheme.getColor(
                                 context,

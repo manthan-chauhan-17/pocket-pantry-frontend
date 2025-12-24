@@ -33,10 +33,8 @@ class LoginUserEvent extends AuthEvent {
 }
 
 class TogglePasswordVisibilityEvent extends AuthEvent {
-  final bool isVisible;
-
-  const TogglePasswordVisibilityEvent({required this.isVisible});
+  const TogglePasswordVisibilityEvent();
 
   @override
-  List<Object> get props => [isVisible];
+  List<Object> get props => [];
 }

@@ -100,27 +100,29 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         BlocBuilder<AuthBloc, AuthState>(
+                          buildWhen: (previous, current) {
+                            // Rebuild on any state change to ensure we get the latest visibility
+                            return true;
+                          },
                           builder: (context, state) {
-                            final togglePasswordVisibilityState =
-                                state as TogglePasswordVisibilityState;
+                            // Get current password visibility from bloc
+                            final authBloc = context.read<AuthBloc>();
+                            final isPasswordVisible =
+                                authBloc.isPasswordVisible;
+
                             return CustomTextFormField(
-                              obscureText:
-                                  togglePasswordVisibilityState.isVisible,
                               controller: passwordController,
+                              obscureText: !isPasswordVisible,
                               hintText: 'Enter your password',
                               isSuffixIconOn: true,
                               suffixIcon: SuffixEyeIcon(
                                 confirmPasswordController: passwordController,
                                 onPressed: () {
-                                  context.read<AuthBloc>().add(
-                                    TogglePasswordVisibilityEvent(
-                                      isVisible: togglePasswordVisibilityState
-                                          .isVisible,
-                                    ),
+                                  authBloc.add(
+                                    const TogglePasswordVisibilityEvent(),
                                   );
                                 },
-                                isVisible:
-                                    togglePasswordVisibilityState.isVisible,
+                                isVisible: isPasswordVisible,
                               ),
                               suffixIconColor: AppTheme.getColor(
                                 context,
