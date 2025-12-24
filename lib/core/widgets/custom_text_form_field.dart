@@ -15,6 +15,8 @@ class CustomTextFormField extends StatelessWidget {
     this.prefixIcon,
     this.prefixIconColor,
     this.fillColor,
+    this.textColor,
+    this.hintColor,
     this.validator,
     this.obscureText = false,
   });
@@ -29,6 +31,8 @@ class CustomTextFormField extends StatelessWidget {
   final Widget? prefixIcon;
   final Color? prefixIconColor;
   final Color? fillColor;
+  final Color? textColor;
+  final Color? hintColor;
   final String? Function(String?)? validator;
   final bool obscureText;
 
@@ -37,10 +41,12 @@ class CustomTextFormField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       obscureText: obscureText,
-      style: TextStyle(color: AppTheme.getColor(context).primary),
+      style: TextStyle(color: textColor ?? AppTheme.getColor(context).primary),
       decoration: InputDecoration(
         hintText: hintText ?? '',
-        hintStyle: TextStyle(color: AppTheme.getColor(context).primary),
+        hintStyle: TextStyle(
+          color: hintColor ?? AppTheme.getColor(context).onSurfaceVariant,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius),
           borderSide: BorderSide(color: AppTheme.getColor(context).primary),
@@ -66,7 +72,7 @@ class CustomTextFormField extends StatelessWidget {
         suffixIconColor: suffixIconColor ?? AppTheme.getColor(context).primary,
         prefixIcon: isPrefixIconOn ? prefixIcon : null,
         prefixIconColor: prefixIconColor ?? AppTheme.getColor(context).primary,
-        fillColor: fillColor ?? AppTheme.getColor(context).surfaceContainer,
+        fillColor: fillColor ?? AppTheme.getSurfaceContainer(context),
         filled: true,
       ),
       validator:

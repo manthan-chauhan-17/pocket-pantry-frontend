@@ -189,6 +189,12 @@ class AppColors {
   // Text/icon color on surface variant
   static const Color onSurfaceVariant = Color(0xFF666666);
 
+  // Surface container - used for cards, search bars, and elevated containers
+  static const Color surfaceContainer = Color(0xFFF0F0F0);
+
+  // Text/icon color on surface container
+  static const Color onSurfaceContainer = Color(0xFF57531e);
+
   // Outline color - used for borders and dividers
   static const Color outline = Color(0xFFCCCCCC);
 
@@ -261,6 +267,12 @@ class AppColors {
 
   // Text/icon color on surface variant in dark mode
   static const Color darkOnSurfaceVariant = Color(0xFFCCCCCC);
+
+  // Surface container for dark mode - used for cards, search bars, and elevated containers
+  static const Color darkSurfaceContainer = Color(0xFF2C2C2C);
+
+  // Text/icon color on surface container in dark mode
+  static const Color darkOnSurfaceContainer = Color(0xFFedeada);
 
   // Outline color for dark mode
   static const Color darkOutline = Color(0xFF666666);
