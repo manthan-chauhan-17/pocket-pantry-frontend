@@ -68,6 +68,9 @@ dependencies:
   google_fonts: ^6.3.3
   flutter_svg: ^2.2.3
 
+  # Skeleton Loading
+  skeletonizer: ^2.1.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

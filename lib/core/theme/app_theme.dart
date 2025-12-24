@@ -9,6 +9,20 @@ class AppTheme {
   static bool isAppThemeDarkMode(BuildContext context) =>
       Theme.of(context).brightness == Brightness.dark;
 
+  // Helper method to get surface container color (for cards, search bars, etc.)
+  static Color getSurfaceContainer(BuildContext context) {
+    return isAppThemeDarkMode(context)
+        ? AppColors.darkSurfaceContainer
+        : AppColors.surfaceContainer;
+  }
+
+  // Helper method to get text color on surface container
+  static Color getOnSurfaceContainer(BuildContext context) {
+    return isAppThemeDarkMode(context)
+        ? AppColors.darkOnSurfaceContainer
+        : AppColors.onSurfaceContainer;
+  }
+
   static ThemeData lightTheme(BuildContext context) => ThemeData(
     // textTheme: GoogleFonts.playwriteNoTextTheme(),
     textTheme: GoogleFonts.mochiyPopPOneTextTheme(),
@@ -88,7 +102,7 @@ class AppTheme {
       onSurface: AppColors.onSurface,
 
       // Surface variant - slightly different surface color for elevation and variety
-      surfaceVariant: AppColors.surfaceVariant,
+      surfaceContainerHighest: AppColors.surfaceVariant,
 
       // Text/icon color on surface variant
       onSurfaceVariant: AppColors.onSurfaceVariant,
@@ -195,7 +209,7 @@ class AppTheme {
       onSurface: AppColors.darkOnSurface,
 
       // Surface variant - slightly different surface color for elevation and variety
-      surfaceVariant: AppColors.darkSurfaceVariant,
+      surfaceContainerHighest: AppColors.darkSurfaceVariant,
 
       // Text/icon color on surface variant
       onSurfaceVariant: AppColors.darkOnSurfaceVariant,
