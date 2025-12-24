@@ -12,6 +12,8 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthUsecase authUsecase;
+  bool isPasswordVisible = false; // Default to hidden (password is obscured)
+
   AuthBloc(this.authUsecase) : super(AuthInitial()) {
     on<RegisterUserEvent>(_registerUser);
     on<LoginUserEvent>(_loginUser);
@@ -33,7 +35,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     result.fold(
       (failure) => emit(RegisterUserFailure(message: failure.message)),
       (registerUserEntity) {
-        PreferenceService.setIsLoggedIn(registerUserEntity.success ?? false);
         emit(RegisterUserSuccess(registerUserEntity: registerUserEntity));
       },
     );
@@ -50,26 +51,29 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       password: event.password,
     );
 
-    result.fold((failure) => emit(LoginUserFailure(message: failure.message)), (
-      response,
-    ) {
-      PreferenceService.setIsLoggedIn(response.success ?? false);
-      if (response.user != null) {
-        PreferenceService.saveLoginDetails(
-          response.user?.token ?? '',
-          response.user?.id ?? '',
-          response.user?.name ?? '',
-          response.user?.email ?? '',
-        );
-      }
-      emit(LoginUserSuccess(loginUserEntity: response));
-    });
+    await result.fold(
+      (failure) async => emit(LoginUserFailure(message: failure.message)),
+      (response) async {
+        await PreferenceService.setIsLoggedIn(response.success ?? false);
+        if (response.user != null) {
+          await PreferenceService.saveLoginDetails(
+            response.user?.token ?? '',
+            response.user?.id ?? '',
+            response.user?.name ?? '',
+            response.user?.email ?? '',
+          );
+        }
+
+        emit(LoginUserSuccess(loginUserEntity: response));
+      },
+    );
   }
 
   FutureOr<void> _togglePasswordVisibility(
     TogglePasswordVisibilityEvent event,
     Emitter<AuthState> emit,
-  ) async {
-    emit(TogglePasswordVisibilityState(isVisible: event.isVisible));
+  ) {
+    isPasswordVisible = !isPasswordVisible; // Toggle the visibility
+    emit(TogglePasswordVisibilityState(isVisible: isPasswordVisible));
   }
 }

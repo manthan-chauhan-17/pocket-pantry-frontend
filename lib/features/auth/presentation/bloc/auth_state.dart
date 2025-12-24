@@ -55,5 +55,6 @@ class TogglePasswordVisibilityState extends AuthState {
   const TogglePasswordVisibilityState({required this.isVisible});
 
   @override
+  // TODO: implement props
   List<Object> get props => [isVisible];
 }
