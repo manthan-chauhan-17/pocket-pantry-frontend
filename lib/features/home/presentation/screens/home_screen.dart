@@ -3,9 +3,6 @@ import 'package:pocket_pantry_frontend/core/services/preference_service.dart';
 import 'package:pocket_pantry_frontend/features/home/presentation/widgets/category_cards_row.dart';
 import 'package:pocket_pantry_frontend/features/home/presentation/widgets/home_header.dart';
 import 'package:pocket_pantry_frontend/features/home/presentation/widgets/home_search_bar.dart';
-import 'package:pocket_pantry_frontend/features/home/presentation/widgets/horizontal_item_list.dart';
-import 'package:pocket_pantry_frontend/features/home/presentation/widgets/item_grid.dart';
-import 'package:pocket_pantry_frontend/features/home/presentation/widgets/section_header.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -49,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
         userName = name.isNotEmpty ? name : 'Sarah';
       });
     }
+    // context.read<HomeBloc>().add(GetItemsEvent());
   }
 
   void _handleNotificationPressed() {
@@ -59,16 +57,13 @@ class _HomeScreenState extends State<HomeScreen> {
     // Handle add action
   }
 
-  void _handleSeeAllExpiringSoon() {
-    // Handle see all expiring soon
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
+            spacing: 20,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Header Section
@@ -79,41 +74,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 onAddPressed: _handleAddPressed,
               ),
 
-              const SizedBox(height: 20),
-
               // Search Bar
               HomeSearchBar(controller: searchController),
 
-              const SizedBox(height: 20),
-
               // Category Overview Cards
               const CategoryCardsRow(),
-
-              const SizedBox(height: 24),
-
-              // Expiring Soon Section
-              SectionHeader(
-                title: 'Expiring Soon',
-                seeAllText: 'See All',
-                onSeeAllPressed: _handleSeeAllExpiringSoon,
-              ),
-
-              const SizedBox(height: 12),
-
-              // Horizontal Scrollable Items
-              const HorizontalItemList(),
-
-              const SizedBox(height: 24),
-
-              // All Items Section
-              SectionHeader(title: 'All Items'),
-
-              const SizedBox(height: 12),
-
-              // Grid of Items
-              const ItemGrid(),
-
-              const SizedBox(height: 20),
             ],
           ),
         ),

@@ -11,6 +11,7 @@ class CategoryCardsRow extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: Constant.generalPadding),
       child: Row(
+        spacing: 12,
         children: [
           Expanded(
             child: CategoryCard(
@@ -20,7 +21,6 @@ class CategoryCardsRow extends StatelessWidget {
               accentColor: const Color(0xFFFF3B30),
             ),
           ),
-          const SizedBox(width: 12),
           Expanded(
             child: CategoryCard(
               title: 'Low Stock',
@@ -31,7 +31,6 @@ class CategoryCardsRow extends StatelessWidget {
               accentColor: const Color(0xFFFF9500),
             ),
           ),
-          const SizedBox(width: 12),
           Expanded(
             child: CategoryCard(
               title: 'Recently Added',

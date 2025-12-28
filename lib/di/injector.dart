@@ -5,6 +5,7 @@ import 'package:pocket_pantry_frontend/core/services/hive_cache_service.dart';
 import 'package:pocket_pantry_frontend/core/services/preference_service.dart';
 import 'package:pocket_pantry_frontend/di/init_network_di.dart';
 import 'package:pocket_pantry_frontend/features/auth/presentation/di/auth_di.dart';
+import 'package:pocket_pantry_frontend/features/home/presentation/di/home_di.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
@@ -29,4 +30,5 @@ Future<void> initDi() async {
   await initNetworkDi(sl);
 
   setAuthModule(sl);
+  setHomeModule(sl);
 }

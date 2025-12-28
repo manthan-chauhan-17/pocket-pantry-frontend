@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pocket_pantry_frontend/core/constants/constant.dart';
 import 'package:pocket_pantry_frontend/core/error/app_exceptions.dart';
+import 'package:pocket_pantry_frontend/core/services/preference_service.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 Dio dio = getDio();
@@ -32,9 +33,15 @@ Dio getDio() {
     ),
   );
 
+  // Add Authorization header interceptor
   dio.interceptors.add(
     InterceptorsWrapper(
-      onRequest: (options, handler) {
+      onRequest: (options, handler) async {
+        // Get token from SharedPreferences
+        final token = await PreferenceService.getToken();
+        if (token.isNotEmpty) {
+          options.headers['Authorization'] = 'Bearer $token';
+        }
         debugPrint(
           'REQUEST[${options.method}] => PATH:${options.baseUrl}${options.path}',
         );
