@@ -18,16 +18,16 @@ class PreferenceService {
   }
 
   static Future<void> saveLoginDetails(
-    String token,
-    String userId,
-    String userName,
-    String userEmail,
+    String jwtToken,
+    String id,
+    String name,
+    String email,
   ) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(token, token);
-    await prefs.setString(userId, userId);
-    await prefs.setString(userName, userName);
-    await prefs.setString(userEmail, userEmail);
+    await prefs.setString(token, jwtToken);
+    await prefs.setString(userId, id);
+    await prefs.setString(userName, name);
+    await prefs.setString(userEmail, email);
   }
 
   static Future<String> getToken() async {

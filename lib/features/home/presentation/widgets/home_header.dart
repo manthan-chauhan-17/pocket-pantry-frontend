@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pocket_pantry_frontend/core/constants/constant.dart';
 import 'package:pocket_pantry_frontend/core/theme/app_theme.dart';
+import 'package:pocket_pantry_frontend/core/utils/responsive.dart';
 import 'package:pocket_pantry_frontend/core/widgets/custom_text.dart';
 
 class HomeHeader extends StatelessWidget {
@@ -23,7 +24,7 @@ class HomeHeader extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: Constant.generalPadding,
-        vertical: 16,
+        vertical: Constant.generalPadding,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,8 +35,8 @@ class HomeHeader extends StatelessWidget {
               Stack(
                 children: [
                   Container(
-                    width: 50,
-                    height: 50,
+                    width: 60 * Responsive.getResponsive(context),
+                    height: 60 * Responsive.getResponsive(context),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: AppTheme.getColor(context).primaryContainer,
@@ -43,7 +44,7 @@ class HomeHeader extends StatelessWidget {
                     child: Icon(
                       Icons.person,
                       color: AppTheme.getColor(context).primary,
-                      size: 30,
+                      size: 32 * Responsive.getResponsive(context),
                     ),
                   ),
                   // Green active status dot
@@ -51,15 +52,15 @@ class HomeHeader extends StatelessWidget {
                     bottom: 0,
                     right: 0,
                     child: Container(
-                      width: 14,
-                      height: 14,
+                      width: 16 * Responsive.getResponsive(context),
+                      height: 16 * Responsive.getResponsive(context),
                       decoration: BoxDecoration(
                         color: const Color(
                           0xFF34C759,
                         ), // Green - works for both themes
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: AppTheme.getColor(context).background,
+                          color: AppTheme.getColor(context).surface,
                           width: 2,
                         ),
                       ),
@@ -67,21 +68,21 @@ class HomeHeader extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 0.02 * Responsive.getWidth(context)),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomText(
                     greetingMessage,
-                    fontSize: 14,
+                    fontSize: 14 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.w400,
                     color: AppTheme.getColor(context).onSurfaceVariant,
                   ),
                   CustomText(
                     userName,
-                    fontSize: 18,
+                    fontSize: 18 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.w600,
-                    color: AppTheme.getColor(context).onBackground,
+                    color: AppTheme.getColor(context).onSurface,
                   ),
                 ],
               ),
@@ -96,7 +97,7 @@ class HomeHeader extends StatelessWidget {
                     icon: Icon(
                       CupertinoIcons.bell,
                       color: AppTheme.getColor(context).onSurfaceVariant,
-                      size: 24,
+                      size: 28 * Responsive.getResponsive(context),
                     ),
                     onPressed: onNotificationPressed,
                   ),
@@ -115,11 +116,11 @@ class HomeHeader extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 0.02 * Responsive.getWidth(context)),
               // Yellow/Gold Add Button
               Container(
-                width: 40,
-                height: 40,
+                width: 0.1 * Responsive.getWidth(context),
+                height: 0.05 * Responsive.getHeight(context),
                 decoration: const BoxDecoration(
                   color: Color(
                     0xFFFFD700,

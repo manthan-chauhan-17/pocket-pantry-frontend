@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pocket_pantry_frontend/core/constants/constant.dart';
 import 'package:pocket_pantry_frontend/core/theme/app_theme.dart';
+import 'package:pocket_pantry_frontend/core/utils/responsive.dart';
 import 'package:pocket_pantry_frontend/core/widgets/custom_text.dart';
 
 class CategoryCard extends StatelessWidget {
@@ -19,8 +21,9 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 110, // Fixed height for all cards
-      padding: const EdgeInsets.all(16),
+      height:
+          0.14 * Responsive.getHeight(context), // Fixed height for all cards
+      padding: const EdgeInsets.all(Constant.generalPadding),
       decoration: BoxDecoration(
         color: AppTheme.getSurfaceContainer(context),
         borderRadius: BorderRadius.circular(12),
@@ -28,10 +31,14 @@ class CategoryCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(icon, color: iconColor, size: 24),
+          Icon(
+            icon,
+            color: iconColor,
+            size: 26 * Responsive.getResponsive(context),
+          ),
           CustomText(
             title,
-            fontSize: 12,
+            fontSize: 12 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w500,
             color: AppTheme.getOnSurfaceContainer(context),
             textAlign: TextAlign.center,
