@@ -3,28 +3,65 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:pocket_pantry_frontend/core/services/preference_service.dart';
+import 'package:pocket_pantry_frontend/features/home/domain/entities/get_expiring_soon_items_entity.dart';
 import 'package:pocket_pantry_frontend/features/home/domain/entities/get_items_entity.dart';
 import 'package:pocket_pantry_frontend/features/home/domain/usecases/home_usecases.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
 
-class HomeBloc extends Bloc<HomeEvent, HomeState> {
+class HomeBloc extends Bloc<HomeEvent, GetItemsState> {
   final HomeUsecases homeUsecases;
-  HomeBloc(this.homeUsecases) : super(HomeInitial()) {
-    on<GetItemsEvent>(_getItems);
+  HomeBloc(this.homeUsecases) : super(GetItemInititalState()) {
+    on<GetAllItemsEvent>(_getItems);
+    on<GetExpiringSoonItemsEvent>(_getExpiringSoonItems);
   }
 
-  FutureOr<void> _getItems(GetItemsEvent event, Emitter<HomeState> emit) async {
-    emit(GetItemsLoadingState());
-
+  FutureOr<void> _getItems(
+    GetAllItemsEvent event,
+    Emitter<GetItemsState> emit,
+  ) async {
     final token = await PreferenceService.getToken();
+    emit(GetItemsState(allItemsLoading: true, allItemsErrorMessage: ''));
 
     final result = await homeUsecases.getItems(token: token);
 
     result.fold(
-      (failure) => emit(GetItemsErrorState(message: failure.message)),
-      (response) => emit(GetItemsSuccessState(getItemsEntity: response)),
+      (failure) => emit(
+        GetItemsState(
+          allItemsErrorMessage: failure.message,
+          allItemsLoading: false,
+        ),
+      ),
+      (response) =>
+          emit(GetItemsState(allItemsLoading: false, getItemsEntity: response)),
+    );
+  }
+
+  FutureOr<void> _getExpiringSoonItems(
+    GetExpiringSoonItemsEvent event,
+    Emitter<GetItemsState> emit,
+  ) async {
+    final token = await PreferenceService.getToken();
+    emit(
+      GetItemsState(expiringSoonLoading: true, expiringSoonErrorMessage: ''),
+    );
+
+    final result = await homeUsecases.getExpiringSoonItems(token: token);
+
+    result.fold(
+      (failure) => emit(
+        GetItemsState(
+          expiringSoonErrorMessage: failure.message,
+          expiringSoonLoading: false,
+        ),
+      ),
+      (response) => emit(
+        GetItemsState(
+          expiringSoonLoading: false,
+          getExpiringSoonItemsEntity: response,
+        ),
+      ),
     );
   }
 }

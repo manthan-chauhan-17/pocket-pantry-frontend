@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:pocket_pantry_frontend/core/error/failure.dart';
 import 'package:pocket_pantry_frontend/core/utils/safe_api_call.dart';
 import 'package:pocket_pantry_frontend/features/home/data/datasource/home_remote_datasource.dart';
+import 'package:pocket_pantry_frontend/features/home/domain/entities/get_expiring_soon_items_entity.dart';
 import 'package:pocket_pantry_frontend/features/home/domain/entities/get_items_entity.dart';
 import 'package:pocket_pantry_frontend/features/home/domain/repository/home_repository.dart';
 
@@ -16,6 +17,17 @@ class HomeRepositoryImpl extends HomeRepository {
   }) async {
     final result = await safeApiCall.execute(
       () => homeRemoteDatasource.getItems(token: token),
+    );
+
+    return result.map((response) => response.toEntity());
+  }
+
+  @override
+  Future<Either<Failure, GetExpiringSoonItemsEntity>> getExpiringSoonItems({
+    required String token,
+  }) async {
+    final result = await safeApiCall.execute(
+      () => homeRemoteDatasource.getExpiringSoonItems(token: token),
     );
 
     return result.map((response) => response.toEntity());
