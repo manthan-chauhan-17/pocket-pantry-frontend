@@ -1,48 +1,48 @@
-class GetItemsEntity {
+class GetExpiringSoonItemsEntity {
   final int? statusCode;
   final String? message;
   final bool? success;
-  final List<ItemEntity>? items;
+  final List<ExpiringSoonItemEntity>? expiringSoonItems;
 
-  const GetItemsEntity({
+  const GetExpiringSoonItemsEntity({
     this.statusCode,
     this.message,
     this.success,
-    this.items,
+    this.expiringSoonItems,
   });
 }
 
-class ItemEntity {
-  final ImageEntity? image;
+class ExpiringSoonItemEntity {
+  final ItemImageEntity? image;
   final QuantityEntity? quantity;
   final LowStockThresholdEntity? lowStockThreshold;
+  final String? id;
   final String? itemName;
   final String? itemDescription;
   final int? expireDate;
   final String? category;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final String? id;
 
-  const ItemEntity({
+  const ExpiringSoonItemEntity({
     this.image,
     this.quantity,
     this.lowStockThreshold,
+    this.id,
     this.itemName,
     this.itemDescription,
     this.expireDate,
     this.category,
     this.createdAt,
     this.updatedAt,
-    this.id,
   });
 }
 
-class ImageEntity {
+class ItemImageEntity {
   final String? url;
   final String? publicId;
 
-  const ImageEntity({this.url, this.publicId});
+  const ItemImageEntity({this.url, this.publicId});
 }
 
 class QuantityEntity {
