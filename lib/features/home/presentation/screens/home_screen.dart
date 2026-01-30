@@ -1,12 +1,173 @@
+// import 'package:flutter/material.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:go_router/go_router.dart';
+// import 'package:pocket_pantry_frontend/core/constants/constant.dart';
+// import 'package:pocket_pantry_frontend/core/router/route_paths.dart';
+// import 'package:pocket_pantry_frontend/core/services/preference_service.dart';
+// import 'package:pocket_pantry_frontend/core/theme/app_theme.dart';
+// import 'package:pocket_pantry_frontend/core/utils/responsive.dart';
+// import 'package:pocket_pantry_frontend/core/widgets/custom_text.dart';
+// import 'package:pocket_pantry_frontend/features/home/presentation/bloc/home_bloc.dart';
+// import 'package:pocket_pantry_frontend/features/home/presentation/widgets/all_items_section.dart';
+// import 'package:pocket_pantry_frontend/features/home/presentation/widgets/category_cards_row.dart';
+// import 'package:pocket_pantry_frontend/features/home/presentation/widgets/expiring_soon_section.dart';
+// import 'package:pocket_pantry_frontend/features/home/presentation/widgets/home_header.dart';
+// import 'package:pocket_pantry_frontend/features/home/presentation/widgets/home_search_bar.dart';
+
+// class HomeScreen extends StatefulWidget {
+//   const HomeScreen({super.key});
+
+//   @override
+//   State<HomeScreen> createState() => _HomeScreenState();
+// }
+
+// class _HomeScreenState extends State<HomeScreen> {
+//   TextEditingController searchController = TextEditingController();
+//   String userName = '';
+
+//   @override
+//   void dispose() {
+//     searchController.dispose();
+//     super.dispose();
+//   }
+
+//   String get greetingMessage {
+//     final hour = DateTime.now().hour;
+
+//     if (hour < 12) {
+//       return 'Good Morning,';
+//     } else if (hour < 17) {
+//       return 'Good Afternoon,';
+//     } else {
+//       return 'Good Evening,';
+//     }
+//   }
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     Future.microtask(fetchInitialData);
+//   }
+
+//   void fetchInitialData() async {
+//     final name = await PreferenceService.getUserName();
+//     if (mounted) {
+//       setState(() {
+//         userName = name.isNotEmpty ? name : 'Sarah';
+//       });
+//     }
+//     context.read<HomeBloc>().add(GetAllItemsEvent());
+//     context.read<HomeBloc>().add(GetExpiringSoonItemsEvent());
+//   }
+
+//   void _handleNotificationPressed() {
+//     // Handle notification
+//   }
+
+//   void _handleAddPressed() {
+//     // Handle add action
+//     context.pushNamed(RoutePaths.addItem);
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: SafeArea(
+//         child: SingleChildScrollView(
+//           child: Column(
+//             spacing: 20,
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               // Header Section
+//               HomeHeader(
+//                 greetingMessage: greetingMessage,
+//                 userName: userName,
+//                 onNotificationPressed: _handleNotificationPressed,
+//                 onAddPressed: _handleAddPressed,
+//               ),
+
+//               // Search Bar
+//               HomeSearchBar(controller: searchController),
+
+//               // Category Overview Cards
+//               const CategoryCardsRow(),
+
+//               // NoExpiringSoonItemsFound(),
+
+//               // Expiring Soon Section
+//               // Padding(
+//               //   padding: const EdgeInsets.symmetric(
+//               //     horizontal: Constant.generalPadding,
+//               //   ),
+//               //   child: Row(
+//               //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               //     children: [
+//               //       CustomText(
+//               //         'Expiring Soon',
+//               //         fontSize: 20 * Responsive.getResponsiveText(context),
+//               //         fontWeight: FontWeight.w600,
+//               //         // color: AppTheme.getColor(context).onSurface,
+//               //       ),
+//               //       GestureDetector(
+//               //         onTap: () {
+//               //           // Handle see all expiring soon
+//               //         },
+//               //         child: CustomText(
+//               //           'See All',
+//               //           fontSize: 14 * Responsive.getResponsiveText(context),
+//               //           decoration: TextDecoration.underline,
+//               //           decorationColor: Color(0xFFFFD700),
+//               //           color: Color(
+//               //             0xFFFFD700,
+//               //           ), // Yellow/Gold - works for both themes
+//               //         ),
+//               //       ),
+//               //     ],
+//               //   ),
+//               // ),
+//               ExpiringSoonSection(),
+
+//               // All Items Section
+//               // Padding(
+//               //   padding: const EdgeInsets.symmetric(
+//               //     horizontal: Constant.generalPadding,
+//               //   ),
+//               //   child: CustomText(
+//               //     'All Items',
+//               //     fontSize: 20 * Responsive.getResponsiveText(context),
+//               //     fontWeight: FontWeight.w600,
+//               //     color: AppTheme.getColor(context).onSurface,
+//               //   ),
+//               // ),
+//               AllItemsSection(),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// /*
+// Color Palette (from design):
+// - Primary Dark Background: #1A1A1A
+// - Card Background / Search Bar Background: #2C2C2C
+// - Text (Primary White): #FFFFFF
+// - Text (Secondary Light Gray / Placeholder): #AAAAAA
+// - Accent Color (Yellow/Gold): #FFD700
+// - Accent Color (Red): #FF3B30
+// - Accent Color (Orange): #FF9500
+// - Accent Color (Green): #34C759
+// - Notification Bell Icon: #333333 (background)
+// - Icon (Filter/Sort, Search): #AAAAAA
+// */
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pocket_pantry_frontend/core/constants/constant.dart';
 import 'package:pocket_pantry_frontend/core/router/route_paths.dart';
 import 'package:pocket_pantry_frontend/core/services/preference_service.dart';
-import 'package:pocket_pantry_frontend/core/theme/app_theme.dart';
-import 'package:pocket_pantry_frontend/core/utils/responsive.dart';
-import 'package:pocket_pantry_frontend/core/widgets/custom_text.dart';
 import 'package:pocket_pantry_frontend/features/home/presentation/bloc/home_bloc.dart';
 import 'package:pocket_pantry_frontend/features/home/presentation/widgets/all_items_section.dart';
 import 'package:pocket_pantry_frontend/features/home/presentation/widgets/category_cards_row.dart';
@@ -65,7 +226,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _handleAddPressed() {
-    // Handle add action
     context.pushNamed(RoutePaths.addItem);
   }
 
@@ -92,55 +252,13 @@ class _HomeScreenState extends State<HomeScreen> {
               // Category Overview Cards
               const CategoryCardsRow(),
 
-              // NoExpiringSoonItemsFound(),
+              // Expiring Soon Section 
+              // (Will hide itself if empty)
+              const ExpiringSoonSection(),
 
-              // Expiring Soon Section
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Constant.generalPadding,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomText(
-                      'Expiring Soon',
-                      fontSize: 20 * Responsive.getResponsiveText(context),
-                      fontWeight: FontWeight.w600,
-                      // color: AppTheme.getColor(context).onSurface,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        // Handle see all expiring soon
-                      },
-                      child: CustomText(
-                        'See All',
-                        fontSize: 14 * Responsive.getResponsiveText(context),
-                        decoration: TextDecoration.underline,
-                        decorationColor: Color(0xFFFFD700),
-                        color: Color(
-                          0xFFFFD700,
-                        ), // Yellow/Gold - works for both themes
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              ExpiringSoonSection(),
-              // All Items Section
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Constant.generalPadding,
-                ),
-                child: CustomText(
-                  'All Items',
-                  fontSize: 20 * Responsive.getResponsiveText(context),
-                  fontWeight: FontWeight.w600,
-                  color: AppTheme.getColor(context).onSurface,
-                ),
-              ),
-
-              AllItemsSection(),
+              // All Items Section 
+              // (Will show NoDataState if empty)
+              const AllItemsSection(),
             ],
           ),
         ),
@@ -148,17 +266,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-/*
-Color Palette (from design):
-- Primary Dark Background: #1A1A1A
-- Card Background / Search Bar Background: #2C2C2C
-- Text (Primary White): #FFFFFF
-- Text (Secondary Light Gray / Placeholder): #AAAAAA
-- Accent Color (Yellow/Gold): #FFD700
-- Accent Color (Red): #FF3B30
-- Accent Color (Orange): #FF9500
-- Accent Color (Green): #34C759
-- Notification Bell Icon: #333333 (background)
-- Icon (Filter/Sort, Search): #AAAAAA
-*/
