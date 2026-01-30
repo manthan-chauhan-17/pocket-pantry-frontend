@@ -22,19 +22,20 @@ class HomeBloc extends Bloc<HomeEvent, GetItemsState> {
     Emitter<GetItemsState> emit,
   ) async {
     final token = await PreferenceService.getToken();
-    emit(GetItemsState(allItemsLoading: true, allItemsErrorMessage: ''));
+    emit(state.copyWith(allItemsLoading: true, allItemsErrorMessage: ''));
 
     final result = await homeUsecases.getItems(token: token);
 
     result.fold(
       (failure) => emit(
-        GetItemsState(
+        state.copyWith(
           allItemsErrorMessage: failure.message,
           allItemsLoading: false,
         ),
       ),
-      (response) =>
-          emit(GetItemsState(allItemsLoading: false, getItemsEntity: response)),
+      (response) => emit(
+        state.copyWith(allItemsLoading: false, getItemsEntity: response),
+      ),
     );
   }
 
@@ -44,20 +45,20 @@ class HomeBloc extends Bloc<HomeEvent, GetItemsState> {
   ) async {
     final token = await PreferenceService.getToken();
     emit(
-      GetItemsState(expiringSoonLoading: true, expiringSoonErrorMessage: ''),
+      state.copyWith(expiringSoonLoading: true, expiringSoonErrorMessage: ''),
     );
 
     final result = await homeUsecases.getExpiringSoonItems(token: token);
 
     result.fold(
       (failure) => emit(
-        GetItemsState(
+        state.copyWith(
           expiringSoonErrorMessage: failure.message,
           expiringSoonLoading: false,
         ),
       ),
       (response) => emit(
-        GetItemsState(
+        state.copyWith(
           expiringSoonLoading: false,
           getExpiringSoonItemsEntity: response,
         ),
