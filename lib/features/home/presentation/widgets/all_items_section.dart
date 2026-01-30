@@ -65,8 +65,8 @@ class _AllItemsSectionState extends State<AllItemsSection> {
                 );
                 final expires = DateHelper.daysUntilExpiration(expireDate);
                 return _AllItemCard(
-                  name: item?.itemName ?? '',
-                  imageUrl: item?.image?.url ?? '',
+                  name: item?.name ?? '',
+                  imageUrl: item?.imageUrl ?? '',
                   quantity: item?.quantity?.value.toString() ?? '',
                   expires: expires.toString(),
                   expiresColor: const Color(0xFFFF9500), // Orange

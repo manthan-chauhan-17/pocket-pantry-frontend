@@ -3,46 +3,37 @@ class GetItemsEntity {
   final String? message;
   final bool? success;
   final List<ItemEntity>? items;
+  final MetaEntity? meta;
 
   const GetItemsEntity({
     this.statusCode,
     this.message,
     this.success,
     this.items,
+    this.meta,
   });
 }
 
 class ItemEntity {
-  final ImageEntity? image;
+  final String? itemId;
+  final String? name;
+  final int? expireDate;
   final QuantityEntity? quantity;
   final LowStockThresholdEntity? lowStockThreshold;
-  final String? itemName;
-  final String? itemDescription;
-  final int? expireDate;
   final String? category;
+  final String? imageUrl;
   final DateTime? createdAt;
-  final DateTime? updatedAt;
-  final String? id;
 
   const ItemEntity({
-    this.image,
+    this.itemId,
+    this.name,
+    this.expireDate,
     this.quantity,
     this.lowStockThreshold,
-    this.itemName,
-    this.itemDescription,
-    this.expireDate,
     this.category,
+    this.imageUrl,
     this.createdAt,
-    this.updatedAt,
-    this.id,
   });
-}
-
-class ImageEntity {
-  final String? url;
-  final String? publicId;
-
-  const ImageEntity({this.url, this.publicId});
 }
 
 class QuantityEntity {
@@ -57,4 +48,10 @@ class LowStockThresholdEntity {
   final String? unit;
 
   const LowStockThresholdEntity({this.value, this.unit});
+}
+
+class MetaEntity {
+  final int? total;
+
+  const MetaEntity({this.total});
 }

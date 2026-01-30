@@ -24,8 +24,16 @@ class GetItemsModel {
   bool? success;
   @JsonKey(name: "items")
   List<Item>? items;
+  @JsonKey(name: "meta")
+  Meta? meta;
 
-  GetItemsModel({this.statusCode, this.message, this.success, this.items});
+  GetItemsModel({
+    this.statusCode,
+    this.message,
+    this.success,
+    this.items,
+    this.meta,
+  });
 
   factory GetItemsModel.fromJson(Map<String, dynamic> json) =>
       _$GetItemsModelFromJson(json);
@@ -33,47 +41,42 @@ class GetItemsModel {
   Map<String, dynamic> toJson() => _$GetItemsModelToJson(this);
 
   GetItemsEntity toEntity() => GetItemsEntity(
-    items: items?.map((e) => e.toEntity()).toList(),
     statusCode: statusCode,
     message: message,
     success: success,
+    items: items?.map((e) => e.toEntity()).toList(),
+    meta: meta?.toEntity(),
   );
 }
 
 @JsonSerializable()
 class Item {
-  @JsonKey(name: "image")
-  Image? image;
+  @JsonKey(name: "itemId")
+  String? itemId;
+  @JsonKey(name: "name")
+  String? name;
+  @JsonKey(name: "expireDate")
+  int? expireDate;
   @JsonKey(name: "quantity")
   Quantity? quantity;
   @JsonKey(name: "lowStockThreshold")
   LowStockThreshold? lowStockThreshold;
-  @JsonKey(name: "itemName")
-  String? itemName;
-  @JsonKey(name: "itemDescription")
-  String? itemDescription;
-  @JsonKey(name: "expireDate")
-  int? expireDate;
   @JsonKey(name: "category")
   String? category;
+  @JsonKey(name: "imageUrl")
+  String? imageUrl;
   @JsonKey(name: "createdAt")
   DateTime? createdAt;
-  @JsonKey(name: "updatedAt")
-  DateTime? updatedAt;
-  @JsonKey(name: "id")
-  String? id;
 
   Item({
-    this.image,
+    this.itemId,
+    this.name,
+    this.expireDate,
     this.quantity,
     this.lowStockThreshold,
-    this.itemName,
-    this.itemDescription,
-    this.expireDate,
     this.category,
+    this.imageUrl,
     this.createdAt,
-    this.updatedAt,
-    this.id,
   });
 
   factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
@@ -81,33 +84,15 @@ class Item {
   Map<String, dynamic> toJson() => _$ItemToJson(this);
 
   ItemEntity toEntity() => ItemEntity(
-    image: image?.toEntity(),
+    itemId: itemId,
+    name: name,
+    expireDate: expireDate,
     quantity: quantity?.toEntity(),
     lowStockThreshold: lowStockThreshold?.toEntity(),
-    itemName: itemName,
-    itemDescription: itemDescription,
-    expireDate: expireDate,
     category: category,
+    imageUrl: imageUrl,
     createdAt: createdAt,
-    updatedAt: updatedAt,
-    id: id,
   );
-}
-
-@JsonSerializable()
-class Image {
-  @JsonKey(name: "url")
-  String? url;
-  @JsonKey(name: "publicId")
-  String? publicId;
-
-  Image({this.url, this.publicId});
-
-  factory Image.fromJson(Map<String, dynamic> json) => _$ImageFromJson(json);
-
-  Map<String, dynamic> toJson() => _$ImageToJson(this);
-
-  ImageEntity toEntity() => ImageEntity(url: url, publicId: publicId);
 }
 
 @JsonSerializable()
@@ -127,6 +112,7 @@ class LowStockThreshold {
   LowStockThresholdEntity toEntity() =>
       LowStockThresholdEntity(value: value, unit: unit);
 }
+
 @JsonSerializable()
 class Quantity {
   @JsonKey(name: "value")
@@ -141,6 +127,19 @@ class Quantity {
 
   Map<String, dynamic> toJson() => _$QuantityToJson(this);
 
-  QuantityEntity toEntity() =>
-      QuantityEntity(value: value, unit: unit);
+  QuantityEntity toEntity() => QuantityEntity(value: value, unit: unit);
+}
+
+@JsonSerializable()
+class Meta {
+  @JsonKey(name: "total")
+  int? total;
+
+  Meta({this.total});
+
+  factory Meta.fromJson(Map<String, dynamic> json) => _$MetaFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MetaToJson(this);
+
+  MetaEntity toEntity() => MetaEntity(total: total);
 }

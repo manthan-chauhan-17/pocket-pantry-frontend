@@ -1,6 +1,5 @@
 // To parse this JSON data, do
-//clear
-
+//
 //     final getExpiringSoonItemsModel = getExpiringSoonItemsModelFromJson(jsonString);
 
 import 'package:json_annotation/json_annotation.dart';
@@ -24,14 +23,17 @@ class GetExpiringSoonItemsModel {
   String? message;
   @JsonKey(name: "success")
   bool? success;
-  @JsonKey(name: "expiringSoonItems")
-  List<ExpiringSoonItem>? expiringSoonItems;
+  @JsonKey(name: "items")
+  List<ExpiringSoonItem>? items;
+  @JsonKey(name: "meta")
+  ExpiringSoonMeta? meta;
 
   GetExpiringSoonItemsModel({
     this.statusCode,
     this.message,
     this.success,
-    this.expiringSoonItems,
+    this.items,
+    this.meta,
   });
 
   factory GetExpiringSoonItemsModel.fromJson(Map<String, dynamic> json) =>
@@ -43,44 +45,39 @@ class GetExpiringSoonItemsModel {
     statusCode: statusCode,
     message: message,
     success: success,
-    expiringSoonItems: expiringSoonItems?.map((e) => e.toEntity()).toList(),
+    items: items?.map((e) => e.toEntity()).toList(),
+    meta: meta?.toEntity(),
   );
 }
 
 @JsonSerializable()
 class ExpiringSoonItem {
-  @JsonKey(name: "image")
-  Image? image;
-  @JsonKey(name: "quantity")
-  Quantity? quantity;
-  @JsonKey(name: "lowStockThreshold")
-  LowStockThreshold? lowStockThreshold;
-  @JsonKey(name: "_id")
-  String? id;
-  @JsonKey(name: "itemName")
-  String? itemName;
-  @JsonKey(name: "itemDescription")
-  String? itemDescription;
+  @JsonKey(name: "itemId")
+  String? itemId;
+  @JsonKey(name: "name")
+  String? name;
   @JsonKey(name: "expireDate")
   int? expireDate;
+  @JsonKey(name: "quantity")
+  ExpiringSoonQuantity? quantity;
+  @JsonKey(name: "lowStockThreshold")
+  ExpiringSoonLowStockThreshold? lowStockThreshold;
   @JsonKey(name: "category")
   String? category;
+  @JsonKey(name: "imageUrl")
+  String? imageUrl;
   @JsonKey(name: "createdAt")
   DateTime? createdAt;
-  @JsonKey(name: "updatedAt")
-  DateTime? updatedAt;
 
   ExpiringSoonItem({
-    this.image,
+    this.itemId,
+    this.name,
+    this.expireDate,
     this.quantity,
     this.lowStockThreshold,
-    this.id,
-    this.itemName,
-    this.itemDescription,
-    this.expireDate,
     this.category,
+    this.imageUrl,
     this.createdAt,
-    this.updatedAt,
   });
 
   factory ExpiringSoonItem.fromJson(Map<String, dynamic> json) =>
@@ -89,66 +86,64 @@ class ExpiringSoonItem {
   Map<String, dynamic> toJson() => _$ExpiringSoonItemToJson(this);
 
   ExpiringSoonItemEntity toEntity() => ExpiringSoonItemEntity(
-    image: image?.toEntity(),
+    itemId: itemId,
+    name: name,
+    expireDate: expireDate,
     quantity: quantity?.toEntity(),
     lowStockThreshold: lowStockThreshold?.toEntity(),
-    id: id,
-    itemName: itemName,
-    itemDescription: itemDescription,
-    expireDate: expireDate,
     category: category,
+    imageUrl: imageUrl,
     createdAt: createdAt,
-    updatedAt: updatedAt,
   );
 }
 
 @JsonSerializable()
-class Image {
-  @JsonKey(name: "url")
-  String? url;
-  @JsonKey(name: "publicId")
-  String? publicId;
-
-  Image({this.url, this.publicId});
-
-  factory Image.fromJson(Map<String, dynamic> json) => _$ImageFromJson(json);
-
-  Map<String, dynamic> toJson() => _$ImageToJson(this);
-
-  ItemImageEntity toEntity() => ItemImageEntity(url: url, publicId: publicId);
-}
-
-@JsonSerializable()
-class Quantity {
+class ExpiringSoonLowStockThreshold {
   @JsonKey(name: "value")
   int? value;
   @JsonKey(name: "unit")
   String? unit;
 
-  Quantity({this.value, this.unit});
+  ExpiringSoonLowStockThreshold({this.value, this.unit});
 
-  factory Quantity.fromJson(Map<String, dynamic> json) =>
-      _$QuantityFromJson(json);
+  factory ExpiringSoonLowStockThreshold.fromJson(Map<String, dynamic> json) =>
+      _$ExpiringSoonLowStockThresholdFromJson(json);
 
-  Map<String, dynamic> toJson() => _$QuantityToJson(this);
+  Map<String, dynamic> toJson() => _$ExpiringSoonLowStockThresholdToJson(this);
 
-  QuantityEntity toEntity() => QuantityEntity(value: value, unit: unit);
+  ExpiringSoonLowStockThresholdEntity toEntity() =>
+      ExpiringSoonLowStockThresholdEntity(value: value, unit: unit);
 }
 
 @JsonSerializable()
-class LowStockThreshold {
+class ExpiringSoonQuantity {
   @JsonKey(name: "value")
   int? value;
   @JsonKey(name: "unit")
   String? unit;
 
-  LowStockThreshold({this.value, this.unit});
+  ExpiringSoonQuantity({this.value, this.unit});
 
-  factory LowStockThreshold.fromJson(Map<String, dynamic> json) =>
-      _$LowStockThresholdFromJson(json);
+  factory ExpiringSoonQuantity.fromJson(Map<String, dynamic> json) =>
+      _$ExpiringSoonQuantityFromJson(json);
 
-  Map<String, dynamic> toJson() => _$LowStockThresholdToJson(this);
+  Map<String, dynamic> toJson() => _$ExpiringSoonQuantityToJson(this);
 
-  LowStockThresholdEntity toEntity() =>
-      LowStockThresholdEntity(value: value, unit: unit);
+  ExpiringSoonQuantityEntity toEntity() =>
+      ExpiringSoonQuantityEntity(value: value, unit: unit);
+}
+
+@JsonSerializable()
+class ExpiringSoonMeta {
+  @JsonKey(name: "total")
+  int? total;
+
+  ExpiringSoonMeta({this.total});
+
+  factory ExpiringSoonMeta.fromJson(Map<String, dynamic> json) =>
+      _$ExpiringSoonMetaFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ExpiringSoonMetaToJson(this);
+
+  ExpiringSoonMetaEntity toEntity() => ExpiringSoonMetaEntity(total: total);
 }

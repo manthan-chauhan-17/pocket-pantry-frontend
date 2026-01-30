@@ -31,8 +31,7 @@ class ExpiringSoonSection extends StatelessWidget {
           );
         }
 
-        final expirintSoonTtems =
-            state.getExpiringSoonItemsEntity?.expiringSoonItems;
+        final expirintSoonTtems = state.getExpiringSoonItemsEntity?.items;
 
         if (expirintSoonTtems?.isEmpty ?? true) {
           return SizedBox(
@@ -57,8 +56,8 @@ class ExpiringSoonSection extends StatelessWidget {
               return Padding(
                 padding: EdgeInsets.only(right: Constant.generalPadding),
                 child: _ExpiringItemCard(
-                  name: expiringSoonItem?.itemName ?? '',
-                  imageUrl: expiringSoonItem?.image?.url ?? '',
+                  name: expiringSoonItem?.name ?? '',
+                  imageUrl: expiringSoonItem?.imageUrl ?? '',
                   quantity: expiringSoonItem?.quantity?.value.toString() ?? '',
                   expires: expires.toString(),
                   // tag: item.,
