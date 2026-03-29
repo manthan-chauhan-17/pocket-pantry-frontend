@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pocket_pantry_frontend/core/constants/constant.dart';
 import 'package:pocket_pantry_frontend/core/theme/app_theme.dart';
@@ -8,6 +11,7 @@ import 'package:pocket_pantry_frontend/core/utils/responsive.dart';
 import 'package:pocket_pantry_frontend/core/widgets/custom_button.dart';
 import 'package:pocket_pantry_frontend/core/widgets/custom_text.dart';
 import 'package:pocket_pantry_frontend/core/widgets/custom_text_form_field.dart';
+import 'package:pocket_pantry_frontend/features/add_item/presentation/bloc/add_item_bloc.dart';
 
 class AddItemScreen extends StatefulWidget {
   const AddItemScreen({super.key});
@@ -99,17 +103,134 @@ class _AddItemScreenState extends State<AddItemScreen> {
   }
 
   Future<void> _pickImage() async {
-    // TODO: Implement image picker
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      setState(() {
-        _selectedImagePath = image.path;
-      });
+    final String? sourceString = await showImageSourceBottomSheet(context);
+
+    if (sourceString != null) {
+      final ImageSource source = sourceString == 'camera'
+          ? ImageSource.camera
+          : ImageSource.gallery;
+
+      // Trigger the BLoC event
+      // context.read<AddItemBloc>().add(PickImageEvent(source));
+      context.read<AddItemBloc>().add(PickImageEvent(source));
     }
-    // For now, this is just a placeholder
-    // You can use image_picker package: final ImagePicker picker = ImagePicker();
-    // final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+  }
+
+  // Function to trigger the BottomSheet
+  Future<String?> showImageSourceBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor:
+          Colors.transparent, // Transparent to show custom container
+      builder: (BuildContext context) {
+        return Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+          ),
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24.0,
+                vertical: 20.0,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min, // Wraps to content height
+                children: [
+                  // --- Small drag handle ---
+                  Container(
+                    height: 5,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+
+                  // --- Title ---
+                  const Text(
+                    "Select Image Source",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+
+                  // --- Camera & Gallery Options ---
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildOptionButton(
+                        context: context,
+                        icon: Icons.camera_alt_rounded,
+                        label: "Camera",
+                        color: Colors.blue,
+                        onTap: () {
+                          // Handle Camera selection
+                          Navigator.pop(context, 'camera');
+                          print("Camera selected");
+                        },
+                      ),
+                      _buildOptionButton(
+                        context: context,
+                        icon: Icons.photo_library_rounded,
+                        label: "Gallery",
+                        color: Colors.purple,
+                        onTap: () {
+                          // Handle Gallery selection
+                          Navigator.pop(context, 'gallery');
+                          print("Gallery selected");
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  // Helper widget for the circular buttons
+  Widget _buildOptionButton({
+    required BuildContext context,
+    required IconData icon,
+    required String label,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(18),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.1), // Soft tinted background
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, size: 32, color: color),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Colors.black87,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   IconData _getCategoryIcon(String category) {
@@ -978,38 +1099,89 @@ class _AddItemScreenState extends State<AddItemScreen> {
               ],
             ),
             const SizedBox(height: 8),
-
             // Image Upload Area
-            GestureDetector(
-              onTap: _pickImage,
-              child: Container(
-                width: double.infinity,
-                height: 140,
-                decoration: BoxDecoration(
-                  color: AppTheme.getSurfaceContainer(context),
-                  borderRadius: BorderRadius.circular(Constants.borderRadius),
-                  border: Border.all(
-                    color: AppTheme.getColor(context).outline.withOpacity(0.5),
-                    width: 1.5,
-                    style: BorderStyle.solid,
+            BlocBuilder<AddItemBloc, AddItemState>(
+              builder: (context, state) {
+                // Extract the image path from the BLoC state
+                String? currentImagePath;
+                if (state is ImagePickedState) {
+                  currentImagePath = state.imagePath;
+                }
+
+                return GestureDetector(
+                  onTap: currentImagePath == null ? _pickImage : null,
+                  child: Container(
+                    width: double.infinity,
+                    height: 140,
+                    decoration: BoxDecoration(
+                      color: AppTheme.getSurfaceContainer(context),
+                      borderRadius: BorderRadius.circular(
+                        Constants.borderRadius,
+                      ),
+                      border: Border.all(
+                        color: AppTheme.getColor(
+                          context,
+                        ).outline.withValues(alpha: 0.5),
+                        width: 1.5,
+                        style: BorderStyle.solid,
+                      ),
+                    ),
+                    child: currentImagePath != null
+                        ? Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              // 1. The Image (Using Image.file instead of Image.network)
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(
+                                  Constants.borderRadius,
+                                ),
+                                child: Image.file(
+                                  File(currentImagePath),
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Center(
+                                      child: CustomText(
+                                        'Error loading image',
+                                        fontSize: 12,
+                                        color: AppTheme.getColor(context).error,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              // 2. The Remove Button
+                              Positioned(
+                                top: 8,
+                                right: 8,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    // Trigger the remove event in the BLoC
+                                    context.read<AddItemBloc>().add(
+                                      const RemoveImageEvent(),
+                                    );
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(6),
+                                    decoration: const BoxDecoration(
+                                      color: Colors.black54,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: const Icon(
+                                      CupertinoIcons.xmark,
+                                      color: Colors.white,
+                                      size: 16,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        : _buildImagePlaceholder(context),
                   ),
-                ),
-                child: _selectedImagePath != null
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(
-                          Constants.borderRadius,
-                        ),
-                        child: Image.network(
-                          _selectedImagePath!,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return _buildImagePlaceholder(context);
-                          },
-                        ),
-                      )
-                    : _buildImagePlaceholder(context),
-              ),
+                );
+              },
             ),
+
             const SizedBox(height: 16),
 
             // Notes
