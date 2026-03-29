@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pocket_pantry_frontend/core/constants/constants.dart';
+import 'package:pocket_pantry_frontend/core/constants/constant.dart';
 import 'package:pocket_pantry_frontend/core/theme/app_theme.dart';
 
 class CustomTextFormField extends StatelessWidget {

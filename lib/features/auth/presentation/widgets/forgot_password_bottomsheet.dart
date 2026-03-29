@@ -2,7 +2,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pocket_pantry_frontend/core/constants/constant.dart';
-import 'package:pocket_pantry_frontend/core/constants/constants.dart';
 import 'package:pocket_pantry_frontend/core/theme/app_theme.dart';
 import 'package:pocket_pantry_frontend/core/utils/util.dart';
 import 'package:pocket_pantry_frontend/core/widgets/custom_button.dart';
@@ -67,7 +66,7 @@ class ForgotPasswordBottomsheet extends StatelessWidget {
                 controller: emailController,
                 hintText: 'Enter your email',
                 validator: Util.emailValidator,
-                prefixIcon: Icon(Constant.mailIcon),
+                prefixIcon: Icon(Constants.mailIcon),
                 prefixIconColor: AppTheme.getColor(context).primary,
                 isPrefixIconOn: true,
               ),
@@ -167,7 +166,7 @@ class OtpVerificationBottomsheet extends StatelessWidget {
                 controller: otpController,
                 hintText: 'Enter your Otp',
                 // validator: Util.emailValidator,
-                prefixIcon: Icon(Constant.mailIcon),
+                prefixIcon: Icon(Constants.mailIcon),
                 prefixIconColor: AppTheme.getColor(context).primary,
                 isPrefixIconOn: true,
               ),
@@ -271,7 +270,7 @@ class ResetPasswordBottomsheet extends StatelessWidget {
               controller: newPasswordController,
               hintText: 'Create a New Password',
               // validator: Util.emailValidator,
-              prefixIcon: Icon(Constant.mailIcon),
+              prefixIcon: Icon(Constants.mailIcon),
               prefixIconColor: AppTheme.getColor(context).primary,
               isPrefixIconOn: true,
             ),
@@ -280,7 +279,7 @@ class ResetPasswordBottomsheet extends StatelessWidget {
               controller: confirmPasswordController,
               hintText: 'Confirm new Password',
               // validator: Util.emailValidator,
-              prefixIcon: Icon(Constant.mailIcon),
+              prefixIcon: Icon(Constants.mailIcon),
               prefixIconColor: AppTheme.getColor(context).primary,
               isPrefixIconOn: true,
             ),

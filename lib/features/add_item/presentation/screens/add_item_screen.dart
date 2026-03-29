@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pocket_pantry_frontend/core/constants/constant.dart';
-import 'package:pocket_pantry_frontend/core/constants/constants.dart';
 import 'package:pocket_pantry_frontend/core/theme/app_theme.dart';
 import 'package:pocket_pantry_frontend/core/utils/date_helper.dart';
 import 'package:pocket_pantry_frontend/core/utils/responsive.dart';
@@ -269,7 +268,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
       builder: (BuildContext context) {
         return Container(
           padding: const EdgeInsets.symmetric(
-            horizontal: Constant.generalPadding,
+            horizontal: Constants.generalPadding,
             vertical: 20,
           ),
           child: Column(
@@ -372,7 +371,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
       builder: (BuildContext context) {
         return Container(
           padding: const EdgeInsets.symmetric(
-            horizontal: Constant.generalPadding,
+            horizontal: Constants.generalPadding,
             vertical: 20,
           ),
           child: Column(
@@ -490,7 +489,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
           child: Form(
             key: _formKey,
             child: Padding(
-              padding: const EdgeInsets.all(Constant.generalPadding),
+              padding: const EdgeInsets.all(Constants.generalPadding),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 // spacing: 0.02 * Responsive.getHeight(context),

@@ -23,8 +23,8 @@ class HomeHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: Constant.generalPadding,
-        vertical: Constant.generalPadding,
+        horizontal: Constants.generalPadding,
+        vertical: Constants.generalPadding,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
