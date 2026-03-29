@@ -9,7 +9,7 @@ Dio dio = getDio();
 
 Dio getDio() {
   BaseOptions options = BaseOptions(
-    baseUrl: Constant.apiBaseUrl,
+    baseUrl: Constants.apiBaseUrl,
     connectTimeout: Duration(seconds: 30),
     receiveTimeout: Duration(seconds: 30),
     sendTimeout: Duration(seconds: 30),

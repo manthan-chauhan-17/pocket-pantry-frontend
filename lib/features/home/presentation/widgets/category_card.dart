@@ -23,7 +23,7 @@ class CategoryCard extends StatelessWidget {
     return Container(
       height:
           0.14 * Responsive.getHeight(context), // Fixed height for all cards
-      padding: const EdgeInsets.all(Constant.generalPadding),
+      padding: const EdgeInsets.all(Constants.generalPadding),
       decoration: BoxDecoration(
         color: AppTheme.getSurfaceContainer(context),
         borderRadius: BorderRadius.circular(12),

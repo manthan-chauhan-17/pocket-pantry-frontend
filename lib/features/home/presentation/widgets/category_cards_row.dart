@@ -9,7 +9,7 @@ class CategoryCardsRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Constant.generalPadding),
+      padding: const EdgeInsets.symmetric(horizontal: Constants.generalPadding),
       child: Row(
         spacing: 12,
         children: [

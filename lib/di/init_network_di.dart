@@ -11,5 +11,7 @@ Future<void> initNetworkDi(GetIt sl) async {
   sl.registerLazySingleton(() => SafeApiCall(sl()));
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(Connectivity()));
   sl.registerSingleton<Dio>(getDio());
-  sl.registerSingleton<ApiClient>(ApiClient(dio, baseUrl: Constant.apiBaseUrl));
+  sl.registerSingleton<ApiClient>(
+    ApiClient(dio, baseUrl: Constants.apiBaseUrl),
+  );
 }

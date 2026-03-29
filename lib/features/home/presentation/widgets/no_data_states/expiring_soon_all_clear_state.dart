@@ -7,10 +7,7 @@ import 'package:pocket_pantry_frontend/core/utils/responsive.dart';
 class ExpiringSoonAllClearState extends StatelessWidget {
   final VoidCallback onViewAllItems;
 
-  const ExpiringSoonAllClearState({
-    super.key,
-    required this.onViewAllItems,
-  });
+  const ExpiringSoonAllClearState({super.key, required this.onViewAllItems});
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +16,7 @@ class ExpiringSoonAllClearState extends StatelessWidget {
 
     return Center(
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: Responsive.scaleWidth(24),
-        ),
+        padding: EdgeInsets.symmetric(horizontal: Responsive.scaleWidth(24)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -85,7 +80,7 @@ class ExpiringSoonAllClearState extends StatelessWidget {
 
             /// CTA Button
             CustomButton.outlined(
-              text: 'View All Items',
+              text: 'View All Expiring Items',
               onPressed: onViewAllItems,
               height: Responsive.scaleHeight(48),
               borderRadius: Responsive.scaleHeight(14),
