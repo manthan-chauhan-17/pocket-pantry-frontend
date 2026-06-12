@@ -74,8 +74,13 @@ class _HomeScreenState extends State<HomeScreen> {
     // Handle notification
   }
 
-  void _handleAddPressed() {
-    context.pushNamed(RoutePaths.addItem);
+  void _handleAddPressed() async {
+    final result = await context.pushNamed(RoutePaths.addItem);
+
+    if (result == true) {
+      context.read<HomeBloc>().add(GetAllItemsEvent());
+      context.read<HomeBloc>().add(GetExpiringSoonItemsEvent());
+    }
   }
 
   @override

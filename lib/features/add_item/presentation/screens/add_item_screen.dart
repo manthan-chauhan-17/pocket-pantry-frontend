@@ -1,8 +1,9 @@
 import 'dart:io';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pocket_pantry_frontend/core/constants/constant.dart';
 import 'package:pocket_pantry_frontend/core/theme/app_theme.dart';
@@ -11,6 +12,7 @@ import 'package:pocket_pantry_frontend/core/utils/responsive.dart';
 import 'package:pocket_pantry_frontend/core/widgets/custom_button.dart';
 import 'package:pocket_pantry_frontend/core/widgets/custom_text.dart';
 import 'package:pocket_pantry_frontend/core/widgets/custom_text_form_field.dart';
+import 'package:pocket_pantry_frontend/features/add_item/data/model/add_item_request_model.dart';
 import 'package:pocket_pantry_frontend/features/add_item/presentation/bloc/add_item_bloc.dart';
 
 class AddItemScreen extends StatefulWidget {
@@ -23,6 +25,8 @@ class AddItemScreen extends StatefulWidget {
 class _AddItemScreenState extends State<AddItemScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _itemNameController = TextEditingController();
+  final TextEditingController _itemDescriptionController =
+      TextEditingController();
   final TextEditingController _quantityController = TextEditingController(
     text: '1',
   );
@@ -34,7 +38,6 @@ class _AddItemScreenState extends State<AddItemScreen> {
   );
 
   String? _selectedCategory;
-  String? _selectedImagePath;
   DateTime? _selectedExpiryDate;
   String _selectedUnit = 'pcs';
   bool _isLowStockAlertEnabled = true;
@@ -448,8 +451,26 @@ class _AddItemScreenState extends State<AddItemScreen> {
 
   void _handleAddItem() {
     if (_formKey.currentState!.validate()) {
-      // TODO: Implement add item logic
-      // Validate all fields and submit to backend
+      final bloc = context.read<AddItemBloc>();
+      final imagePath = bloc.selectedImagePath;
+      File? imageFile = imagePath != null ? File(imagePath) : null;
+
+      context.read<AddItemBloc>().add(
+        AddItemDetailsEvent(
+          request: AddItemRequestModel(
+            itemName: _itemNameController.text,
+            itemDescription: _itemDescriptionController.text,
+            expireDate: DateHelper.dateTimeToTimestamp(
+              _selectedExpiryDate ?? DateTime.now(),
+            ),
+            category: _selectedCategory ?? "",
+            quantityValue: int.parse(_quantityController.text),
+            quantityUnit: _selectedUnit,
+            lowStockThresholdValue: int.parse(_lowStockAlertController.text),
+            image: imageFile,
+          ),
+        ),
+      );
     }
   }
 
@@ -471,51 +492,73 @@ class _AddItemScreenState extends State<AddItemScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppTheme.getColor(context).surface,
-      appBar: AppBar(
-        title: CustomText(
-          'Add Item',
-          fontSize: 18 * Responsive.getResponsiveText(context),
-          fontWeight: FontWeight.w600,
-          color: AppTheme.getColor(context).onSurface,
-        ),
-        centerTitle: true,
+    return BlocListener<AddItemBloc, AddItemState>(
+      listener: (context, state) {
+        if (state is AddItemsSuccessState) {
+          context.pop(true);
+
+          AwesomeSnackbarContent(
+            title: "Success",
+            message:
+                state.addItemSuccessEntity.message ?? "Item added successfully",
+            contentType: ContentType.success,
+          );
+        }
+
+        if (state is AddItemsErrorState) {
+          AwesomeSnackbarContent(
+            title: "Error",
+            message: state.message,
+            contentType: ContentType.failure,
+          );
+        }
+      },
+      child: Scaffold(
         backgroundColor: AppTheme.getColor(context).surface,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Padding(
-              padding: const EdgeInsets.all(Constants.generalPadding),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                // spacing: 0.02 * Responsive.getHeight(context),
-                children: [
-                  // Item Name & Category Card
-                  Card(child: _buildBasicInfoCard(context)),
+        appBar: AppBar(
+          title: CustomText(
+            'Add Item',
+            fontSize: 18 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.w600,
+            color: AppTheme.getColor(context).onSurface,
+          ),
+          centerTitle: true,
+          backgroundColor: AppTheme.getColor(context).surface,
+          elevation: 0,
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Padding(
+                padding: const EdgeInsets.all(Constants.generalPadding),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  // spacing: 0.02 * Responsive.getHeight(context),
+                  children: [
+                    // Item Name & Category Card
+                    Card(child: _buildBasicInfoCard(context)),
 
-                  // Expiration Date Card
-                  Card(child: _buildExpirationDateCard(context)),
+                    // Expiration Date Card
+                    Card(child: _buildExpirationDateCard(context)),
 
-                  // Quantity Card
-                  Card(child: _buildQuantityCard(context)),
+                    // Quantity Card
+                    Card(child: _buildQuantityCard(context)),
 
-                  // Additional Details Card
-                  Card(child: _buildAdditionalDetailsCard(context)),
+                    // Additional Details Card
+                    Card(child: _buildAdditionalDetailsCard(context)),
 
-                  SizedBox(height: 0.02 * Responsive.getHeight(context)),
+                    SizedBox(height: 0.02 * Responsive.getHeight(context)),
 
-                  CustomButton(
-                    text: 'Save',
-                    buttonType: ButtonType.primary,
-                    onPressed: _handleAddItem,
-                    isEnabled: true,
-                    isLoading: false,
-                  ),
-                ],
+                    CustomButton(
+                      text: 'Save',
+                      buttonType: ButtonType.primary,
+                      onPressed: _handleAddItem,
+                      isEnabled: true,
+                      isLoading: false,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -730,41 +773,41 @@ class _AddItemScreenState extends State<AddItemScreen> {
     );
   }
 
-  Widget _buildQuickDateButton(
-    BuildContext context,
-    String label,
-    Duration duration,
-  ) {
-    return InkWell(
-      onTap: () => _setExpiryDateFromDuration(duration),
-      borderRadius: BorderRadius.circular(Constants.borderRadius),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        decoration: BoxDecoration(
-          color: label == '+3 Days'
-              ? const Color(0xFFD4F6D4)
-              : AppTheme.getSurfaceContainer(context),
-          borderRadius: BorderRadius.circular(Constants.borderRadius),
-          border: Border.all(
-            color: label == '+3 Days'
-                ? const Color(0xFF8BC34A)
-                : AppTheme.getColor(context).outline.withOpacity(0.3),
-            width: 1,
-          ),
-        ),
-        child: Center(
-          child: CustomText(
-            label,
-            fontSize: 13,
-            fontWeight: FontWeight.w500,
-            color: label == '+3 Days'
-                ? const Color(0xFF558B2F)
-                : AppTheme.getColor(context).onSurfaceVariant,
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget _buildQuickDateButton(
+  //   BuildContext context,
+  //   String label,
+  //   Duration duration,
+  // ) {
+  //   return InkWell(
+  //     onTap: () => _setExpiryDateFromDuration(duration),
+  //     borderRadius: BorderRadius.circular(Constants.borderRadius),
+  //     child: Container(
+  //       padding: const EdgeInsets.symmetric(vertical: 10),
+  //       decoration: BoxDecoration(
+  //         color: label == '+3 Days'
+  //             ? const Color(0xFFD4F6D4)
+  //             : AppTheme.getSurfaceContainer(context),
+  //         borderRadius: BorderRadius.circular(Constants.borderRadius),
+  //         border: Border.all(
+  //           color: label == '+3 Days'
+  //               ? const Color(0xFF8BC34A)
+  //               : AppTheme.getColor(context).outline.withOpacity(0.3),
+  //           width: 1,
+  //         ),
+  //       ),
+  //       child: Center(
+  //         child: CustomText(
+  //           label,
+  //           fontSize: 13,
+  //           fontWeight: FontWeight.w500,
+  //           color: label == '+3 Days'
+  //               ? const Color(0xFF558B2F)
+  //               : AppTheme.getColor(context).onSurfaceVariant,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildQuantityCard(BuildContext context) {
     return Card(

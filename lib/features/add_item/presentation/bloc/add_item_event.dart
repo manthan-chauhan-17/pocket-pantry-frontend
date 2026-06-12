@@ -19,3 +19,12 @@ class PickImageEvent extends AddItemEvent {
 class RemoveImageEvent extends AddItemEvent {
   const RemoveImageEvent();
 }
+
+class AddItemDetailsEvent extends AddItemEvent {
+  final AddItemRequestModel request;
+
+  const AddItemDetailsEvent({required this.request});
+
+  @override
+  List<Object?> get props => [request];
+}
